@@ -58,7 +58,7 @@ mavenPublishing {
     pom {
         name.set("Lotus")
         description.set("A modern customizable scoreboard library for spigot development.")
-        inceptionYear.set("2025")
+        inceptionYear.set("2026")
         url.set("https://github.com/MeveraStudios/Lotus/")
         licenses {
             license {
