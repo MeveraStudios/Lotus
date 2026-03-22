@@ -1,6 +1,7 @@
 package studio.mevera.menus;
 
 import com.google.common.base.Preconditions;
+import lombok.Data;
 import studio.mevera.menus.base.BaseMenuView;
 import studio.mevera.menus.base.Menu;
 import studio.mevera.menus.base.MenuView;
@@ -10,10 +11,11 @@ import studio.mevera.menus.base.serialization.SerializableMenu;
 import studio.mevera.menus.base.serialization.SerializedMenuIO;
 import studio.mevera.menus.base.serialization.impl.SerializedMenuYaml;
 import studio.mevera.menus.misc.DataRegistry;
+import studio.mevera.menus.misc.button.Button;
 import studio.mevera.menus.openers.DefaultViewOpener;
+import studio.mevera.menus.util.Couple;
 import studio.mevera.menus.util.InventoryUtil;
 import lombok.Getter;
-import lombok.Setter;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
@@ -49,41 +51,33 @@ public final class Lotus {
 	
 	@Getter
 	private final Plugin plugin;
-	
-	@Getter
-	@Setter
-	private boolean allowOutsideClick = true;
-	
-	@Getter
-	@Setter
-	private SerializedMenuIO<?> menuIO;
-	
-	@Getter
-	@Setter
-	private MenuSerializer menuSerializer;
-	
-	@Getter
-	private long updateTicks = 15L;
-    
-    private Lotus(Plugin plugin) {
-		this.plugin = plugin;
-		menuIO = new SerializedMenuYaml();
-		menuSerializer = MenuSerializer.newDefaultSerializer();
-		
-		registerOpeners();
 
+	@Getter
+	private final Options options;
+    
+    Lotus(Plugin plugin, Options options) {
+		this.plugin = plugin;
+		this.options = options;
 		Bukkit.getPluginManager().registerEvents(new LotusListener(), plugin);
 	}
-	
-	public static Lotus load(Plugin plugin) {
-		Preconditions.checkNotNull(plugin, "Plugin cannot be null");
-		return new Lotus(plugin);
+
+	public static LotusBuilder builder(Plugin plugin) {
+		return new LotusBuilder(plugin);
 	}
-	
-	private void registerOpeners() {
-		//TODO register the rest of openers
+
+	@Data(staticConstructor = "of")
+	public static class Options {
+
+		private final SerializedMenuIO<?> menuIO;
+		private final MenuSerializer menuSerializer;
+		private final boolean allowOutsideClick, dynamicButtonAction;
+		private final long updateTicks;
+
+		public static Options defaultOptions() {
+			return Options.of(new SerializedMenuYaml(), MenuSerializer.newDefaultSerializer(), true, false, 15L);
+		}
 	}
-	
+
 	public void enableDebugger() {
 		this.debugger = new LotusDebugger(plugin.getLogger());
 	}
@@ -98,6 +92,8 @@ public final class Lotus {
 	
 	@SuppressWarnings("unchecked")
 	public Menu readYamlMenu(YamlConfiguration configuration) {
+		var menuIO = options.menuIO;
+		var menuSerializer = options.menuSerializer;
 		if(!YamlConfiguration.class.isAssignableFrom(menuIO.fileType()))
 			throw new IllegalArgumentException("File type of menu IO does not support Yaml serialization");
 		
@@ -107,6 +103,8 @@ public final class Lotus {
 	
 	@SuppressWarnings("unchecked")
 	public void writeYamlMenu(SerializableMenu menu, YamlConfiguration configuration) {
+		var menuIO = options.menuIO;
+		var menuSerializer = options.menuSerializer;
 		if(!YamlConfiguration.class.isAssignableFrom(menuIO.fileType()))
 			throw new IllegalArgumentException("File type of menu IO does not support Yaml serialization");
 		
@@ -246,6 +244,8 @@ public final class Lotus {
 	}
 
 	final class LotusListener implements Listener {
+
+		volatile Couple<Integer, Button> lastPickedUpButton = null;
 		@EventHandler(priority = EventPriority.LOW)
 		public void onClick(InventoryClickEvent e) {
 			if(e.isCancelled())
@@ -259,24 +259,54 @@ public final class Lotus {
 
 
 			MenuView<?> menu = Lotus.this.getMenuView(clicker.getUniqueId()).orElseGet(() -> {
-				if (topInventory.getHolder() instanceof MenuView<?>) {
-					MenuView<?> playerMenu = (MenuView<?>) topInventory.getHolder();
-					Lotus.this.setOpenView(clicker, playerMenu);
+				if (topInventory.getHolder() instanceof MenuView<?> playerMenu) {
+                    Lotus.this.setOpenView(clicker, playerMenu);
 					return playerMenu;
 				}
 				return null;
 			});
 
 			if (menu == null) {
-				e.setCancelled(!Lotus.this.allowOutsideClick);
+				e.setCancelled(!Lotus.this.options.allowOutsideClick);
 				return;
 			}
 
 			if (clickedInventory == null)
 				return;
 
+			if(options.dynamicButtonAction) {
+				InventoryAction action = e.getAction();
+				Button button = menu.getContent().getButton(e.getSlot()).orElse(null);
+				if (isPickupAction(action) && button != null) {
+					System.out.println("IS PICKUP ACTION");
+					lastPickedUpButton = new Couple<>(e.getSlot(), button);
+				} else if (isPlaceAction(action) && lastPickedUpButton != null) {
+					System.out.println("PLACE ACTION");
+					int oldSlot = lastPickedUpButton.getLeft();
+					Button pickedUpButton = lastPickedUpButton.getRight();
+
+					menu.getContent().setButton(oldSlot, null);
+					menu.getContent().setButton(e.getSlot(), pickedUpButton);
+					System.out.println("NEW SLOT = " + e.getSlot() + ", OLD SLOT = " + oldSlot);
+					lastPickedUpButton = null;
+				}
+			}
+
 			Lotus.this.debug("Triggering InventoryClickEvent");
 			menu.handleOnClick(e);
+		}
+
+		private boolean isPickupAction(InventoryAction action) {
+			return action == InventoryAction.PICKUP_ONE ||
+						   action == InventoryAction.PICKUP_SOME ||
+						   action == InventoryAction.PICKUP_HALF ||
+						   action == InventoryAction.PICKUP_ALL;
+		}
+
+		private boolean isPlaceAction(InventoryAction action) {
+			return action == InventoryAction.PLACE_ONE ||
+						   action == InventoryAction.PLACE_SOME ||
+						   action == InventoryAction.PLACE_ALL;
 		}
 
 		@EventHandler(priority = EventPriority.LOW)
@@ -286,28 +316,19 @@ public final class Lotus {
 
 			final Inventory topInventory = InventoryUtil.getTopInventory(e);
 			MenuView<?> menu = Lotus.this.getMenuView(clicker.getUniqueId()).orElseGet(() -> {
-				if (topInventory.getHolder() instanceof MenuView<?>) {
-					MenuView<?> playerMenu = (MenuView<?>)topInventory.getHolder();
-					Lotus.this.setOpenView(clicker, playerMenu);
+				if (topInventory.getHolder() instanceof MenuView<?> playerMenu) {
+                    Lotus.this.setOpenView(clicker, playerMenu);
 					return playerMenu;
 				}
 				return null;
 			});
 
 			if (menu == null) {
-				e.setCancelled(!Lotus.this.allowOutsideClick);
+				e.setCancelled(!Lotus.this.options.allowOutsideClick);
 				return;
 			}
-			/*
-			if(menu != null && lastClickEvent != null && lastClickEvent.getInventory() == clickedInventory) {
-				InventoryClickEvent clickEvent = new InventoryClickEvent(
-					lastClickEvent.getView(), lastClickEvent.getSlotType(), lastClickEvent.getSlot(), lastClickEvent.getClick(), lastClickEvent.getAction()
-				);
-                menu.handleOnClick(clickEvent);
-			}
-			*/
 
-			if (clickedInventory != null && clickedInventory == topInventory) {
+            if (clickedInventory != null && clickedInventory == topInventory) {
 				Lotus.this.debug("Triggering InventoryDragEvent");
 				menu.onDrag(e);
 			}
@@ -324,10 +345,9 @@ public final class Lotus {
 		public void onOpen(InventoryOpenEvent e) {
 
 			Inventory inventory = e.getInventory();
-			if (!(inventory.getHolder() instanceof MenuView<?>))
+			if (!(inventory.getHolder() instanceof MenuView<?> menu))
 				return;
-			MenuView<?> menu = (MenuView<?>)inventory.getHolder();
-			Lotus.this.setOpenView((Player) e.getPlayer(), menu);
+            Lotus.this.setOpenView((Player) e.getPlayer(), menu);
 			menu.onOpen(e);
 		}
 

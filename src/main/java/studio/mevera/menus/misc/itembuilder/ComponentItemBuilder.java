@@ -27,6 +27,10 @@ public final class ComponentItemBuilder extends ItemBuilder<Component, Component
 	}
 
 
+	public ComponentItemBuilder setDisplay(String richText) {
+		return setDisplay(LegacyComponentSerializer.legacySection().deserialize(richText));
+	}
+
 	@Override
 	protected String toString(Component component) {
 		return LegacyComponentSerializer.legacySection().serialize(component);

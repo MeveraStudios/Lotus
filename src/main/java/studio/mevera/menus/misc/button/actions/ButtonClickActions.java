@@ -4,8 +4,7 @@ import studio.mevera.menus.misc.button.actions.impl.CloseMenuAction;
 import studio.mevera.menus.misc.button.actions.impl.OpenMenuAction;
 
 /**
- * @author <a href="https://github.com/Cobeine">Cobeine</a>
- * @author Mqzen (modifed after Cobeine)
+ * @author Mqzen
  */
 
 public final class ButtonClickActions {

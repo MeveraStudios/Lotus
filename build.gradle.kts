@@ -5,7 +5,7 @@ plugins {
 }
 
 group = "studio.mevera"
-version = "1.7.0"
+version = "2.0.0"
 
 repositories {
     gradlePluginPortal()
@@ -45,11 +45,6 @@ dependencies {
     testImplementation("net.kyori:adventure-platform-bukkit:4.3.4")
     testImplementation("net.kyori:adventure-text-minimessage:4.19.0")
     testCompileOnly("org.spigotmc:spigot-api:1.8.8-R0.1-SNAPSHOT")
-}
-
-java {
-    withSourcesJar()
-    withJavadocJar()
 }
 
 mavenPublishing {
@@ -97,7 +92,7 @@ tasks.withType<Javadoc> {
     }
 
     // Set source compatibility for javadoc
-    options.source = "8"
+    options.source = "17"
 
     // Exclude implementation packages from javadoc
     exclude("**/impl/**")

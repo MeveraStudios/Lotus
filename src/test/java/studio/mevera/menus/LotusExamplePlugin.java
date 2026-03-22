@@ -23,7 +23,8 @@ public final class LotusExamplePlugin extends JavaPlugin implements CommandExecu
 
 	@Override
 	public void onEnable() {
-		lotus = Lotus.load(this);
+		lotus = Lotus.builder(this)
+							 .build();
 		lotus.enableDebugger();
 
 		this.getCommand("test").setExecutor(this);
@@ -43,8 +44,8 @@ public final class LotusExamplePlugin extends JavaPlugin implements CommandExecu
 					exampleMenu.getCapacity(registry, null), exampleMenu.getContent(registry, null, exampleMenu.getCapacity(registry, null)));
 
 			YamlConfiguration configuration = YamlConfiguration.loadConfiguration(exampleFile);
-			SerializedMenuYaml yaml = (SerializedMenuYaml) lotus.getMenuIO();
-			yaml.write(lotus.getMenuSerializer().serialize(menu), configuration);
+			SerializedMenuYaml yaml = (SerializedMenuYaml) lotus.getOptions().getMenuIO();
+			yaml.write(lotus.getOptions().getMenuSerializer().serialize(menu), configuration);
 			try {
 				configuration.save(exampleFile);
 			} catch (IOException e) {
@@ -59,10 +60,10 @@ public final class LotusExamplePlugin extends JavaPlugin implements CommandExecu
 			return true;
 			}
 			YamlConfiguration configuration = YamlConfiguration.loadConfiguration(exampleFile);
-			SerializedMenuYaml yaml = (SerializedMenuYaml) lotus.getMenuIO();
+			SerializedMenuYaml yaml = (SerializedMenuYaml) lotus.getOptions().getMenuIO();
 
 			DataRegistry registry = yaml.read(configuration);
-			Menu menu = lotus.getMenuSerializer().deserialize(registry);
+			Menu menu = lotus.getOptions().getMenuSerializer().deserialize(registry);
 			lotus.openMenu((Player) commandSender,menu);
 			commandSender.sendMessage("loaded");
 			return true;

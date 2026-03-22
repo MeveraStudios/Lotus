@@ -19,7 +19,9 @@ public interface Menu {
 	/**
 	 * @return The unique name for this menu
 	 */
-	String getName();
+	default String getName() {
+		return this.getClass().getSimpleName();
+	}
 	
 	/**
 	 * Type of inventory you're creating

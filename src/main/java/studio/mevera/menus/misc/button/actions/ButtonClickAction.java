@@ -22,8 +22,7 @@ import java.util.stream.Collectors;
  * - Retrieve preferable actions based on click events and data registry
  * - Extract action-specific data from a given action string
  *
- * @author <a href="https://github.com/Cobeine">Cobeine</a>
- * @author Mqzen (modified after Cobeine)
+ * @author Mqzen
  */
 public interface ButtonClickAction {
 

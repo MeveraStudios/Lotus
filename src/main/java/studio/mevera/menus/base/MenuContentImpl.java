@@ -1,6 +1,7 @@
 package studio.mevera.menus.base;
 
 import com.google.common.collect.Lists;
+import org.jetbrains.annotations.Nullable;
 import studio.mevera.menus.misc.Capacity;
 import studio.mevera.menus.misc.Slot;
 import studio.mevera.menus.misc.Slots;
@@ -46,7 +47,7 @@ final class MenuContentImpl implements Content {
 	@Override
 	public int nextEmptySlot(int start) {
 		for (int slot = start; slot < capacity.getTotalSize(); slot++) {
-			if (!getButton(slot).isPresent()) return slot;
+			if (getButton(slot).isEmpty()) return slot;
 		}
 		
 		return -1;
@@ -58,8 +59,12 @@ final class MenuContentImpl implements Content {
 	}
 
 	@Override
-	public void setButton(Slot slot, Button item) {
-		map.put(slot, item.copy());
+	public void setButton(Slot slot, @Nullable Button item) {
+		if(item == null) {
+			map.remove(slot);
+		}else {
+			map.put(slot, item.copy());
+		}
 	}
 	
 	@Override
