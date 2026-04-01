@@ -1,5 +1,6 @@
 package studio.mevera.menus.misc.itembuilder;
 
+import net.kyori.adventure.text.minimessage.MiniMessage;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.inventory.ItemFlag;
@@ -165,20 +166,20 @@ public abstract class ItemBuilder<T, B extends ItemBuilder<T, B>> {
 		return new LegacyItemBuilder(material);
 	}
 
-	public static ComponentItemBuilder modern(ItemStack itemStack) {
-		return new ComponentItemBuilder(itemStack);
+	public static ComponentItemBuilder modern(MiniMessage miniMessage, ItemStack itemStack) {
+		return new ComponentItemBuilder(itemStack, miniMessage);
 	}
 
-	public static ComponentItemBuilder modern(Material material, int amount, short data) {
-		return new ComponentItemBuilder(material, amount, data);
+	public static ComponentItemBuilder modern(MiniMessage miniMessage, Material material, int amount, short data) {
+		return new ComponentItemBuilder(material, amount, data, miniMessage);
 	}
 
-	public static ComponentItemBuilder modern(Material material, int amount) {
-		return new ComponentItemBuilder(material, amount);
+	public static ComponentItemBuilder modern(MiniMessage miniMessage, Material material, int amount) {
+		return new ComponentItemBuilder(material, amount, miniMessage);
 	}
 
-	public static ComponentItemBuilder modern(Material material) {
-		return new ComponentItemBuilder(material);
+	public static ComponentItemBuilder modern(MiniMessage miniMessage, Material material) {
+		return new ComponentItemBuilder(material, miniMessage);
 	}
 
 }
