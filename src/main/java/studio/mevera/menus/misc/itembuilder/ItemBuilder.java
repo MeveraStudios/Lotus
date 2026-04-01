@@ -75,6 +75,7 @@ public abstract class ItemBuilder<T, B extends ItemBuilder<T, B>> {
 		itemMeta.setLore(Arrays.stream(lore).map(this::toString).collect(Collectors.toList()));
 		return (B) this;
 	}
+
 	
 	/**
 	 * Sets the lore (description) of the item with the given list of lore entries.

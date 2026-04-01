@@ -4,8 +4,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="5627481f-164c-4877-8050-a073e3de7c6c" name="Changes" comment="Refactor Lotus initialization with builder pattern and options, add dynamic button action support, update Java version to 17&#10;&#10;- Introduce LotusBuilder for flexible Lotus instantiation with customizable options&#10;- Move configuration fields into Lotus.Options data class&#10;- Add dynamicButtonAction option to enable drag-and-drop button rearrangement in menus&#10;- Refactor event handling to support dynamic button actions&#10;- Update default Java version and Gradle JVM to 17&#10;- Add utility method to ComponentItemBuilder for setting display from rich text&#10;- Set default Menu#getName to class simple name&#10;- Update MenuContentImpl to allow removing buttons by setting null">
+    <list default="true" id="5627481f-164c-4877-8050-a073e3de7c6c" name="Changes" comment="Add GitHub Actions workflow for release automation and cleanup">
+      <change afterPath="$PROJECT_DIR$/src/test/java/studio/mevera/menus/TutorialMenu.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/studio/mevera/menus/misc/itembuilder/ComponentItemBuilder.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/studio/mevera/menus/misc/itembuilder/ComponentItemBuilder.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/studio/mevera/menus/misc/itembuilder/ItemBuilder.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/studio/mevera/menus/misc/itembuilder/ItemBuilder.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -121,6 +124,7 @@
     "git-widget-placeholder": "master",
     "ignore.virus.scanning.warn.message": "true",
     "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "D:/Projects 2025/Lotus/.github/workflows",
     "project.structure.last.edited": "Project",
     "project.structure.proportion": "0.0",
     "project.structure.side.proportion": "0.2",
@@ -128,6 +132,11 @@
     "show.migrate.to.gradle.popup": "false"
   }
 }]]></component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="D:\Projects 2025\Lotus\.github\workflows" />
+    </key>
+  </component>
   <component name="RunManager">
     <configuration name="Lotus [publishToMavenLocal]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
       <ExternalSystemSettings>
@@ -199,7 +208,15 @@
       <option name="project" value="LOCAL" />
       <updated>1774152729185</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="Add GitHub Actions workflow for release automation and cleanup">
+      <option name="closed" value="true" />
+      <created>1775059757465</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1775059757465</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
@@ -207,7 +224,8 @@
     <MESSAGE value="Convert groovy to kotlin" />
     <MESSAGE value="Convert gradle groovy to kotlin" />
     <MESSAGE value="Refactor Lotus initialization with builder pattern and options, add dynamic button action support, update Java version to 17&#10;&#10;- Introduce LotusBuilder for flexible Lotus instantiation with customizable options&#10;- Move configuration fields into Lotus.Options data class&#10;- Add dynamicButtonAction option to enable drag-and-drop button rearrangement in menus&#10;- Refactor event handling to support dynamic button actions&#10;- Update default Java version and Gradle JVM to 17&#10;- Add utility method to ComponentItemBuilder for setting display from rich text&#10;- Set default Menu#getName to class simple name&#10;- Update MenuContentImpl to allow removing buttons by setting null" />
-    <option name="LAST_COMMIT_MESSAGE" value="Refactor Lotus initialization with builder pattern and options, add dynamic button action support, update Java version to 17&#10;&#10;- Introduce LotusBuilder for flexible Lotus instantiation with customizable options&#10;- Move configuration fields into Lotus.Options data class&#10;- Add dynamicButtonAction option to enable drag-and-drop button rearrangement in menus&#10;- Refactor event handling to support dynamic button actions&#10;- Update default Java version and Gradle JVM to 17&#10;- Add utility method to ComponentItemBuilder for setting display from rich text&#10;- Set default Menu#getName to class simple name&#10;- Update MenuContentImpl to allow removing buttons by setting null" />
+    <MESSAGE value="Add GitHub Actions workflow for release automation and cleanup" />
+    <option name="LAST_COMMIT_MESSAGE" value="Add GitHub Actions workflow for release automation and cleanup" />
   </component>
   <component name="github-copilot-workspace">
     <instructionFileLocations>
