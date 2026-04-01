@@ -4,12 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="5627481f-164c-4877-8050-a073e3de7c6c" name="Changes" comment="Add GitHub Actions workflow for release automation and cleanup">
-      <change afterPath="$PROJECT_DIR$/src/test/java/studio/mevera/menus/TutorialMenu.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/studio/mevera/menus/misc/itembuilder/ComponentItemBuilder.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/studio/mevera/menus/misc/itembuilder/ComponentItemBuilder.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/studio/mevera/menus/misc/itembuilder/ItemBuilder.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/studio/mevera/menus/misc/itembuilder/ItemBuilder.java" afterDir="false" />
-    </list>
+    <list default="true" id="5627481f-164c-4877-8050-a073e3de7c6c" name="Changes" comment="Add TutorialMenu implementation with interactive button for item giving" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -216,7 +211,31 @@
       <option name="project" value="LOCAL" />
       <updated>1775059757465</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="Enhance ComponentItemBuilder with MiniMessage support and add TutorialMenu implementation">
+      <option name="closed" value="true" />
+      <created>1775083915195</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1775083915195</updated>
+    </task>
+    <task id="LOCAL-00006" summary="Enhance ComponentItemBuilder with MiniMessage support and add TutorialMenu implementation">
+      <option name="closed" value="true" />
+      <created>1775084024324</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1775084024324</updated>
+    </task>
+    <task id="LOCAL-00007" summary="Add TutorialMenu implementation with interactive button for item giving">
+      <option name="closed" value="true" />
+      <created>1775084696065</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1775084696065</updated>
+    </task>
+    <option name="localTasksCounter" value="8" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
@@ -225,7 +244,9 @@
     <MESSAGE value="Convert gradle groovy to kotlin" />
     <MESSAGE value="Refactor Lotus initialization with builder pattern and options, add dynamic button action support, update Java version to 17&#10;&#10;- Introduce LotusBuilder for flexible Lotus instantiation with customizable options&#10;- Move configuration fields into Lotus.Options data class&#10;- Add dynamicButtonAction option to enable drag-and-drop button rearrangement in menus&#10;- Refactor event handling to support dynamic button actions&#10;- Update default Java version and Gradle JVM to 17&#10;- Add utility method to ComponentItemBuilder for setting display from rich text&#10;- Set default Menu#getName to class simple name&#10;- Update MenuContentImpl to allow removing buttons by setting null" />
     <MESSAGE value="Add GitHub Actions workflow for release automation and cleanup" />
-    <option name="LAST_COMMIT_MESSAGE" value="Add GitHub Actions workflow for release automation and cleanup" />
+    <MESSAGE value="Enhance ComponentItemBuilder with MiniMessage support and add TutorialMenu implementation" />
+    <MESSAGE value="Add TutorialMenu implementation with interactive button for item giving" />
+    <option name="LAST_COMMIT_MESSAGE" value="Add TutorialMenu implementation with interactive button for item giving" />
   </component>
   <component name="github-copilot-workspace">
     <instructionFileLocations>
