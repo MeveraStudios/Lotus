@@ -19,12 +19,12 @@ public class TutorialMenu implements Menu {
 
     @Override
     public @NotNull MenuTitle getTitle(DataRegistry extraData, Player opener) {
-        return MenuTitles.createModern("<green> Welcome " + opener.getName());
+        return MenuTitles.createModern("<blue><bold> Welcome " + opener.getName());
     }
 
     @Override
     public @NotNull Capacity getCapacity(DataRegistry extraData, Player opener) {
-        return null;
+        return Capacity.ofRows(3);
     }
 
     @Override

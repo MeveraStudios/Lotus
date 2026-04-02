@@ -4,7 +4,14 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="5627481f-164c-4877-8050-a073e3de7c6c" name="Changes" comment="Add TutorialMenu implementation with interactive button for item giving" />
+    <list default="true" id="5627481f-164c-4877-8050-a073e3de7c6c" name="Changes" comment="Update workspace.xml to reflect changes in TutorialMenu implementation and task summaries">
+      <change beforePath="$PROJECT_DIR$/build.gradle.kts" beforeDir="false" afterPath="$PROJECT_DIR$/build.gradle.kts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/studio/mevera/menus/Lotus.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/studio/mevera/menus/Lotus.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/studio/mevera/menus/ExampleMenuComponent.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/studio/mevera/menus/ExampleMenuComponent.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/studio/mevera/menus/LotusExamplePlugin.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/studio/mevera/menus/LotusExamplePlugin.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/studio/mevera/menus/TutorialMenu.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/studio/mevera/menus/TutorialMenu.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/resources/plugin.yml" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/resources/plugin.yml" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -108,6 +115,7 @@
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
     "Gradle.Download Sources.executor": "Run",
+    "Gradle.Lotus [buildWithTest].executor": "Run",
     "Gradle.Lotus [publishToMavenLocal].executor": "Run",
     "ModuleVcsDetector.initialDetectionPerformed": "true",
     "RunOnceActivity.MCP Project settings loaded": "true",
@@ -132,7 +140,32 @@
       <recent name="D:\Projects 2025\Lotus\.github\workflows" />
     </key>
   </component>
-  <component name="RunManager">
+  <component name="RunManager" selected="Gradle.Lotus [buildWithTest]">
+    <configuration name="Lotus [buildWithTest]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value="buildWithTest" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <ExternalSystemDebugServerProcess>true</ExternalSystemDebugServerProcess>
+      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
+      <ExternalSystemDebugDisabled>false</ExternalSystemDebugDisabled>
+      <DebugAllEnabled>false</DebugAllEnabled>
+      <RunAsTest>false</RunAsTest>
+      <GradleProfilingDisabled>false</GradleProfilingDisabled>
+      <GradleCoverageDisabled>false</GradleCoverageDisabled>
+      <method v="2" />
+    </configuration>
     <configuration name="Lotus [publishToMavenLocal]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
       <ExternalSystemSettings>
         <option name="executionName" />
@@ -160,6 +193,7 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Gradle.Lotus [buildWithTest]" />
         <item itemvalue="Gradle.Lotus [publishToMavenLocal]" />
       </list>
     </recent_temporary>
@@ -235,7 +269,15 @@
       <option name="project" value="LOCAL" />
       <updated>1775084696065</updated>
     </task>
-    <option name="localTasksCounter" value="8" />
+    <task id="LOCAL-00008" summary="Update workspace.xml to reflect changes in TutorialMenu implementation and task summaries">
+      <option name="closed" value="true" />
+      <created>1775084994551</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1775084994551</updated>
+    </task>
+    <option name="localTasksCounter" value="9" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
@@ -246,7 +288,8 @@
     <MESSAGE value="Add GitHub Actions workflow for release automation and cleanup" />
     <MESSAGE value="Enhance ComponentItemBuilder with MiniMessage support and add TutorialMenu implementation" />
     <MESSAGE value="Add TutorialMenu implementation with interactive button for item giving" />
-    <option name="LAST_COMMIT_MESSAGE" value="Add TutorialMenu implementation with interactive button for item giving" />
+    <MESSAGE value="Update workspace.xml to reflect changes in TutorialMenu implementation and task summaries" />
+    <option name="LAST_COMMIT_MESSAGE" value="Update workspace.xml to reflect changes in TutorialMenu implementation and task summaries" />
   </component>
   <component name="github-copilot-workspace">
     <instructionFileLocations>

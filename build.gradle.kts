@@ -104,3 +104,14 @@ tasks.named<Delete>("clean") {
     delete("$projectDir/out")
     delete("$projectDir/bin")
 }
+
+tasks.register<com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar>("buildWithTest") {
+    archiveClassifier.set("")
+    archiveBaseName.set("lotus-${version}")
+    from(tasks.compileJava, tasks.compileTestJava)
+    from(tasks.processResources, tasks.processTestResources)
+    configurations = listOf(
+        project.configurations.testRuntimeClasspath.get()
+    )
+    dependsOn(tasks.compileJava, tasks.compileTestJava, tasks.processResources, tasks.processTestResources)
+}

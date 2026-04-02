@@ -5,6 +5,7 @@ import studio.mevera.menus.base.pagination.PageView;
 import studio.mevera.menus.misc.itembuilder.ItemBuilder;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
+import net.kyori.adventure.text.minimessage.MiniMessage;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryClickEvent;
@@ -18,7 +19,7 @@ public class ExampleMenuComponent implements PageComponent {
     }
     @Override
     public ItemStack toItem() {
-        return ItemBuilder.modern(Material.GRASS)
+        return ItemBuilder.modern(MiniMessage.miniMessage(), Material.GRASS)
                 .setDisplay(Component.text(name, NamedTextColor.GRAY)).build();
     }
  

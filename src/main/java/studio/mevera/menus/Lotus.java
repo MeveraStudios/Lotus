@@ -266,7 +266,7 @@ public final class Lotus {
 				return null;
 			});
 
-			if (menu == null) {
+			if (menu == null || clickedInventory == e.getView().getBottomInventory()) {
 				e.setCancelled(!Lotus.this.options.allowOutsideClick);
 				return;
 			}
@@ -278,16 +278,13 @@ public final class Lotus {
 				InventoryAction action = e.getAction();
 				Button button = menu.getContent().getButton(e.getSlot()).orElse(null);
 				if (isPickupAction(action) && button != null) {
-					System.out.println("IS PICKUP ACTION");
 					lastPickedUpButton = new Couple<>(e.getSlot(), button);
 				} else if (isPlaceAction(action) && lastPickedUpButton != null) {
-					System.out.println("PLACE ACTION");
 					int oldSlot = lastPickedUpButton.getLeft();
 					Button pickedUpButton = lastPickedUpButton.getRight();
 
 					menu.getContent().setButton(oldSlot, null);
 					menu.getContent().setButton(e.getSlot(), pickedUpButton);
-					System.out.println("NEW SLOT = " + e.getSlot() + ", OLD SLOT = " + oldSlot);
 					lastPickedUpButton = null;
 				}
 			}

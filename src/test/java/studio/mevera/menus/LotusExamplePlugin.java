@@ -82,7 +82,7 @@ public final class LotusExamplePlugin extends JavaPlugin implements CommandExecu
 	                         String label, String[] args) {
 
 		if(args.length == 0) {
-			lotus.openMenu((Player) sender, new ExampleMenu());
+			lotus.openMenu((Player) sender, new TutorialMenu());
 			return true;
 		}
 		if(args.length != 1) {
