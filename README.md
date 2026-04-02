@@ -22,7 +22,7 @@ This library depends mainly on the following :
 
 ## Links
 
-**Lotus Documentation:** https://mevera.studio/docs/Lotus/Introduction
+**Lotus Documentation:** https://mevera.studio/docs/Lotus/Introduction <br>
 **Discord:** https://discord.com/invite/ZwSF6xZFdU/
 
 ## Usage/Examples
