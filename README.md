@@ -13,60 +13,17 @@ Simple but yet powerful spigot menus api created using OOP principles
 - Menu Iterators
 - Highly Dynamic creation of menus
 
-## Documentation
-
-**Lotus Wiki:** https://github.com/Mqzn/Lotus/wiki
 
 ## Requirements
-
 This library depends mainly on the following :
 
 - Java 8
-- **_(OPTIONAL)_** [Adventure Components](https://docs.advntr.dev/getting-started.html) 
+- **_(OPTIONAL)_** [Adventure Components](https://docs.advntr.dev/getting-started.html)
 
-## Installation
+## Links
 
-Lotus API is being hosted on jitpack. Here's an example on how to setup
-Lotus dependency on your project.
-
-### Gradle
-
-If you're using Gradle as your build tool for your project, this is quick example how to add it as a dependency in
-your `build.gradle` file
-
-```groovy
-repositories {
-    mavenCentral()
-    maven { url 'https://jitpack.io' }
-}
-
-dependencies {
-    implementation 'com.github.Mqzn:Lotus:VERSION'
-}
-```
-
-### Maven
-
-if you're using maven, it's basically the same information regarding the API dependency but there will be small changes
-to the syntax as following:
-
-```xml
-<repositories>
-    <repository>
-        <id>jitpack.io</id>
-        <url>https://jitpack.io</url>
-    </repository>
-</repositories>
-
-<dependencies>
-    <dependency>
-        <groupId>com.github.mqzn</groupId>
-        <artifactId>Lotus</artifactId>
-        <version>VERSION</version>
-    </dependency>
-</dependencies>
-
-```
+**Lotus Documentation:** https://mevera.studio/docs/Lotus/Introduction
+**Discord:** https://discord.com/invite/ZwSF6xZFdU/
 
 ## Usage/Examples
 
@@ -74,7 +31,6 @@ There are currently no real examples, but you can be the first to contribute to 
 examples for other to be inspired by.
 
 If you want to add your example here, contact me via discord
-
 **Discord:** mqzen
 
 ## License
