@@ -1,6 +1,5 @@
 package studio.mevera.menus.base;
 
-import com.google.common.collect.Lists;
 import org.jetbrains.annotations.Nullable;
 import studio.mevera.menus.misc.Capacity;
 import studio.mevera.menus.misc.Slot;
@@ -74,7 +73,7 @@ final class MenuContentImpl implements Content {
 	
 	@Override
 	public Slots getItemSlots(ItemStack item) {
-		List<Slot> slots = Lists.newArrayList();
+		List<Slot> slots = new ArrayList<>();
 		for (Map.Entry<Slot, Button> buttonEntry : map.entrySet()) {
 			Slot slot = buttonEntry.getKey();
 			Button button = buttonEntry.getValue();

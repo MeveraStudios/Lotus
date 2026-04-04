@@ -4,10 +4,12 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="5627481f-164c-4877-8050-a073e3de7c6c" name="Changes" comment="modified spigot dependency for tests">
-      <change afterPath="$PROJECT_DIR$/src/main/java/studio/mevera/menus/util/Preconditions.java" afterDir="false" />
+    <list default="true" id="5627481f-164c-4877-8050-a073e3de7c6c" name="Changes" comment="Removed the use of apache's Preconditions">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/studio/mevera/menus/Lotus.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/studio/mevera/menus/Lotus.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/studio/mevera/menus/base/MenuContentImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/studio/mevera/menus/base/MenuContentImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/studio/mevera/menus/base/pagination/Pagination.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/studio/mevera/menus/base/pagination/Pagination.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/studio/mevera/menus/base/pagination/PaginationImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/studio/mevera/menus/base/pagination/PaginationImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/studio/mevera/menus/misc/Slot.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/studio/mevera/menus/misc/Slot.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -44,6 +46,12 @@
                 <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
                 <item name="Lotus" type="f1a62948:ProjectNode" />
                 <item name="Tasks" type="e4a08cd1:TasksNode" />
+              </path>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="Lotus" type="f1a62948:ProjectNode" />
+                <item name="Tasks" type="e4a08cd1:TasksNode" />
+                <item name="build" type="c8890929:TasksNode$1" />
               </path>
               <path>
                 <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
@@ -116,6 +124,7 @@
   "keyToString": {
     "Gradle.Download Sources.executor": "Run",
     "Gradle.Lotus [buildWithTest].executor": "Run",
+    "Gradle.Lotus [build].executor": "Run",
     "Gradle.Lotus [publishToMavenLocal].executor": "Run",
     "ModuleVcsDetector.initialDetectionPerformed": "true",
     "RunOnceActivity.MCP Project settings loaded": "true",
@@ -145,7 +154,7 @@
       <recent name="D:\Projects 2025\Lotus\.github\workflows" />
     </key>
   </component>
-  <component name="RunManager" selected="Gradle.Lotus [buildWithTest]">
+  <component name="RunManager" selected="Gradle.Lotus [build]">
     <configuration name="Lotus [buildWithTest]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
       <ExternalSystemSettings>
         <option name="executionName" />
@@ -158,6 +167,31 @@
         <option name="taskNames">
           <list>
             <option value="buildWithTest" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <ExternalSystemDebugServerProcess>true</ExternalSystemDebugServerProcess>
+      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
+      <ExternalSystemDebugDisabled>false</ExternalSystemDebugDisabled>
+      <DebugAllEnabled>false</DebugAllEnabled>
+      <RunAsTest>false</RunAsTest>
+      <GradleProfilingDisabled>false</GradleProfilingDisabled>
+      <GradleCoverageDisabled>false</GradleCoverageDisabled>
+      <method v="2" />
+    </configuration>
+    <configuration name="Lotus [build]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value="build" />
           </list>
         </option>
         <option name="vmOptions" />
@@ -198,6 +232,7 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Gradle.Lotus [build]" />
         <item itemvalue="Gradle.Lotus [buildWithTest]" />
         <item itemvalue="Gradle.Lotus [publishToMavenLocal]" />
       </list>
@@ -306,7 +341,15 @@
       <option name="project" value="LOCAL" />
       <updated>1775278148076</updated>
     </task>
-    <option name="localTasksCounter" value="12" />
+    <task id="LOCAL-00012" summary="Removed the use of apache's Preconditions">
+      <option name="closed" value="true" />
+      <created>1775278554265</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1775278554265</updated>
+    </task>
+    <option name="localTasksCounter" value="13" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -325,7 +368,8 @@
     <MESSAGE value="Add buildWithTest task and update TutorialMenu implementation" />
     <MESSAGE value="modified spigot dependency" />
     <MESSAGE value="modified spigot dependency for tests" />
-    <option name="LAST_COMMIT_MESSAGE" value="modified spigot dependency for tests" />
+    <MESSAGE value="Removed the use of apache's Preconditions" />
+    <option name="LAST_COMMIT_MESSAGE" value="Removed the use of apache's Preconditions" />
   </component>
   <component name="github-copilot-workspace">
     <instructionFileLocations>

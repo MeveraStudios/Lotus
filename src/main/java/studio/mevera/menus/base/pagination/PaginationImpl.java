@@ -1,6 +1,5 @@
 package studio.mevera.menus.base.pagination;
 
-import com.google.common.collect.Lists;
 import studio.mevera.menus.Lotus;
 import studio.mevera.menus.base.pagination.exception.InvalidPageException;
 import studio.mevera.menus.misc.Capacity;
@@ -16,7 +15,7 @@ class PaginationImpl implements Pagination {
 	
 	private final Lotus manager;
 	private final Page pageModel;
-	private final List<PageComponent> components = Lists.newArrayList();
+	private final List<PageComponent> components = new ArrayList<>();
 	private final Map<Integer, PageView> pages = new HashMap<>();
 	private int lastPage;
 	private final boolean automatic;

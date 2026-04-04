@@ -1,8 +1,9 @@
 package studio.mevera.menus.misc;
 
-import com.google.common.base.Objects;
 import lombok.Getter;
 import org.jetbrains.annotations.NotNull;
+
+import java.util.Objects;
 
 
 /**

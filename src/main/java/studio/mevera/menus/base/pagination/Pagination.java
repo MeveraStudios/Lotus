@@ -1,6 +1,5 @@
 package studio.mevera.menus.base.pagination;
 
-import com.google.common.collect.Lists;
 import studio.mevera.menus.Lotus;
 import studio.mevera.menus.base.pagination.exception.InvalidPageException;
 import studio.mevera.menus.misc.Capacity;
@@ -222,7 +221,7 @@ public interface Pagination {
 		public static class Automatic extends Builder {
 			
 			private boolean trimExtra = false;
-			private final LinkedList<PageComponent> components = Lists.newLinkedList();
+			private final LinkedList<PageComponent> components = new LinkedList<>();
 			private Page creator;
 			private PageComponentsProvider provider;
 			
