@@ -1,6 +1,5 @@
 package studio.mevera.menus;
 
-import com.google.common.base.Preconditions;
 import lombok.Data;
 import studio.mevera.menus.base.BaseMenuView;
 import studio.mevera.menus.base.Menu;
@@ -26,6 +25,8 @@ import org.bukkit.event.inventory.*;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.plugin.Plugin;
+import studio.mevera.menus.util.Preconditions;
+
 import java.util.*;
 
 /**
