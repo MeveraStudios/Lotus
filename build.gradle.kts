@@ -35,7 +35,9 @@ dependencies {
     compileOnly("net.kyori:adventure-platform-bukkit:4.3.4")
     compileOnly("net.kyori:adventure-text-minimessage:4.19.0")
 
-    compileOnly("org.spigotmc:spigot-api:1.8.8-R0.1-SNAPSHOT")
+    compileOnly("org.spigotmc:spigot-api:1.8.8-R0.1-SNAPSHOT") {
+        isTransitive = false
+    }
     compileOnly("org.projectlombok:lombok:1.18.34")
     annotationProcessor("org.projectlombok:lombok:1.18.34")
 
