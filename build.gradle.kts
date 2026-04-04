@@ -24,6 +24,12 @@ repositories {
     maven {
         url = uri("https://oss.sonatype.org/content/repositories/central")
     }
+    maven {
+        url = uri("https://repo.md-5.net/content/groups/public/")
+        content {
+            includeGroup("net.md-5")
+        }
+    }
 }
 
 dependencies {
@@ -46,7 +52,9 @@ dependencies {
     testCompileOnly("org.jetbrains:annotations:21.0.1")
     testImplementation("net.kyori:adventure-platform-bukkit:4.3.4")
     testImplementation("net.kyori:adventure-text-minimessage:4.19.0")
-    testCompileOnly("org.spigotmc:spigot-api:1.8.8-R0.1-SNAPSHOT")
+    testCompileOnly("org.spigotmc:spigot-api:1.8.8-R0.1-SNAPSHOT") {
+        isTransitive = false
+    }
 }
 
 mavenPublishing {

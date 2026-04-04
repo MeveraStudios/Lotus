@@ -4,7 +4,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="5627481f-164c-4877-8050-a073e3de7c6c" name="Changes" comment="Add buildWithTest task and update TutorialMenu implementation">
+    <list default="true" id="5627481f-164c-4877-8050-a073e3de7c6c" name="Changes" comment="modified spigot dependency">
+      <change beforePath="$PROJECT_DIR$/.idea/material_theme_project_new.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/material_theme_project_new.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -16,6 +17,9 @@
     <persistenceIdMap>
       <entry key="_D:/Projects 2025/Lotus" value="3B6Bvv6qKP7GWmMYqijTDtHRufv" />
     </persistenceIdMap>
+  </component>
+  <component name="EmbeddingIndexingInfo">
+    <option name="cachedIndexableFilesCount" value="175" />
   </component>
   <component name="ExternalProjectsData">
     <projectState path="$PROJECT_DIR$">
@@ -285,7 +289,15 @@
       <option name="project" value="LOCAL" />
       <updated>1775088775457</updated>
     </task>
-    <option name="localTasksCounter" value="10" />
+    <task id="LOCAL-00010" summary="modified spigot dependency">
+      <option name="closed" value="true" />
+      <created>1775271442114</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1775271442114</updated>
+    </task>
+    <option name="localTasksCounter" value="11" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -302,7 +314,8 @@
     <MESSAGE value="Update workspace.xml to reflect changes in TutorialMenu implementation and task summaries" />
     <MESSAGE value="Enhance TutorialMenu with improved welcome message and capacity, update ExampleMenuComponent to use MiniMessage, and add buildWithTest task in Gradle" />
     <MESSAGE value="Add buildWithTest task and update TutorialMenu implementation" />
-    <option name="LAST_COMMIT_MESSAGE" value="Add buildWithTest task and update TutorialMenu implementation" />
+    <MESSAGE value="modified spigot dependency" />
+    <option name="LAST_COMMIT_MESSAGE" value="modified spigot dependency" />
   </component>
   <component name="github-copilot-workspace">
     <instructionFileLocations>

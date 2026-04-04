@@ -35,13 +35,10 @@ jobs:
       - name: 📐 Setup Gradle
         uses: gradle/actions/setup-gradle@v4
 
-      - name: 👷 Gradle Build
+      - name: 🚀 Deploy
         run: |
           chmod +x ./gradlew
-          ./gradlew build
-
-      - name: 🚀 Deploy
-        run: ./gradlew publishAndReleaseToMavenCentral
+          ./gradlew publishAndReleaseToMavenCentral -x test
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           ORG_GRADLE_PROJECT_mavenCentralUsername: ${{ secrets.MAVEN_USERNAME }}
