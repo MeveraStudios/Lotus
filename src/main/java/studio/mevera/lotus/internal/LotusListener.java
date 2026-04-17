@@ -109,8 +109,8 @@ public final class LotusListener implements Listener {
 
         if (!isPlaceAction(action) || lastPickedUpButton == null) return;
 
-        Slot oldSlot = lastPickedUpButton.left();
-        Button pickedUpButton = lastPickedUpButton.right();
+        Slot oldSlot = Objects.requireNonNull(lastPickedUpButton).left();
+        Button pickedUpButton = Objects.requireNonNull(lastPickedUpButton).right();
 
         view.content().set(oldSlot, null);
         view.content().set(clickedSlot, pickedUpButton);

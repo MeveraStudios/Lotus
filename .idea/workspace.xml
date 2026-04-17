@@ -4,21 +4,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="5627481f-164c-4877-8050-a073e3de7c6c" name="Changes" comment="Added the dynamicButton Option back">
-      <change beforePath="$PROJECT_DIR$/src/main/java/studio/mevera/lotus/api/button/ClickAction.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/studio/mevera/lotus/api/button/ClickAction.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/studio/mevera/lotus/api/content/Content.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/studio/mevera/lotus/api/content/Content.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/studio/mevera/lotus/api/content/ContentEditor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/studio/mevera/lotus/api/content/ContentEditor.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/studio/mevera/lotus/api/content/ContentView.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/studio/mevera/lotus/api/content/ContentView.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/studio/mevera/lotus/api/menu/InteractiveMenu.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/studio/mevera/lotus/api/menu/InteractiveMenu.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/studio/mevera/lotus/api/menu/Menu.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/studio/mevera/lotus/api/menu/Menu.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/studio/mevera/lotus/api/menu/MenuHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/studio/mevera/lotus/api/menu/MenuHandler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/studio/mevera/lotus/api/menu/MenuView.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/studio/mevera/lotus/api/menu/MenuView.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/studio/mevera/lotus/api/pagination/ComponentRenderer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/studio/mevera/lotus/api/pagination/ComponentRenderer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/studio/mevera/lotus/api/pagination/ContentSource.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/studio/mevera/lotus/api/pagination/ContentSource.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/studio/mevera/lotus/api/pagination/PageLayout.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/studio/mevera/lotus/api/pagination/PageLayout.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/studio/mevera/lotus/api/pagination/PaginationSession.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/studio/mevera/lotus/api/pagination/PaginationSession.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/studio/mevera/lotus/internal/menu/BaseMenuView.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/studio/mevera/lotus/internal/menu/BaseMenuView.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/studio/mevera/lotus/spi/opener/ViewOpener.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/studio/mevera/lotus/spi/opener/ViewOpener.java" afterDir="false" />
+    <list default="true" id="5627481f-164c-4877-8050-a073e3de7c6c" name="Changes" comment="Fixed CycleButton so that its mutations propagate to the actual Bukkit inventory immediately, Added java docs.">
+      <change beforePath="$PROJECT_DIR$/src/main/java/studio/mevera/lotus/internal/LotusListener.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/studio/mevera/lotus/internal/LotusListener.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -374,7 +361,15 @@
       <option name="project" value="LOCAL" />
       <updated>1776385416022</updated>
     </task>
-    <option name="localTasksCounter" value="15" />
+    <task id="LOCAL-00015" summary="Fixed CycleButton so that its mutations propagate to the actual Bukkit inventory immediately, Added java docs.">
+      <option name="closed" value="true" />
+      <created>1776421400520</created>
+      <option name="number" value="00015" />
+      <option name="presentableId" value="LOCAL-00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1776421400520</updated>
+    </task>
+    <option name="localTasksCounter" value="16" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -397,7 +392,8 @@
     <MESSAGE value="Fixed build errors" />
     <MESSAGE value="Revamp for v2" />
     <MESSAGE value="Added the dynamicButton Option back" />
-    <option name="LAST_COMMIT_MESSAGE" value="Added the dynamicButton Option back" />
+    <MESSAGE value="Fixed CycleButton so that its mutations propagate to the actual Bukkit inventory immediately, Added java docs." />
+    <option name="LAST_COMMIT_MESSAGE" value="Fixed CycleButton so that its mutations propagate to the actual Bukkit inventory immediately, Added java docs." />
   </component>
   <component name="github-copilot-workspace">
     <instructionFileLocations>
