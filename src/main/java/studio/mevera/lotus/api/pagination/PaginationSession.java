@@ -4,31 +4,62 @@ import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
 /**
- * Per-player runtime of a {@link Pagination}. Owns the snapshot of source items, current page
- * index, and navigation methods. Created via {@link Pagination#open(studio.mevera.lotus.Lotus, Player)}.
+ * Live pagination state for one player.
+ * <p>
+ * A session tracks the current page and opens page menus as the player navigates.
  */
 public interface PaginationSession<T> {
 
+    /**
+     * Returns the shared pagination definition.
+     */
     @NotNull Pagination<T> definition();
 
+    /**
+     * Returns the player viewing this session.
+     */
     @NotNull Player viewer();
 
+    /**
+     * Returns the current page index.
+     */
     int currentIndex();
 
+    /**
+     * Returns the total number of pages.
+     */
     int totalPages();
 
+    /**
+     * Opens the next page when possible.
+     */
     void next();
 
+    /**
+     * Opens the previous page when possible.
+     */
     void previous();
 
+    /**
+     * Opens the given page index.
+     */
     void goTo(int pageIndex);
 
+    /**
+     * Closes the session and the viewer's inventory.
+     */
     void close();
 
+    /**
+     * Returns whether the current page is the first page.
+     */
     default boolean isFirst() {
         return currentIndex() == 0;
     }
 
+    /**
+     * Returns whether the current page is the last page.
+     */
     default boolean isLast() {
         return currentIndex() == totalPages() - 1;
     }

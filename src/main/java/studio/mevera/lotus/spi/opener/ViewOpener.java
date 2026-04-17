@@ -6,11 +6,14 @@ import studio.mevera.lotus.Lotus;
 import studio.mevera.lotus.api.menu.MenuView;
 
 /**
- * Strategy for materialising a {@link MenuView} into a Bukkit {@link Inventory}. Registered per
- * {@link org.bukkit.event.inventory.InventoryType} on the {@link Lotus} facade; the default
- * implementation handles chest-style and fixed-layout types.
+ * Opens a {@link MenuView} as a Bukkit {@link Inventory}.
+ * <p>
+ * Different inventory types may use different opener implementations.
  */
 public interface ViewOpener {
 
+    /**
+     * Creates and opens the inventory for the given view.
+     */
     @NotNull Inventory open(@NotNull Lotus lotus, @NotNull MenuView<?> view);
 }

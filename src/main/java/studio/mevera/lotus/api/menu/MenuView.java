@@ -13,38 +13,65 @@ import studio.mevera.lotus.api.data.DataRegistry;
 import studio.mevera.lotus.api.slot.Capacity;
 
 /**
- * A live, per-player projection of a {@link Menu}. Holds the inventory, content, and per-view
- * data; routes events to the underlying menu (and its {@link MenuHandler} if present).
+ * Live view of a {@link Menu} for one player.
+ * <p>
+ * A menu view holds the resolved inventory state, content, and per-view data.
  *
- * @param <M> the menu template type
+ * @param <M> the menu type
  */
 public interface MenuView<M extends Menu> extends InventoryHolder {
 
+    /**
+     * Returns the Lotus runtime that owns this view.
+     */
     @NotNull Lotus lotus();
 
+    /**
+     * Returns the menu template behind this view.
+     */
     @NotNull M menu();
 
+    /**
+     * Returns the player viewing this menu.
+     */
     @NotNull Player viewer();
 
+    /**
+     * Returns the per-view data registry.
+     */
     @NotNull DataRegistry data();
 
+    /**
+     * Returns the current content.
+     */
     @NotNull Content content();
 
+    /**
+     * Returns the resolved title.
+     */
     @NotNull Component title();
 
+    /**
+     * Returns the resolved capacity.
+     */
     @NotNull Capacity capacity();
 
     @Override
     @Nullable Inventory getInventory();
 
+    /**
+     * Returns whether the view is currently open.
+     */
     boolean isOpen();
 
     /**
-     * Re-renders the view from the menu template. Discards the current content, rebuilds it via
-     * {@link Menu#content(MenuView)}, and re-paints the underlying inventory in place.
+     * Rebuilds the content from the menu and repaints the inventory.
      */
     void refresh();
 
+    /**
+     * Returns the inventory type used by this view.
+     */
     default @NotNull InventoryType type() {
         return menu().type();
     }

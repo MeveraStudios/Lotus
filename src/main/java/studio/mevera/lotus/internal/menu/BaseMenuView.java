@@ -92,7 +92,10 @@ public class BaseMenuView<M extends Menu> implements MenuView<M> {
     public void handleClick(@NotNull InventoryClickEvent event) {
         if (handler() instanceof MenuHandler h && !h.onPreClick(this, event)) return;
         Slot slot = Slot.of(event.getSlot());
-        content().get(slot).ifPresent(button -> dispatchButton(button, event));
+        content().get(slot).ifPresent(button -> {
+            dispatchButton(button, event);
+            repaint();
+        });
         if (handler() instanceof MenuHandler h) h.onPostClick(this, event);
     }
 

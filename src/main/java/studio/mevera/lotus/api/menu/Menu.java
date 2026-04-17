@@ -7,24 +7,37 @@ import studio.mevera.lotus.api.content.Content;
 import studio.mevera.lotus.api.slot.Capacity;
 
 /**
- * Declarative template for a menu. Implementations supply title, capacity and content for a given
- * {@link MenuView}. Stateless by convention — per-view state belongs in {@code view.data()}.
+ * Defines the layout of a menu.
  * <p>
- * For lifecycle hooks (open/close/click), additionally implement {@link MenuHandler} or extend
- * {@link InteractiveMenu}.
+ * A menu describes its title, size, and content for a specific {@link MenuView}.
  */
 public interface Menu {
 
+    /**
+     * Returns the title for the current view.
+     */
     @NotNull Component title(@NotNull MenuView<?> view);
 
+    /**
+     * Returns the capacity for the current view.
+     */
     @NotNull Capacity capacity(@NotNull MenuView<?> view);
 
+    /**
+     * Builds the content for the current view.
+     */
     @NotNull Content content(@NotNull MenuView<?> view);
 
+    /**
+     * Returns the menu name used for registration and logging.
+     */
     default @NotNull String name() {
         return getClass().getSimpleName();
     }
 
+    /**
+     * Returns the Bukkit inventory type used by this menu.
+     */
     default @NotNull InventoryType type() {
         return InventoryType.CHEST;
     }

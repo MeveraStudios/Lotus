@@ -4,11 +4,13 @@ import org.jetbrains.annotations.NotNull;
 import studio.mevera.lotus.api.button.Button;
 
 /**
- * Maps a domain object to a {@link Button} for placement within a page. Replaces the legacy
- * {@code PageComponent} pair of {@code toItem()} / {@code onClick()}.
+ * Converts one page item into a {@link Button}.
  */
 @FunctionalInterface
 public interface ComponentRenderer<T> {
 
+    /**
+     * Creates the button to show for the given item.
+     */
     @NotNull Button render(@NotNull T item, @NotNull PageContext context);
 }
