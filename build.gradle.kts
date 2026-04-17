@@ -1,68 +1,62 @@
 plugins {
     java
-    id("com.vanniktech.maven.publish") version "0.29.0" // Note: 0.33.0 is not a valid version, latest is 0.29.0
+    `java-library`
+    id("com.vanniktech.maven.publish") version "0.29.0"
     id("com.gradleup.shadow") version "8.3.2"
 }
 
 group = "studio.mevera"
 version = "2.0.0"
 
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(25)
+    }
+    withSourcesJar()
+    withJavadocJar()
+}
+
 repositories {
-    gradlePluginPortal()
     mavenCentral()
-    mavenLocal()
+    maven("https://repo.papermc.io/repository/maven-public/")
     maven {
-        url = uri("https://hub.spigotmc.org/nexus/content/repositories/snapshots/")
-        content {
-            includeGroup("org.bukkit")
-            includeGroup("org.spigotmc")
-        }
-    }
-    maven {
-        url = uri("https://oss.sonatype.org/content/repositories/snapshots")
-    }
-    maven {
-        url = uri("https://oss.sonatype.org/content/repositories/central")
-    }
-    maven {
-        url = uri("https://repo.md-5.net/content/groups/public/")
-        content {
-            includeGroup("net.md-5")
-        }
+        name = "papermc"
+        url = uri("https://repo.papermc.io/repository/maven-public/")
     }
 }
 
 dependencies {
-    compileOnly("org.projectlombok:lombok:1.18.36")
-    annotationProcessor("org.projectlombok:lombok:1.18.36")
+    compileOnly("io.papermc.paper:paper-api:26.1.2.build.+")
+    compileOnly("org.jetbrains:annotations:26.0.2")
 
-    compileOnly("org.jetbrains:annotations:21.0.1")
+    testCompileOnly("io.papermc.paper:paper-api:26.1.2")
+    testCompileOnly("org.jetbrains:annotations:26.0.2")
+}
 
-    compileOnly("net.kyori:adventure-platform-bukkit:4.3.4")
-    compileOnly("net.kyori:adventure-text-minimessage:4.19.0")
+tasks.withType<JavaCompile>().configureEach {
+    options.encoding = "UTF-8"
+    options.release = 25
+    options.compilerArgs.addAll(listOf("-Xlint:all", "-Xlint:-serial", "-parameters"))
+}
 
-    compileOnly("org.spigotmc:spigot-api:1.8.8-R0.1-SNAPSHOT") {
-        isTransitive = false
-    }
-    compileOnly("org.projectlombok:lombok:1.18.34")
-    annotationProcessor("org.projectlombok:lombok:1.18.34")
+tasks.withType<Javadoc>().configureEach {
+    val opts = options as StandardJavadocDocletOptions
+    opts.addBooleanOption("html5", true)
+    opts.addStringOption("Xdoclint:none", "-quiet")
+    opts.encoding = "UTF-8"
+    opts.source = "25"
+    exclude("**/internal/**")
+}
 
-    testCompileOnly("org.projectlombok:lombok:1.18.34")
-    testAnnotationProcessor("org.projectlombok:lombok:1.18.34")
-    testCompileOnly("org.jetbrains:annotations:21.0.1")
-    testImplementation("net.kyori:adventure-platform-bukkit:4.3.4")
-    testImplementation("net.kyori:adventure-text-minimessage:4.19.0")
-    testCompileOnly("org.spigotmc:spigot-api:1.8.8-R0.1-SNAPSHOT") {
-        isTransitive = false
-    }
+tasks.named<Delete>("clean") {
+    delete("$projectDir/out", "$projectDir/bin")
 }
 
 mavenPublishing {
     coordinates(group.toString(), "lotus", version.toString())
-
     pom {
         name.set("Lotus")
-        description.set("A modern customizable scoreboard library for spigot development.")
+        description.set("A modern, type-safe Paper menu framework.")
         inceptionYear.set("2026")
         url.set("https://github.com/MeveraStudios/Lotus/")
         licenses {
@@ -80,48 +74,13 @@ mavenPublishing {
             }
         }
         scm {
-            url.set("https://github.com/MeveraStudios/Scofi/")
+            url.set("https://github.com/MeveraStudios/Lotus/")
             connection.set("scm:git:git://github.com/MeveraStudios/Lotus.git")
             developerConnection.set("scm:git:ssh://git@github.com/MeveraStudios/Lotus.git")
         }
     }
-
-    if (!gradle.startParameter.taskNames.any { it == "publishToMavenLocal" }) {
+    if (gradle.startParameter.taskNames.none { it == "publishToMavenLocal" }) {
         publishToMavenCentral(com.vanniktech.maven.publish.SonatypeHost.CENTRAL_PORTAL)
         signAllPublications()
     }
-}
-
-
-// Javadoc configuration for Java 17
-tasks.withType<Javadoc> {
-    if (JavaVersion.current().isJava9Compatible) {
-        val options = options as StandardJavadocDocletOptions
-        options.addBooleanOption("html5", true)
-        options.addStringOption("Xdoclint:none", "-quiet")
-    }
-
-    // Set source compatibility for javadoc
-    options.source = "17"
-
-    // Exclude implementation packages from javadoc
-    exclude("**/impl/**")
-    exclude("**/internal/**")
-}
-
-// Clean task enhancement
-tasks.named<Delete>("clean") {
-    delete("$projectDir/out")
-    delete("$projectDir/bin")
-}
-
-tasks.register<com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar>("buildWithTest") {
-    archiveClassifier.set("")
-    archiveBaseName.set("lotus-${version}")
-    from(tasks.compileJava, tasks.compileTestJava)
-    from(tasks.processResources, tasks.processTestResources)
-    configurations = listOf(
-        project.configurations.testRuntimeClasspath.get()
-    )
-    dependsOn(tasks.compileJava, tasks.compileTestJava, tasks.processResources, tasks.processTestResources)
 }

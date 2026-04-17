@@ -4,12 +4,115 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="5627481f-164c-4877-8050-a073e3de7c6c" name="Changes" comment="Removed the use of apache's Preconditions">
+    <list default="true" id="5627481f-164c-4877-8050-a073e3de7c6c" name="Changes" comment="Fixed build errors">
+      <change afterPath="$PROJECT_DIR$/src/main/java/studio/mevera/lotus/Lotus.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/studio/mevera/lotus/LotusBuilder.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/studio/mevera/lotus/api/button/Button.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/studio/mevera/lotus/api/button/ClickAction.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/studio/mevera/lotus/api/button/ClickableButton.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/studio/mevera/lotus/api/button/StaticButton.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/studio/mevera/lotus/api/button/TransformingButton.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/studio/mevera/lotus/api/content/Content.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/studio/mevera/lotus/api/content/ContentBuilder.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/studio/mevera/lotus/api/content/ContentEditor.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/studio/mevera/lotus/api/content/ContentView.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/studio/mevera/lotus/api/data/DataRegistry.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/studio/mevera/lotus/api/data/Key.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/studio/mevera/lotus/api/menu/InteractiveMenu.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/studio/mevera/lotus/api/menu/Menu.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/studio/mevera/lotus/api/menu/MenuHandler.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/studio/mevera/lotus/api/menu/MenuView.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/studio/mevera/lotus/api/pagination/ComponentRenderer.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/studio/mevera/lotus/api/pagination/ContentSource.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/studio/mevera/lotus/api/pagination/PageContext.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/studio/mevera/lotus/api/pagination/PageLayout.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/studio/mevera/lotus/api/pagination/PageLayoutBuilder.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/studio/mevera/lotus/api/pagination/Pagination.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/studio/mevera/lotus/api/pagination/PaginationSession.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/studio/mevera/lotus/api/slot/Capacity.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/studio/mevera/lotus/api/slot/Direction.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/studio/mevera/lotus/api/slot/Slot.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/studio/mevera/lotus/api/slot/SlotIterator.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/studio/mevera/lotus/api/slot/SlotMask.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/studio/mevera/lotus/api/util/Pair.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/studio/mevera/lotus/internal/LotusListener.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/studio/mevera/lotus/internal/LotusLogger.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/studio/mevera/lotus/internal/content/DefaultContent.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/studio/mevera/lotus/internal/menu/BaseMenuView.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/studio/mevera/lotus/internal/opener/DefaultViewOpener.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/studio/mevera/lotus/internal/pagination/DefaultPaginationSession.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/studio/mevera/lotus/spi/opener/ViewOpener.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/studio/mevera/menus/base/MenuContentImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/studio/mevera/menus/base/MenuContentImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/studio/mevera/menus/base/pagination/Pagination.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/studio/mevera/menus/base/pagination/Pagination.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/studio/mevera/menus/base/pagination/PaginationImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/studio/mevera/menus/base/pagination/PaginationImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/studio/mevera/menus/misc/Slot.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/studio/mevera/menus/misc/Slot.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build.gradle.kts" beforeDir="false" afterPath="$PROJECT_DIR$/build.gradle.kts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/studio/mevera/menus/FieldAccessor.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/studio/mevera/menus/Lotus.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/studio/mevera/menus/LotusBuilder.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/studio/mevera/menus/LotusDebugger.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/studio/mevera/menus/MenuUpdateTask.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/studio/mevera/menus/Reflections.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/studio/mevera/menus/base/BaseMenuView.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/studio/mevera/menus/base/Content.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/studio/mevera/menus/base/Menu.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/studio/mevera/menus/base/MenuContentImpl.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/studio/mevera/menus/base/MenuView.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/studio/mevera/menus/base/ViewOpener.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/studio/mevera/menus/base/animation/AnimatedButton.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/studio/mevera/menus/base/animation/AnimationTaskData.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/studio/mevera/menus/base/animation/ButtonAnimationTask.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/studio/mevera/menus/base/animation/TransformingButton.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/studio/mevera/menus/base/iterator/Direction.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/studio/mevera/menus/base/iterator/SlotIterator.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/studio/mevera/menus/base/pagination/FillRange.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/studio/mevera/menus/base/pagination/Page.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/studio/mevera/menus/base/pagination/PageComponent.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/studio/mevera/menus/base/pagination/PageComponentsProvider.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/studio/mevera/menus/base/pagination/PageView.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/studio/mevera/menus/base/pagination/PageViewFactory.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/studio/mevera/menus/base/pagination/Pagination.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/studio/mevera/menus/base/pagination/PaginationImpl.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/studio/mevera/menus/base/pagination/exception/InvalidPageException.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/studio/mevera/menus/base/serialization/MenuSerializer.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/studio/mevera/menus/base/serialization/SerializableMenu.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/studio/mevera/menus/base/serialization/SerializedMenuIO.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/studio/mevera/menus/base/serialization/SimpleMenuSerializer.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/studio/mevera/menus/base/serialization/impl/SerializedMenuYaml.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/studio/mevera/menus/base/style/Pane.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/studio/mevera/menus/base/style/TextLayout.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/studio/mevera/menus/base/style/TextLayoutPane.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/studio/mevera/menus/base/style/TextLayoutProvider.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/studio/mevera/menus/misc/Capacity.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/studio/mevera/menus/misc/DataRegistry.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/studio/mevera/menus/misc/Slot.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/studio/mevera/menus/misc/Slots.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/studio/mevera/menus/misc/ViewData.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/studio/mevera/menus/misc/button/Button.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/studio/mevera/menus/misc/button/ButtonCondition.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/studio/mevera/menus/misc/button/ButtonUpdater.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/studio/mevera/menus/misc/button/actions/ButtonActionRegistry.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/studio/mevera/menus/misc/button/actions/ButtonClickAction.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/studio/mevera/menus/misc/button/actions/ButtonClickActions.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/studio/mevera/menus/misc/button/actions/impl/CloseMenuAction.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/studio/mevera/menus/misc/button/actions/impl/OpenMenuAction.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/studio/mevera/menus/misc/itembuilder/ComponentItemBuilder.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/studio/mevera/menus/misc/itembuilder/ItemBuilder.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/studio/mevera/menus/misc/itembuilder/LegacyItemBuilder.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/studio/mevera/menus/openers/DefaultViewOpener.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/studio/mevera/menus/titles/LegacyTitle.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/studio/mevera/menus/titles/MenuTitle.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/studio/mevera/menus/titles/MenuTitles.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/studio/mevera/menus/titles/ModernTitle.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/studio/mevera/menus/util/Couple.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/studio/mevera/menus/util/InventoryUtil.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/studio/mevera/menus/util/Preconditions.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/studio/mevera/menus/ExampleAutoAnimatedButton.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/studio/mevera/menus/ExampleAutoPage.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/studio/mevera/menus/ExampleMenu.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/studio/mevera/menus/ExampleMenu2.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/studio/mevera/menus/ExampleMenuComponent.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/studio/mevera/menus/ExamplePlainPage.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/studio/mevera/menus/LotusExamplePlugin.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/studio/mevera/menus/TutorialMenu.java" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -135,7 +238,7 @@
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
     "codeWithMe.voiceChat.enabledByDefault": "false",
     "dart.analysis.tool.window.visible": "false",
-    "git-widget-placeholder": "master",
+    "git-widget-placeholder": "v2",
     "ignore.virus.scanning.warn.message": "true",
     "kotlin-language-version-configured": "true",
     "last_opened_file_path": "D:/Projects 2025/Lotus/.github/workflows",
