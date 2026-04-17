@@ -1,6 +1,5 @@
 plugins {
     java
-    `java-library`
     id("com.vanniktech.maven.publish") version "0.29.0"
     id("com.gradleup.shadow") version "8.3.2"
 }
@@ -10,10 +9,10 @@ version = "2.0.0"
 
 java {
     toolchain {
-        languageVersion = JavaLanguageVersion.of(25)
+        languageVersion = JavaLanguageVersion.of(21)
     }
     withSourcesJar()
-    withJavadocJar()
+    //withJavadocJar()
 }
 
 repositories {
@@ -25,27 +24,15 @@ repositories {
 }
 
 dependencies {
-    compileOnly("io.papermc.paper:paper-api:26.1.2.build.+")
+    compileOnly("io.papermc.paper:paper-api:1.21.11-R0.1-SNAPSHOT")
     compileOnly("org.jetbrains:annotations:26.0.2")
-
-    testCompileOnly("io.papermc.paper:paper-api:26.1.2")
-    testCompileOnly("org.jetbrains:annotations:26.0.2")
 }
 
-tasks.withType<JavaCompile>().configureEach {
-    options.encoding = "UTF-8"
-    options.release = 25
-    options.compilerArgs.addAll(listOf("-Xlint:all", "-Xlint:-serial", "-parameters"))
+tasks.test {
+    useJUnitPlatform()
+    jvmArgs("-XX:+EnableDynamicAgentLoading")
 }
 
-tasks.withType<Javadoc>().configureEach {
-    val opts = options as StandardJavadocDocletOptions
-    opts.addBooleanOption("html5", true)
-    opts.addStringOption("Xdoclint:none", "-quiet")
-    opts.encoding = "UTF-8"
-    opts.source = "25"
-    exclude("**/internal/**")
-}
 
 tasks.named<Delete>("clean") {
     delete("$projectDir/out", "$projectDir/bin")
