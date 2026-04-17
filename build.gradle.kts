@@ -18,7 +18,6 @@ java {
 
 repositories {
     mavenCentral()
-    maven("https://repo.papermc.io/repository/maven-public/")
     maven {
         name = "papermc"
         url = uri("https://repo.papermc.io/repository/maven-public/")
@@ -56,7 +55,7 @@ mavenPublishing {
     coordinates(group.toString(), "lotus", version.toString())
     pom {
         name.set("Lotus")
-        description.set("A modern, type-safe Paper menu framework.")
+        description.set("A modern, type-safe Paper GUI framework.")
         inceptionYear.set("2026")
         url.set("https://github.com/MeveraStudios/Lotus/")
         licenses {
