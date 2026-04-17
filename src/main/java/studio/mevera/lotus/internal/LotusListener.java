@@ -4,6 +4,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
+import org.bukkit.event.inventory.InventoryAction;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.event.inventory.InventoryDragEvent;
@@ -11,8 +12,12 @@ import org.bukkit.event.inventory.InventoryOpenEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.inventory.Inventory;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import studio.mevera.lotus.Lotus;
+import studio.mevera.lotus.api.button.Button;
 import studio.mevera.lotus.api.menu.MenuView;
+import studio.mevera.lotus.api.slot.Slot;
+import studio.mevera.lotus.api.util.Pair;
 import studio.mevera.lotus.internal.menu.BaseMenuView;
 
 import java.util.Objects;
@@ -24,6 +29,7 @@ import java.util.Objects;
 public final class LotusListener implements Listener {
 
     private final Lotus lotus;
+    private volatile @Nullable Pair<Slot, Button> lastPickedUpButton;
 
     public LotusListener(@NotNull Lotus lotus) {
         this.lotus = Objects.requireNonNull(lotus);
@@ -41,6 +47,7 @@ public final class LotusListener implements Listener {
             return;
         }
         event.setCancelled(true);
+        handleDynamicButtonAction(view, event);
         if (view instanceof BaseMenuView<?> base) base.handleClick(event);
     }
 
@@ -86,5 +93,46 @@ public final class LotusListener implements Listener {
             return holder;
         }
         return null;
+    }
+
+    private void handleDynamicButtonAction(@NotNull MenuView<?> view, @NotNull InventoryClickEvent event) {
+        if (!lotus.options().dynamicButtonAction()) return;
+
+        InventoryAction action = event.getAction();
+        Slot clickedSlot = Slot.of(event.getSlot());
+        Button button = view.content().get(clickedSlot).orElse(null);
+
+        if (isPickupAction(action) && button != null) {
+            lastPickedUpButton = Pair.of(clickedSlot, button);
+            return;
+        }
+
+        if (!isPlaceAction(action) || lastPickedUpButton == null) return;
+
+        Slot oldSlot = lastPickedUpButton.left();
+        Button pickedUpButton = lastPickedUpButton.right();
+
+        view.content().set(oldSlot, null);
+        view.content().set(clickedSlot, pickedUpButton);
+
+        Inventory inventory = view.getInventory();
+        if (inventory != null) {
+            inventory.setItem(oldSlot.index(), null);
+            inventory.setItem(clickedSlot.index(), pickedUpButton.item());
+        }
+        lastPickedUpButton = null;
+    }
+
+    private static boolean isPickupAction(@NotNull InventoryAction action) {
+        return action == InventoryAction.PICKUP_ONE
+            || action == InventoryAction.PICKUP_SOME
+            || action == InventoryAction.PICKUP_HALF
+            || action == InventoryAction.PICKUP_ALL;
+    }
+
+    private static boolean isPlaceAction(@NotNull InventoryAction action) {
+        return action == InventoryAction.PLACE_ONE
+            || action == InventoryAction.PLACE_SOME
+            || action == InventoryAction.PLACE_ALL;
     }
 }

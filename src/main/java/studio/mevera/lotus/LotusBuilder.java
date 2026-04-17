@@ -13,6 +13,7 @@ public final class LotusBuilder {
 
     private final Plugin plugin;
     private boolean allowBottomInventoryClick = true;
+    private boolean dynamicButtonAction = false;
     private boolean debug = false;
 
     LotusBuilder(@NotNull Plugin plugin) {
@@ -24,12 +25,17 @@ public final class LotusBuilder {
         return this;
     }
 
+    public @NotNull LotusBuilder dynamicButtonAction(boolean dynamic) {
+        this.dynamicButtonAction = dynamic;
+        return this;
+    }
+
     public @NotNull LotusBuilder debug(boolean debug) {
         this.debug = debug;
         return this;
     }
 
     public @NotNull Lotus build() {
-        return new Lotus(plugin, new Lotus.Options(allowBottomInventoryClick, debug));
+        return new Lotus(plugin, new Lotus.Options(allowBottomInventoryClick, dynamicButtonAction, debug));
     }
 }

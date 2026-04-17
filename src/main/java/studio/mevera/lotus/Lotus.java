@@ -124,10 +124,10 @@ public final class Lotus {
     /**
      * Immutable runtime configuration.
      */
-    public record Options(boolean allowBottomInventoryClick, boolean debug) {
+    public record Options(boolean allowBottomInventoryClick, boolean dynamicButtonAction, boolean debug) {
 
         public static @NotNull Options defaults() {
-            return new Options(true, false);
+            return new Options(true, false, false);
         }
     }
 }
