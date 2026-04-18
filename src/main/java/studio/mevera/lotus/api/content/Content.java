@@ -1,8 +1,12 @@
 package studio.mevera.lotus.api.content;
 
 import org.jetbrains.annotations.NotNull;
+import studio.mevera.lotus.api.button.Button;
 import studio.mevera.lotus.api.slot.Capacity;
+import studio.mevera.lotus.api.slot.Slot;
 import studio.mevera.lotus.internal.content.DefaultContent;
+
+import java.util.Optional;
 
 /**
  * Full read-write content for a menu.
@@ -23,6 +27,15 @@ public interface Content extends ContentView, ContentEditor {
      * Removes extra buttons after the given limit is reached.
      */
     void trimTo(int maxButtons);
+
+    /**
+     * Places the button into the first empty slot, returning that slot if one was found.
+     */
+    default @NotNull Optional<Slot> add(@NotNull Button button) {
+        Optional<Slot> target = nextEmpty(Slot.of(0));
+        target.ifPresent(slot -> set(slot, button));
+        return target;
+    }
 
     /**
      * Creates an empty content object for the given capacity.
