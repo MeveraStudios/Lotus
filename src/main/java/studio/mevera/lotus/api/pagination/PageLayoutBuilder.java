@@ -1,6 +1,9 @@
 package studio.mevera.lotus.api.pagination;
 
 import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.format.NamedTextColor;
+import org.bukkit.Material;
+import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
 import studio.mevera.lotus.api.button.Button;
 import studio.mevera.lotus.api.content.Content;
@@ -29,7 +32,17 @@ public final class PageLayoutBuilder {
     PageLayoutBuilder(@NotNull Capacity capacity) {
         this.capacity = capacity;
         this.previousSlot = Slot.at(capacity.rows() - 1, 0, capacity);
+
+        ItemStack previousPageItem = ItemStack.of(Material.ARROW);
+        previousPageItem.editMeta((meta)-> meta.displayName(Component.text("<- Previous Page", NamedTextColor.GREEN)));
+        this.previousButton = (ctx)-> Button.of(previousPageItem);
+
         this.nextSlot = Slot.at(capacity.rows() - 1, capacity.columns() - 1, capacity);
+
+        ItemStack nextPageItem = ItemStack.of(Material.ARROW);
+        nextPageItem.editMeta((meta)-> meta.displayName(Component.text("Next Page ->", NamedTextColor.GREEN)));
+        this.nextButton = (ctx)-> Button.of(nextPageItem);
+
         this.decorations = ctx -> Content.empty(this.capacity);
     }
 
@@ -49,9 +62,19 @@ public final class PageLayoutBuilder {
         return this;
     }
 
+    public @NotNull PageLayoutBuilder previousButton(@NotNull Function<PageContext, Button> previousButton) {
+        this.previousButton = previousButton;
+        return this;
+    }
+
     public @NotNull PageLayoutBuilder nextButton(@NotNull Slot slot, @NotNull Function<PageContext, Button> button) {
         this.nextSlot = slot;
         this.nextButton = button;
+        return this;
+    }
+
+    public @NotNull PageLayoutBuilder nextButton(@NotNull Function<PageContext, Button> nextButton) {
+        this.nextButton = nextButton;
         return this;
     }
 

@@ -43,11 +43,12 @@ public final class Pagination<T> {
     }
 
     /**
-     * Resolves source items for this viewer and returns a new per-player session positioned at page 0.
-     * The session must be opened (or moved with {@code goTo}) explicitly.
+     * Resolves source items for this viewer, creates a per-player session, and opens page 0.
      */
     public @NotNull PaginationSession<T> open(@NotNull Lotus lotus, @NotNull Player viewer) {
-        return new DefaultPaginationSession<>(lotus, this, viewer);
+        var session = new DefaultPaginationSession<>(lotus, this, viewer);
+        session.goTo(0);
+        return session;
     }
 
     public static <T> @NotNull Builder<T> builder() {
