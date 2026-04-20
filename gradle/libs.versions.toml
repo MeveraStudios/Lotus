@@ -1,0 +1,15 @@
+[versions]
+spigot        = "1.8.8-R0.1-SNAPSHOT"
+paper         = "1.21.11-R0.1-SNAPSHOT"
+jetbrains     = "26.0.2"
+shadow        = "8.3.2"
+maven-publish = "0.29.0"
+
+[libraries]
+spigot-api            = { group = "org.spigotmc",      name = "spigot-api",  version.ref = "spigot"   }
+paper-api             = { group = "io.papermc.paper",  name = "paper-api",   version.ref = "paper"    }
+jetbrains-annotations = { group = "org.jetbrains",     name = "annotations", version.ref = "jetbrains" }
+
+[plugins]
+shadow        = { id = "com.gradleup.shadow",          version.ref = "shadow"        }
+maven-publish = { id = "com.vanniktech.maven.publish", version.ref = "maven-publish" }

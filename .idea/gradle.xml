@@ -9,6 +9,9 @@
         <option name="modules">
           <set>
             <option value="$PROJECT_DIR$" />
+            <option value="$PROJECT_DIR$/lotus-commons" />
+            <option value="$PROJECT_DIR$/lotus-paper" />
+            <option value="$PROJECT_DIR$/lotus-spigot" />
           </set>
         </option>
       </GradleProjectSettings>

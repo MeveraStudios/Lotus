@@ -1,0 +1,28 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(rm -rf src/main/java/studio)",
+      "Bash(rm -rf src/test/java)",
+      "Bash(ls src/main/java)",
+      "Bash(./gradlew compileJava --no-daemon)",
+      "Bash(del \"D:\\\\Projects 2025\\\\Lotus\\\\settings.gradle\")",
+      "Bash(cp 'D:/Projects 2025/Lotus/src/main/java/studio/mevera/lotus/api/button/*.java' 'D:/Projects 2025/Lotus/lotus-commons/src/main/java/studio/mevera/lotus/api/button/')",
+      "Bash(cp 'D:/Projects 2025/Lotus/src/main/java/studio/mevera/lotus/api/content/*.java' 'D:/Projects 2025/Lotus/lotus-commons/src/main/java/studio/mevera/lotus/api/content/')",
+      "Bash(cp 'D:/Projects 2025/Lotus/src/main/java/studio/mevera/lotus/api/data/*.java' 'D:/Projects 2025/Lotus/lotus-commons/src/main/java/studio/mevera/lotus/api/data/')",
+      "Bash(cp 'D:/Projects 2025/Lotus/src/main/java/studio/mevera/lotus/api/slot/*.java' 'D:/Projects 2025/Lotus/lotus-commons/src/main/java/studio/mevera/lotus/api/slot/')",
+      "Bash(cp 'D:/Projects 2025/Lotus/src/main/java/studio/mevera/lotus/api/util/*.java' 'D:/Projects 2025/Lotus/lotus-commons/src/main/java/studio/mevera/lotus/api/util/')",
+      "Bash(./gradlew :lotus-commons:compileJava)",
+      "Bash(./gradlew clean *)",
+      "Bash(./gradlew :lotus-paper:compileJava)",
+      "Bash(./gradlew :lotus-spigot:compileJava)",
+      "Bash(./gradlew build *)",
+      "Bash(javap -p lotus-commons/build/classes/java/main/studio/mevera/lotus/api/menu/Menu.class)",
+      "Bash(javap -p lotus-paper/build/classes/java/main/studio/mevera/lotus/paper/api/menu/PaperMenu.class)",
+      "Bash(javap -p lotus-paper/build/classes/java/main/studio/mevera/lotus/paper/ItemBuilder.class)",
+      "Bash(javap -p lotus-spigot/build/classes/java/main/studio/mevera/lotus/spigot/ItemBuilder.class)",
+      "Bash(javap -p lotus-spigot/build/classes/java/main/studio/mevera/lotus/spigot/SpigotLotus.class)",
+      "Bash(javap -verbose lotus-commons/build/classes/java/main/studio/mevera/lotus/api/menu/Menu.class)",
+      "Bash(xargs -I {} javap -verbose {})"
+    ]
+  }
+}

@@ -4,8 +4,74 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="5627481f-164c-4877-8050-a073e3de7c6c" name="Changes" comment="Improved internals">
+    <list default="true" id="5627481f-164c-4877-8050-a073e3de7c6c" name="Changes" comment="Improved internals &amp; api">
+      <change afterPath="$PROJECT_DIR$/.claude/settings.local.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/.name" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/gradle/libs.versions.toml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lotus-commons/build.gradle.kts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lotus-commons/src/main/java/studio/mevera/lotus/LotusBuilder.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lotus-commons/src/main/java/studio/mevera/lotus/api/item/AbstractItemBuilder.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lotus-commons/src/main/java/studio/mevera/lotus/api/menu/InteractiveMenu.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lotus-commons/src/main/java/studio/mevera/lotus/spi/PaginationSessionFactory.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lotus-paper/build.gradle.kts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lotus-paper/src/main/java/studio/mevera/lotus/paper/ItemBuilder.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lotus-paper/src/main/java/studio/mevera/lotus/paper/PaperLotus.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lotus-paper/src/main/java/studio/mevera/lotus/paper/api/menu/PaperInteractiveMenu.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lotus-paper/src/main/java/studio/mevera/lotus/paper/api/menu/PaperMenu.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lotus-paper/src/main/java/studio/mevera/lotus/paper/api/pagination/PaperPageLayout.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lotus-paper/src/main/java/studio/mevera/lotus/paper/api/pagination/PaperPageLayoutBuilder.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lotus-paper/src/main/java/studio/mevera/lotus/paper/internal/opener/PaperViewOpener.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lotus-paper/src/main/java/studio/mevera/lotus/paper/internal/pagination/PaperPaginationSession.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lotus-spigot/build.gradle.kts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lotus-spigot/src/main/java/studio/mevera/lotus/spigot/ItemBuilder.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lotus-spigot/src/main/java/studio/mevera/lotus/spigot/SpigotLotus.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lotus-spigot/src/main/java/studio/mevera/lotus/spigot/internal/opener/SpigotViewOpener.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/settings.gradle.kts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/gradle.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/gradle.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build.gradle.kts" beforeDir="false" afterPath="$PROJECT_DIR$/build.gradle.kts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/settings.gradle" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/studio/mevera/lotus/Lotus.java" beforeDir="false" afterPath="$PROJECT_DIR$/lotus-commons/src/main/java/studio/mevera/lotus/Lotus.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/studio/mevera/lotus/LotusBuilder.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/studio/mevera/lotus/api/button/Button.java" beforeDir="false" afterPath="$PROJECT_DIR$/lotus-commons/src/main/java/studio/mevera/lotus/api/button/Button.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/studio/mevera/lotus/api/button/ClickAction.java" beforeDir="false" afterPath="$PROJECT_DIR$/lotus-commons/src/main/java/studio/mevera/lotus/api/button/ClickAction.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/studio/mevera/lotus/api/button/ClickableButton.java" beforeDir="false" afterPath="$PROJECT_DIR$/lotus-commons/src/main/java/studio/mevera/lotus/api/button/ClickableButton.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/studio/mevera/lotus/api/button/CompositeButton.java" beforeDir="false" afterPath="$PROJECT_DIR$/lotus-commons/src/main/java/studio/mevera/lotus/api/button/CompositeButton.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/studio/mevera/lotus/api/button/CycleButton.java" beforeDir="false" afterPath="$PROJECT_DIR$/lotus-commons/src/main/java/studio/mevera/lotus/api/button/CycleButton.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/studio/mevera/lotus/api/button/SpanningButton.java" beforeDir="false" afterPath="$PROJECT_DIR$/lotus-commons/src/main/java/studio/mevera/lotus/api/button/SpanningButton.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/studio/mevera/lotus/api/button/StaticButton.java" beforeDir="false" afterPath="$PROJECT_DIR$/lotus-commons/src/main/java/studio/mevera/lotus/api/button/StaticButton.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/studio/mevera/lotus/api/button/TransformingButton.java" beforeDir="false" afterPath="$PROJECT_DIR$/lotus-commons/src/main/java/studio/mevera/lotus/api/button/TransformingButton.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/studio/mevera/lotus/api/content/Content.java" beforeDir="false" afterPath="$PROJECT_DIR$/lotus-commons/src/main/java/studio/mevera/lotus/api/content/Content.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/studio/mevera/lotus/api/content/ContentBuilder.java" beforeDir="false" afterPath="$PROJECT_DIR$/lotus-commons/src/main/java/studio/mevera/lotus/api/content/ContentBuilder.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/studio/mevera/lotus/api/content/ContentEditor.java" beforeDir="false" afterPath="$PROJECT_DIR$/lotus-commons/src/main/java/studio/mevera/lotus/api/content/ContentEditor.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/studio/mevera/lotus/api/content/ContentView.java" beforeDir="false" afterPath="$PROJECT_DIR$/lotus-commons/src/main/java/studio/mevera/lotus/api/content/ContentView.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/studio/mevera/lotus/api/data/DataRegistry.java" beforeDir="false" afterPath="$PROJECT_DIR$/lotus-commons/src/main/java/studio/mevera/lotus/api/data/DataRegistry.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/studio/mevera/lotus/api/data/Key.java" beforeDir="false" afterPath="$PROJECT_DIR$/lotus-commons/src/main/java/studio/mevera/lotus/api/data/Key.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/studio/mevera/lotus/api/menu/InteractiveMenu.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/studio/mevera/lotus/api/menu/Menu.java" beforeDir="false" afterPath="$PROJECT_DIR$/lotus-commons/src/main/java/studio/mevera/lotus/api/menu/Menu.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/studio/mevera/lotus/api/menu/MenuHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/lotus-commons/src/main/java/studio/mevera/lotus/api/menu/MenuHandler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/studio/mevera/lotus/api/menu/MenuView.java" beforeDir="false" afterPath="$PROJECT_DIR$/lotus-commons/src/main/java/studio/mevera/lotus/api/menu/MenuView.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/studio/mevera/lotus/api/pagination/ComponentRenderer.java" beforeDir="false" afterPath="$PROJECT_DIR$/lotus-commons/src/main/java/studio/mevera/lotus/api/pagination/ComponentRenderer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/studio/mevera/lotus/api/pagination/ContentSource.java" beforeDir="false" afterPath="$PROJECT_DIR$/lotus-commons/src/main/java/studio/mevera/lotus/api/pagination/ContentSource.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/studio/mevera/lotus/api/pagination/PageContext.java" beforeDir="false" afterPath="$PROJECT_DIR$/lotus-commons/src/main/java/studio/mevera/lotus/api/pagination/PageContext.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/studio/mevera/lotus/api/pagination/PageLayout.java" beforeDir="false" afterPath="$PROJECT_DIR$/lotus-commons/src/main/java/studio/mevera/lotus/api/pagination/PageLayout.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/studio/mevera/lotus/api/pagination/PageLayoutBuilder.java" beforeDir="false" afterPath="$PROJECT_DIR$/lotus-commons/src/main/java/studio/mevera/lotus/api/pagination/PageLayoutBuilder.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/studio/mevera/lotus/api/pagination/Pagination.java" beforeDir="false" afterPath="$PROJECT_DIR$/lotus-commons/src/main/java/studio/mevera/lotus/api/pagination/Pagination.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/studio/mevera/lotus/api/pagination/PaginationSession.java" beforeDir="false" afterPath="$PROJECT_DIR$/lotus-commons/src/main/java/studio/mevera/lotus/api/pagination/PaginationSession.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/studio/mevera/lotus/api/slot/Capacity.java" beforeDir="false" afterPath="$PROJECT_DIR$/lotus-commons/src/main/java/studio/mevera/lotus/api/slot/Capacity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/studio/mevera/lotus/api/slot/Direction.java" beforeDir="false" afterPath="$PROJECT_DIR$/lotus-commons/src/main/java/studio/mevera/lotus/api/slot/Direction.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/studio/mevera/lotus/api/slot/Slot.java" beforeDir="false" afterPath="$PROJECT_DIR$/lotus-commons/src/main/java/studio/mevera/lotus/api/slot/Slot.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/studio/mevera/lotus/api/slot/SlotIterator.java" beforeDir="false" afterPath="$PROJECT_DIR$/lotus-commons/src/main/java/studio/mevera/lotus/api/slot/SlotIterator.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/studio/mevera/lotus/api/slot/SlotMask.java" beforeDir="false" afterPath="$PROJECT_DIR$/lotus-commons/src/main/java/studio/mevera/lotus/api/slot/SlotMask.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/studio/mevera/lotus/api/util/Pair.java" beforeDir="false" afterPath="$PROJECT_DIR$/lotus-commons/src/main/java/studio/mevera/lotus/api/util/Pair.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/studio/mevera/lotus/internal/LotusListener.java" beforeDir="false" afterPath="$PROJECT_DIR$/lotus-commons/src/main/java/studio/mevera/lotus/internal/LotusListener.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/studio/mevera/lotus/internal/LotusLogger.java" beforeDir="false" afterPath="$PROJECT_DIR$/lotus-commons/src/main/java/studio/mevera/lotus/internal/LotusLogger.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/studio/mevera/lotus/internal/content/DefaultContent.java" beforeDir="false" afterPath="$PROJECT_DIR$/lotus-commons/src/main/java/studio/mevera/lotus/internal/content/DefaultContent.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/studio/mevera/lotus/internal/menu/BaseMenuView.java" beforeDir="false" afterPath="$PROJECT_DIR$/lotus-commons/src/main/java/studio/mevera/lotus/internal/menu/BaseMenuView.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/studio/mevera/lotus/internal/opener/DefaultViewOpener.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/studio/mevera/lotus/internal/pagination/DefaultPaginationSession.java" beforeDir="false" afterPath="$PROJECT_DIR$/lotus-commons/src/main/java/studio/mevera/lotus/internal/pagination/DefaultPaginationSession.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/studio/mevera/lotus/spi/opener/ViewOpener.java" beforeDir="false" afterPath="$PROJECT_DIR$/lotus-commons/src/main/java/studio/mevera/lotus/spi/opener/ViewOpener.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/resources/plugin.yml" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -116,35 +182,35 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;Gradle.Download Sources.executor&quot;: &quot;Run&quot;,
-    &quot;Gradle.Lotus [buildWithTest].executor&quot;: &quot;Run&quot;,
-    &quot;Gradle.Lotus [build].executor&quot;: &quot;Run&quot;,
-    &quot;Gradle.Lotus [publishToMavenLocal].executor&quot;: &quot;Run&quot;,
-    &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.MCP Project settings loaded&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.typescript.service.memoryLimit.init&quot;: &quot;true&quot;,
-    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
-    &quot;codeWithMe.voiceChat.enabledByDefault&quot;: &quot;false&quot;,
-    &quot;dart.analysis.tool.window.visible&quot;: &quot;false&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;master&quot;,
-    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
-    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;D:/Projects 2025/Lotus/.github/workflows&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;project.structure.last.edited&quot;: &quot;Modules&quot;,
-    &quot;project.structure.proportion&quot;: &quot;0.0&quot;,
-    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;reference.settingsdialog.project.gradle&quot;,
-    &quot;show.migrate.to.gradle.popup&quot;: &quot;false&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Gradle.Download Sources.executor": "Run",
+    "Gradle.Lotus [buildWithTest].executor": "Run",
+    "Gradle.Lotus [build].executor": "Run",
+    "Gradle.Lotus [publishToMavenLocal].executor": "Run",
+    "ModuleVcsDetector.initialDetectionPerformed": "true",
+    "RunOnceActivity.MCP Project settings loaded": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "RunOnceActivity.typescript.service.memoryLimit.init": "true",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "codeWithMe.voiceChat.enabledByDefault": "false",
+    "dart.analysis.tool.window.visible": "false",
+    "git-widget-placeholder": "multi-modular",
+    "ignore.virus.scanning.warn.message": "true",
+    "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "D:/Projects 2025/Lotus/.github/workflows",
+    "node.js.detected.package.eslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "project.structure.last.edited": "Modules",
+    "project.structure.proportion": "0.0",
+    "project.structure.side.proportion": "0.2",
+    "settings.editor.selected.configurable": "reference.settingsdialog.project.gradle",
+    "show.migrate.to.gradle.popup": "false"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="D:\Projects 2025\Lotus\.github\workflows" />
@@ -417,7 +483,15 @@
       <option name="project" value="LOCAL" />
       <updated>1776537688485</updated>
     </task>
-    <option name="localTasksCounter" value="22" />
+    <task id="LOCAL-00022" summary="Improved internals &amp; api">
+      <option name="closed" value="true" />
+      <created>1776541686149</created>
+      <option name="number" value="00022" />
+      <option name="presentableId" value="LOCAL-00022" />
+      <option name="project" value="LOCAL" />
+      <updated>1776541686149</updated>
+    </task>
+    <option name="localTasksCounter" value="23" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -447,7 +521,8 @@
     <MESSAGE value="updated README.md" />
     <MESSAGE value="explanations draft" />
     <MESSAGE value="Improved internals" />
-    <option name="LAST_COMMIT_MESSAGE" value="Improved internals" />
+    <MESSAGE value="Improved internals &amp; api" />
+    <option name="LAST_COMMIT_MESSAGE" value="Improved internals &amp; api" />
   </component>
   <component name="github-copilot-workspace">
     <instructionFileLocations>

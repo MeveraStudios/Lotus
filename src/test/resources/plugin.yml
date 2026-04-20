@@ -1,7 +1,0 @@
-name: Lotus-bukkit-test
-main: studio.mevera.menus.LotusExamplePlugin
-version: 1.0
-commands:
-  test:
-  load:
-  save:
