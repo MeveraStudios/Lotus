@@ -60,7 +60,7 @@ When the DSL doesn't fit, `apply` hands you the `Content` directly:
 
 ```java
 public @NotNull Content content(MenuView<?> view) {
-    Capacity size = capacity(view);
+    Capacity size = view.capacity();
 
     return Content.builder(size)
         .fillBorder(Button.of(filler()))

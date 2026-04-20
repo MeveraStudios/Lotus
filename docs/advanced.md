@@ -2,14 +2,15 @@
 
 ## `Lotus.Options`
 
-Immutable runtime configuration, set once at build time.
+Immutable runtime configuration, set via the factory's customizer argument.
 
 ```java
-Lotus lotus = Lotus.builder(plugin)
-    .allowBottomInventoryClick(true)   // let hotbar shift-clicks through
-    .dynamicButtonAction(false)        // advanced: allow buttons to be picked up / moved
-    .debug(false)                      // verbose [lotus] logs
-    .build();
+// Paper — same options available on SpigotLotus.create(this, builder -> { ... })
+Lotus lotus = PaperLotus.create(this, builder -> {
+    builder.allowBottomInventoryClick(true)   // let hotbar shift-clicks through
+           .dynamicButtonAction(false)        // advanced: allow buttons to be picked up / moved
+           .debug(false);                     // verbose [lotus] logs
+});
 ```
 
 | Option                      | Default | Effect                                               |
@@ -20,16 +21,46 @@ Lotus lotus = Lotus.builder(plugin)
 
 Read them back with `lotus.options()`.
 
+## `ItemBuilder`
+
+Both platform modules ship a concrete `ItemBuilder` class with the same simple name but
+different packages. Both extend `AbstractItemBuilder<B, C>` from `lotus-commons`.
+
+### Paper — `studio.mevera.lotus.paper.ItemBuilder`
+
+```java
+import studio.mevera.lotus.paper.ItemBuilder;
+
+ItemStack sword = ItemBuilder.of(Material.DIAMOND_SWORD)
+    .displayName(Component.text("Legendary Blade").color(NamedTextColor.AQUA))
+    .lore(Component.text("A very sharp blade").color(NamedTextColor.GRAY))
+    .amount(1)
+    .unbreakable(true)
+    .build();
+```
+
+### Spigot — `studio.mevera.lotus.spigot.ItemBuilder`
+
+```java
+import studio.mevera.lotus.spigot.ItemBuilder;
+
+ItemStack sword = ItemBuilder.of(Material.DIAMOND_SWORD)
+    .displayName("&bLegendary Blade")    // & color codes translated automatically
+    .lore("&7A very sharp blade")
+    .amount(1)
+    .unbreakable(true)
+    .build();
+```
+
 ## Custom `ViewOpener`
 
-The opener strategy decides **how** a Bukkit `Inventory` is created and opened for a given `MenuView`. Lotus ships a sensible default that uses Adventure-native `Bukkit.createInventory(...)`.
-
-Replace per inventory type:
+The opener strategy decides **how** a Bukkit `Inventory` is created and opened for a given
+`MenuView`. `PaperLotus.create()` wires `PaperViewOpener` (Adventure-native) and
+`SpigotLotus.create()` wires `SpigotViewOpener` (legacy String title). To replace per inventory type:
 
 ```java
 lotus.registerOpener(InventoryType.HOPPER, (l, view) -> {
-    Inventory inv = Bukkit.createInventory(view, InventoryType.HOPPER, view.title());
-    // custom rendering, decorations, sound, etc.
+    Inventory inv = Bukkit.createInventory(view, InventoryType.HOPPER, "Custom");
     ((BaseMenuView<?>) view).renderInto(inv);
     view.viewer().openInventory(inv);
     return inv;
@@ -43,20 +74,14 @@ lotus.registerOpener(InventoryType.HOPPER, (l, view) -> {
 ```java
 lotus.registerMenu(new ShopMenu());
 lotus.openMenu(player, "shopmenu");          // case-insensitive lookup
-lotus.registeredMenu("shopmenu");            // Optional<Menu>
+lotus.registeredMenu("shopmenu");            // Optional<Menu<?>>
 ```
 
-Great for config-driven menus where commands like `/menu <name>` resolve by string.
-
 ## Tracking open views
-
-Lotus keeps a live map of `UUID → MenuView<?>`.
 
 ```java
 lotus.viewOf(player);             // Optional<MenuView<?>>
 lotus.openViews();                // Collection<MenuView<?>>
-lotus.track(player, view);        // internal helpers
-lotus.untrack(player);
 ```
 
 Common use: broadcast a `view.refresh()` when your backing data changes.
@@ -72,50 +97,52 @@ for (MenuView<?> v : lotus.openViews()) {
 - **`view.refresh()`** — re-runs `Menu.content(view)` from scratch. Use when the underlying model changed.
 - **`view.content().set(...)` / `update(...)`** — surgical edits. Use inside click handlers when you only need to swap one slot. Lotus auto-repaints after click dispatch.
 
-If you mutate content **outside** a click handler (e.g., from a scheduler task), call `view.refresh()` yourself — Lotus only auto-repaints on click.
-
-## `MenuView` data
-
-Per-view `DataRegistry` is seeded on open and mutable for the life of the view:
-
-```java
-lotus.openMenu(player, menu, DataRegistry.empty().put(Keys.CATEGORY, "weapons"));
-```
-
-Use it to carry "which tab was I on?" or "who am I inspecting?" without closing the menu.
+If you mutate content **outside** a click handler (e.g., a scheduler task), call `view.refresh()` yourself.
 
 ## Spanning buttons lifecycle
 
-Removing a spanning button cleanly means clearing **every slot** in its footprint. Clearing one slot leaves orphaned copies visible in the others. Either keep a reference to the `SpanningButton` and iterate its footprint, or use `content.clear()` + rebuild.
-
-## Repaint after button mutation
-
-`BaseMenuView.handleClick` always repaints after dispatch. This matters for:
-- `TransformingButton` — the new button's item appears immediately.
-- `CycleButton` — the advanced state's item appears immediately.
-
-You don't have to call anything. If you wrote a custom `Button` variant that mutates `view.content()`, the same auto-repaint covers you.
+Removing a spanning button cleanly means clearing **every slot** in its footprint. Clearing one slot leaves orphaned copies visible. Either keep a reference and iterate its footprint, or use `content.clear()` + rebuild.
 
 ## Errors in click handlers
 
-If your button dispatch throws a `RuntimeException`, Lotus catches it, logs via `lotus.logger().warn(...)`, and continues. The menu stays usable. Check your plugin logs for `[lotus] button dispatch failed in menu <name>`.
+If button dispatch throws a `RuntimeException`, Lotus catches it, logs via `lotus.logger().warn(...)`, and keeps the menu usable. Check plugin logs for `[lotus] button dispatch failed in menu <name>`.
 
-Nothing to handle in user code — just don't swallow exceptions silently upstream if you need to see them.
+## Package layout
 
-## Package layout (for plugin authors browsing the jar)
+Three artifacts:
 
 ```
-studio.mevera.lotus
-├── Lotus, LotusBuilder          ← facade
-├── api/                         ← what you import
-│   ├── button/                  ← Button, variants, ClickAction
-│   ├── content/                 ← Content, ContentView/Editor, ContentBuilder
-│   ├── data/                    ← Key, DataRegistry
-│   ├── menu/                    ← Menu, InteractiveMenu, MenuView, MenuHandler
-│   ├── pagination/              ← Pagination, Session, Layout, Source, Renderer
-│   └── slot/                    ← Capacity, Slot, SlotMask, Direction, Iterator
-├── spi/                         ← extension points (ViewOpener)
-└── internal/                    ← implementation details; do not import
+studio.mevera:lotus-commons
+└── studio.mevera.lotus
+    ├── Lotus, LotusBuilder          ← main facade
+    ├── api/                         ← what you import from commons
+    │   ├── button/                  ← Button, variants, ClickAction
+    │   ├── content/                 ← Content, ContentView/Editor, ContentBuilder
+    │   ├── data/                    ← Key, DataRegistry
+    │   ├── item/                    ← AbstractItemBuilder<B, C>
+    │   ├── menu/                    ← Menu<C>, InteractiveMenu<C>, MenuView, MenuHandler
+    │   ├── pagination/              ← Pagination, PaginationSession, PageLayout<C>,
+    │   │                               PageLayoutBuilder, ContentSource, ComponentRenderer
+    │   └── slot/                    ← Capacity, Slot, SlotMask, Direction, SlotIterator
+    ├── spi/                         ← extension points (ViewOpener, PaginationSessionFactory)
+    └── internal/                    ← do NOT import
+
+studio.mevera:lotus-paper            ← Paper 1.21+
+└── studio.mevera.lotus.paper
+    ├── PaperLotus                   ← static factory
+    ├── ItemBuilder                  ← extends AbstractItemBuilder<ItemBuilder, Component>
+    └── api/
+        ├── menu/
+        │   ├── PaperMenu            ← alias for Menu<Component>
+        │   └── PaperInteractiveMenu ← alias for InteractiveMenu<Component>
+        └── pagination/
+            ├── PaperPageLayout      ← alias for PageLayout<Component>
+            └── PaperPageLayoutBuilder
+
+studio.mevera:lotus-spigot           ← Spigot 1.8.8
+└── studio.mevera.lotus.spigot
+    ├── SpigotLotus                  ← static factory
+    └── ItemBuilder                  ← extends AbstractItemBuilder<ItemBuilder, String>
 ```
 
-Rule of thumb: import from `api.*` and `spi.*`. Stay out of `internal.*` — no compatibility guarantees.
+Rule: import from `api.*` and `spi.*`. Stay out of `internal.*` — no compatibility guarantees.

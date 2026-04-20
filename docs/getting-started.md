@@ -1,8 +1,17 @@
 # Getting Started
 
+## Pick your module
+
+Lotus has two platform modules:
+
+| Module         | Server         | Artifact                     |
+|----------------|----------------|------------------------------|
+| `lotus-paper`  | Paper 1.21+    | `studio.mevera:lotus-paper`  |
+| `lotus-spigot` | Spigot 1.8.8   | `studio.mevera:lotus-spigot` |
+
 ## Add the dependency
 
-Gradle (Kotlin DSL):
+### Paper 1.21+ (Gradle Kotlin DSL)
 
 ```kotlin
 repositories {
@@ -11,7 +20,21 @@ repositories {
 }
 
 dependencies {
-    implementation("studio.mevera:lotus:2.0.0")
+    implementation("studio.mevera:lotus-paper:2.0.0")
+}
+```
+
+### Spigot 1.8.8 (Gradle Kotlin DSL)
+
+```kotlin
+repositories {
+    maven("https://hub.spigotmc.org/nexus/content/repositories/snapshots/")
+    maven("https://oss.sonatype.org/content/repositories/snapshots/")
+    mavenCentral()
+}
+
+dependencies {
+    implementation("studio.mevera:lotus-spigot:2.0.0")
 }
 ```
 
@@ -19,19 +42,34 @@ Shade or relocate as appropriate — Lotus is a library, not a plugin.
 
 ## Boot once per plugin
 
-Construct a `Lotus` instance in `onEnable`. It registers its Bukkit listener automatically.
+### Paper
 
 ```java
-public final class MyPlugin extends JavaPlugin {
+import studio.mevera.lotus.Lotus;
+import studio.mevera.lotus.paper.PaperLotus;
 
+public final class MyPlugin extends JavaPlugin {
     private Lotus lotus;
 
-    @Override
-    public void onEnable() {
-        this.lotus = Lotus.builder(this)
-            .allowBottomInventoryClick(true)   // let players shift-click their own hotbar
-            .debug(false)                      // [lotus] log lines when true
-            .build();
+    @Override public void onEnable() {
+        this.lotus = PaperLotus.create(this);
+    }
+
+    public Lotus lotus() { return lotus; }
+}
+```
+
+### Spigot 1.8.8
+
+```java
+import studio.mevera.lotus.Lotus;
+import studio.mevera.lotus.spigot.SpigotLotus;
+
+public final class MyPlugin extends JavaPlugin {
+    private Lotus lotus;
+
+    @Override public void onEnable() {
+        this.lotus = SpigotLotus.create(this);
     }
 
     public Lotus lotus() { return lotus; }
@@ -39,13 +77,26 @@ public final class MyPlugin extends JavaPlugin {
 ```
 
 One `Lotus` instance per plugin. It tracks every open view and dispatches clicks.
+Both factories register their own Bukkit listener automatically.
+
+## Customising the builder
+
+Pass a `Consumer<LotusBuilder>` as a second argument:
+
+```java
+this.lotus = PaperLotus.create(this, b -> b
+    .allowBottomInventoryClick(true)   // let players shift-click their own hotbar
+    .debug(false));                    // [lotus] log lines when true
+```
+
+The same overload is available on `SpigotLotus.create(this, b -> { ... })`.
 
 ## Your first menu
 
-A `Menu` is a **template**: title, capacity, and content. Lotus resolves it per player when opened.
+### Paper
 
 ```java
-public final class WelcomeMenu implements Menu {
+public final class WelcomeMenu implements PaperMenu {
     @Override public @NotNull Component title(MenuView<?> view) {
         return Component.text("Welcome, " + view.viewer().getName());
     }
@@ -53,7 +104,25 @@ public final class WelcomeMenu implements Menu {
         return Capacity.ofRows(3);
     }
     @Override public @NotNull Content content(MenuView<?> view) {
-        return Content.builder(capacity(view))
+        return Content.builder(view.capacity())
+            .set(1, 4, Button.of(new ItemStack(Material.PAPER)))
+            .build();
+    }
+}
+```
+
+### Spigot
+
+```java
+public final class WelcomeMenu implements Menu<String> {
+    @Override public @NotNull String title(MenuView<?> view) {
+        return "&6Welcome, " + view.viewer().getName();
+    }
+    @Override public @NotNull Capacity capacity(MenuView<?> view) {
+        return Capacity.ofRows(3);
+    }
+    @Override public @NotNull Content content(MenuView<?> view) {
+        return Content.builder(view.capacity())
             .set(1, 4, Button.of(new ItemStack(Material.PAPER)))
             .build();
     }

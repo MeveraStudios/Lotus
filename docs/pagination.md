@@ -7,13 +7,23 @@ Lotus pagination separates **definition** (shared, immutable) from **session** (
 
 ## Ingredients
 
-### 1. `PageLayout`
+### 1. `PageLayout<C>`
 
 Defines shared shape of every page: capacity, fill area, navigation buttons, title, decorations.
 
+On **Paper**, use `PaperPageLayoutBuilder` (title is an Adventure `Component`).
+On **Spigot**, use `PageLayout.builder()` (title is a `String`).
+
+#### Paper
+
 ```java
-PageLayout layout = PageLayout.builder(Capacity.ofRows(6))
-    .title(ctx -> Component.text("Shop — page " + (ctx.pageIndex() + 1) + "/" + ctx.totalPages()))
+import studio.mevera.lotus.paper.api.pagination.PaperPageLayoutBuilder;
+
+Capacity capacity = Capacity.ofRows(6);
+
+PaperPageLayout layout = new PaperPageLayoutBuilder(capacity)
+    .title(ctx -> Component.text("Shop — page "
+        + (ctx.pageIndex() + 1) + "/" + ctx.totalPages()))
     .previousButton(Slot.at(5, 3, capacity), ctx -> Button.of(arrow("←")))
     .nextButton(Slot.at(5, 5, capacity),     ctx -> Button.of(arrow("→")))
     .decorations(ctx -> Content.builder(capacity)
@@ -22,13 +32,25 @@ PageLayout layout = PageLayout.builder(Capacity.ofRows(6))
     .build();
 ```
 
-Defaults:
-- `title` → `"Page N"`.
+#### Spigot
+
+```java
+Capacity capacity = Capacity.ofRows(6);
+
+PageLayout<String> layout = PageLayout.builder(capacity)
+    .title(ctx -> "Shop - page " + (ctx.pageIndex() + 1) + "/" + ctx.totalPages())
+    .previousButton(Slot.at(5, 3, capacity), ctx -> Button.of(arrow()))
+    .nextButton(Slot.at(5, 5, capacity),     ctx -> Button.of(arrow()))
+    .build();
+```
+
+Defaults (both platforms):
+- `title` → `"Page N"` (String) / `Component.text("Page N")` (Paper).
 - `fillMask` → full capacity minus the two nav slots.
 - nav button slots → bottom-left and bottom-right corners.
 - `decorations` → empty.
 
-Customise the fill mask for more nuanced layouts:
+Customise the fill mask:
 
 ```java
 .fillMask(SlotMask.range(capacity, Slot.of(10), Slot.of(43))
@@ -40,13 +62,13 @@ Customise the fill mask for more nuanced layouts:
 Supplies the items. Captured once per session (snapshot).
 
 ```java
-ContentSource<ShopItem> source = ContentSource.of(shopItems);             // fixed list
+ContentSource<ShopItem> source  = ContentSource.of(shopItems);
 ContentSource<ShopItem> dynamic = ContentSource.dynamic(player -> db.itemsFor(player));
 ```
 
 ### 3. `ComponentRenderer<T>`
 
-Converts one item into a `Button` for display. Receives the `PageContext` so it can react to page state.
+Converts one item into a `Button`. Receives the `PageContext`.
 
 ```java
 ComponentRenderer<ShopItem> renderer = (item, ctx) -> Button.clickable(
@@ -65,12 +87,17 @@ Pagination<ShopItem> pagination = Pagination.<ShopItem>builder()
     .trimOverflow(true)     // items past fillMask.size() are discarded (default true)
     .build();
 
-// Open for a specific player
-PaginationSession<ShopItem> session = pagination.open(lotus, player);
-session.goTo(0);            // or session.next() / session.previous()
+// Open for a specific player — navigates to page 0 automatically
+pagination.open(lotus, player);
 ```
 
-`pagination.open(...)` returns a session positioned at page 0 but **not yet opened**. Call `goTo(0)` (or any valid page) to actually open the inventory.
+`pagination.open(lotus, player)` creates the session, navigates to page 0, and opens the inventory.
+If you need to navigate to a specific starting page:
+
+```java
+PaginationSession<ShopItem> session = pagination.open(lotus, player);
+session.goTo(2);    // navigate from page 0 to page 2
+```
 
 ## Session control
 
@@ -124,7 +151,7 @@ public final class Shop {
     }
 
     public static void open(Lotus lotus, Player p) {
-        PAGINATION.open(lotus, p).goTo(0);
+        PAGINATION.open(lotus, p);   // opens at page 0
     }
 }
 ```
@@ -136,7 +163,7 @@ Each `open` spawns a fresh session with its own snapshot and page cursor. No sha
 Use `ContentSource.dynamic(...)` when items depend on the viewer:
 
 ```java
-ContentSource<Friend> friends = ContentSource.dynamic(player -> friendService.friendsOf(player));
+ContentSource<Friend> friends = ContentSource.dynamic(p -> friendService.friendsOf(p));
 ```
 
 The source is called **once per session** (at construction), not per page. If you need real-time updates, close and re-open the session.

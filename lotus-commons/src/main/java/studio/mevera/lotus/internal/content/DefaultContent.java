@@ -3,6 +3,7 @@ package studio.mevera.lotus.internal.content;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import studio.mevera.lotus.api.button.Button;
+import studio.mevera.lotus.api.button.SpanningButton;
 import studio.mevera.lotus.api.content.Content;
 import studio.mevera.lotus.api.content.ContentView;
 import studio.mevera.lotus.api.slot.Capacity;
