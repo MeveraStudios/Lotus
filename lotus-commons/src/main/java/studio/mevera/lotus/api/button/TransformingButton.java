@@ -11,7 +11,7 @@ import java.util.function.BiFunction;
 
 public record TransformingButton(
     @NotNull ItemStack item,
-    @NotNull BiFunction<MenuView<?>, InventoryClickEvent, Button> transformer,
+    @NotNull BiFunction<MenuView<?, ?>, InventoryClickEvent, Button> transformer,
     @NotNull DataRegistry data
 ) implements Button {
 
@@ -21,7 +21,7 @@ public record TransformingButton(
     }
 
     @Override
-    public void dispatch(@NotNull MenuView<?> view, @NotNull InventoryClickEvent event) {
+    public void dispatch(@NotNull MenuView<?, ?> view, @NotNull InventoryClickEvent event) {
         Button replacement = transformer.apply(view, event);
         if (replacement != null) {
             view.content().set(Slot.of(event.getSlot()), replacement);

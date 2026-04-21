@@ -7,7 +7,6 @@ import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
 import studio.mevera.lotus.api.button.Button;
 import studio.mevera.lotus.api.content.Content;
-import studio.mevera.lotus.api.pagination.PageContext;
 import studio.mevera.lotus.api.slot.Capacity;
 import studio.mevera.lotus.api.slot.Slot;
 import studio.mevera.lotus.api.slot.SlotMask;
@@ -22,19 +21,19 @@ import java.util.function.Function;
  * This builder is independent of {@link studio.mevera.lotus.api.pagination.PageLayoutBuilder}
  * (not extending it) to avoid fluent-inheritance issues.
  */
-public final class PaperPageLayoutBuilder {
+public final class PaperPageLayoutBuilder<T> {
 
     private final Capacity capacity;
     private SlotMask fillMask;
     private Slot previousSlot;
     private Slot nextSlot;
-    private Function<PageContext, Component> title = ctx ->
+    private Function<PaperPageContext<T>, Component> title = ctx ->
         Component.text("Page " + (ctx.pageIndex() + 1));
-    private Function<PageContext, Button> previousButton;
-    private Function<PageContext, Button> nextButton;
-    private Function<PageContext, Content> decorations;
+    private Function<PaperPageContext<T>, Button> previousButton;
+    private Function<PaperPageContext<T>, Button> nextButton;
+    private Function<PaperPageContext<T>, Content> decorations;
 
-    public PaperPageLayoutBuilder(@NotNull Capacity capacity) {
+    PaperPageLayoutBuilder(@NotNull Capacity capacity) {
         this.capacity = Objects.requireNonNull(capacity);
         this.previousSlot = Slot.at(capacity.rows() - 1, 0, capacity);
 
@@ -53,80 +52,80 @@ public final class PaperPageLayoutBuilder {
         this.decorations = ctx -> Content.empty(this.capacity);
     }
 
-    public @NotNull PaperPageLayoutBuilder title(@NotNull Function<PageContext, Component> title) {
+    public @NotNull PaperPageLayoutBuilder<T> title(@NotNull Function<PaperPageContext<T>, Component> title) {
         this.title = Objects.requireNonNull(title);
         return this;
     }
 
-    public @NotNull PaperPageLayoutBuilder fillMask(@NotNull SlotMask mask) {
+    public @NotNull PaperPageLayoutBuilder<T> fillMask(@NotNull SlotMask mask) {
         this.fillMask = mask;
         return this;
     }
 
-    public @NotNull PaperPageLayoutBuilder previousButton(
+    public @NotNull PaperPageLayoutBuilder<T> previousButton(
         @NotNull Slot slot,
-        @NotNull Function<PageContext, Button> button
+        @NotNull Function<PaperPageContext<T>, Button> button
     ) {
         this.previousSlot = slot;
         this.previousButton = button;
         return this;
     }
 
-    public @NotNull PaperPageLayoutBuilder previousButton(
-        @NotNull Function<PageContext, Button> previousButton
+    public @NotNull PaperPageLayoutBuilder<T> previousButton(
+        @NotNull Function<PaperPageContext<T>, Button> previousButton
     ) {
         this.previousButton = previousButton;
         return this;
     }
 
-    public @NotNull PaperPageLayoutBuilder nextButton(
+    public @NotNull PaperPageLayoutBuilder<T> nextButton(
         @NotNull Slot slot,
-        @NotNull Function<PageContext, Button> button
+        @NotNull Function<PaperPageContext<T>, Button> button
     ) {
         this.nextSlot = slot;
         this.nextButton = button;
         return this;
     }
 
-    public @NotNull PaperPageLayoutBuilder nextButton(
-        @NotNull Function<PageContext, Button> nextButton
+    public @NotNull PaperPageLayoutBuilder<T> nextButton(
+        @NotNull Function<PaperPageContext<T>, Button> nextButton
     ) {
         this.nextButton = nextButton;
         return this;
     }
 
-    public @NotNull PaperPageLayoutBuilder decorations(
-        @NotNull Function<PageContext, Content> decorations
+    public @NotNull PaperPageLayoutBuilder<T> decorations(
+        @NotNull Function<PaperPageContext<T>, Content> decorations
     ) {
         this.decorations = Objects.requireNonNull(decorations);
         return this;
     }
 
-    public @NotNull PaperPageLayout build() {
+    public @NotNull PaperPageLayout<T> build() {
         if (previousButton == null) throw new IllegalStateException("previousButton not configured");
         if (nextButton == null) throw new IllegalStateException("nextButton not configured");
         var resolvedMask = fillMask != null
             ? fillMask
             : SlotMask.full(capacity).excluding(previousSlot, nextSlot);
-        return new BuiltPaperPageLayout(
+        return new BuiltPaperPageLayout<>(
             capacity, resolvedMask, previousSlot, nextSlot,
             title, previousButton, nextButton, decorations);
     }
 
-    private record BuiltPaperPageLayout(
+    private record BuiltPaperPageLayout<T>(
         @NotNull Capacity capacity,
         @NotNull SlotMask fillMask,
         @NotNull Slot previousButtonSlot,
         @NotNull Slot nextButtonSlot,
-        @NotNull Function<PageContext, Component> titleFn,
-        @NotNull Function<PageContext, Button> previousButtonFn,
-        @NotNull Function<PageContext, Button> nextButtonFn,
-        @NotNull Function<PageContext, Content> decorationsFn
-    ) implements PaperPageLayout {
+        @NotNull Function<PaperPageContext<T>, Component> titleFn,
+        @NotNull Function<PaperPageContext<T>, Button> previousButtonFn,
+        @NotNull Function<PaperPageContext<T>, Button> nextButtonFn,
+        @NotNull Function<PaperPageContext<T>, Content> decorationsFn
+    ) implements PaperPageLayout<T> {
 
-        @Override public @NotNull Component title(@NotNull PageContext ctx) { return titleFn.apply(ctx); }
-        @Override public @NotNull Button previousButton(@NotNull PageContext ctx) { return previousButtonFn.apply(ctx); }
-        @Override public @NotNull Button nextButton(@NotNull PageContext ctx) { return nextButtonFn.apply(ctx); }
-        @Override public @NotNull Content decorations(@NotNull PageContext ctx) { return decorationsFn.apply(ctx); }
+        @Override public @NotNull Component title(@NotNull PaperPageContext<T> ctx) { return titleFn.apply(ctx); }
+        @Override public @NotNull Button previousButton(@NotNull PaperPageContext<T> ctx) { return previousButtonFn.apply(ctx); }
+        @Override public @NotNull Button nextButton(@NotNull PaperPageContext<T> ctx) { return nextButtonFn.apply(ctx); }
+        @Override public @NotNull Content decorations(@NotNull PaperPageContext<T> ctx) { return decorationsFn.apply(ctx); }
     }
 }

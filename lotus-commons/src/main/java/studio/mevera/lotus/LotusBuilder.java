@@ -2,9 +2,11 @@ package studio.mevera.lotus;
 
 import org.bukkit.plugin.Plugin;
 import org.jetbrains.annotations.NotNull;
+import studio.mevera.lotus.spi.PaginationSessionFactory;
 import studio.mevera.lotus.spi.opener.ViewOpener;
 
 import java.util.Objects;
+import java.util.function.Consumer;
 
 /**
  * Builder for {@link Lotus}. Required: {@link Plugin}. All other fields default to
@@ -14,16 +16,20 @@ import java.util.Objects;
  * e.g. {@code PaperViewOpener} from {@code lotus-paper} or {@code SpigotViewOpener} from
  * {@code lotus-spigot}.
  */
-public final class LotusBuilder {
+public final class LotusBuilder<C> {
 
     private final Plugin plugin;
+    private final Consumer<Lotus<C>> bootstrap;
     private boolean allowBottomInventoryClick = true;
     private boolean dynamicButtonAction = false;
     private boolean debug = false;
-    private @NotNull ViewOpener defaultViewOpener;
+    private @NotNull ViewOpener<C> defaultViewOpener;
 
-    LotusBuilder(@NotNull Plugin plugin) {
+    private PaginationSessionFactory<C> paginationSessionFactory;
+
+    public LotusBuilder(@NotNull Plugin plugin, @NotNull Consumer<Lotus<C>> bootstrap) {
         this.plugin = Objects.requireNonNull(plugin);
+        this.bootstrap = Objects.requireNonNull(bootstrap);
         // Placeholder: replaced at build() if not explicitly set.
         // Platform factories (PaperLotus, SpigotLotus) always set this.
         this.defaultViewOpener = (lotus, view) -> {
@@ -33,18 +39,23 @@ public final class LotusBuilder {
         };
     }
 
-    public @NotNull LotusBuilder allowBottomInventoryClick(boolean allow) {
+    public @NotNull LotusBuilder<C> allowBottomInventoryClick(boolean allow) {
         this.allowBottomInventoryClick = allow;
         return this;
     }
 
-    public @NotNull LotusBuilder dynamicButtonAction(boolean dynamic) {
+    public @NotNull LotusBuilder<C> dynamicButtonAction(boolean dynamic) {
         this.dynamicButtonAction = dynamic;
         return this;
     }
 
-    public @NotNull LotusBuilder debug(boolean debug) {
+    public @NotNull LotusBuilder<C> debug(boolean debug) {
         this.debug = debug;
+        return this;
+    }
+
+    public @NotNull LotusBuilder<C> paginationSessionFactory(PaginationSessionFactory<C> factory) {
+        this.paginationSessionFactory = Objects.requireNonNull(factory);
         return this;
     }
 
@@ -55,16 +66,24 @@ public final class LotusBuilder {
      * This must be a platform-specific implementation — {@code PaperViewOpener} on Paper or
      * {@code SpigotViewOpener} on Spigot.
      */
-    public @NotNull LotusBuilder defaultViewOpener(@NotNull ViewOpener opener) {
+    public @NotNull LotusBuilder<C> defaultViewOpener(@NotNull ViewOpener<C> opener) {
         this.defaultViewOpener = Objects.requireNonNull(opener);
         return this;
     }
 
-    public @NotNull Lotus build() {
-        return new Lotus(
-            plugin,
-            new Lotus.Options(allowBottomInventoryClick, dynamicButtonAction, debug),
-            defaultViewOpener
+    public @NotNull Lotus<C> build() {
+        if (paginationSessionFactory == null) {
+            throw new IllegalStateException(
+                "No paginationSessionFactory configured. Use PaperLotus.create(plugin) or " +
+                "SpigotLotus.create(plugin) instead of constructing LotusBuilder directly."
+            );
+        }
+        return new Lotus<>(
+                plugin,
+                new Lotus.Options(allowBottomInventoryClick, dynamicButtonAction, debug),
+                defaultViewOpener,
+                paginationSessionFactory,
+                bootstrap
         );
     }
 }

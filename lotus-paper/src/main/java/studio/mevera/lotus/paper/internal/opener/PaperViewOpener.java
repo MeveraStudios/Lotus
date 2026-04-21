@@ -19,13 +19,13 @@ import studio.mevera.lotus.spi.opener.ViewOpener;
  * returns an Adventure {@link Component} (no serialization). Otherwise the String fallback
  * is wrapped via {@link Component#text(String)}.
  */
-public final class PaperViewOpener implements ViewOpener {
+public final class PaperViewOpener implements ViewOpener<Component> {
 
     @Override
-    public @NotNull Inventory open(@NotNull Lotus lotus, @NotNull MenuView<?> view) {
+    public @NotNull Inventory open(@NotNull Lotus<Component> lotus, @NotNull MenuView<Component, ?> view) {
         Component title = resolveTitle(view);
         Inventory inventory = createInventory(view, title);
-        if (view instanceof BaseMenuView<?> base) {
+        if (view instanceof BaseMenuView<?, ?> base) {
             base.renderInto(inventory);
         } else {
             view.content().forEach((slot, button) -> inventory.setItem(slot.index(), button.item()));
@@ -34,16 +34,13 @@ public final class PaperViewOpener implements ViewOpener {
         return inventory;
     }
 
-    private static @NotNull Component resolveTitle(@NotNull MenuView<?> view) {
+    @SuppressWarnings({"rawtypes", "unchecked"})
+    private static @NotNull Component resolveTitle(@NotNull MenuView<Component, ?> view) {
         // instanceof PaperMenu → title() returns Component directly (no serialization, full fidelity)
-        if (view.menu() instanceof PaperMenu pm) {
-            return pm.title(view);
-        }
-        // Non-PaperMenu fallback: wrap the String title in a plain Component
-        return Component.text(view.menu().title(view).toString());
+        return view.title();
     }
 
-    private static @NotNull Inventory createInventory(@NotNull MenuView<?> view, @NotNull Component title) {
+    private static @NotNull Inventory createInventory(@NotNull MenuView<Component, ?> view, @NotNull Component title) {
         InventoryType type = view.type();
         if (type == InventoryType.CHEST) {
             return Bukkit.createInventory(view, view.capacity().totalSize(), title);

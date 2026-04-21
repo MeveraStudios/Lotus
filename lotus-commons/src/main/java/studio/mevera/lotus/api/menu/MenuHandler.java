@@ -11,38 +11,38 @@ import org.jetbrains.annotations.NotNull;
  * <p>
  * Implement this when a menu needs to react to open, close, click, or drag events.
  */
-public interface MenuHandler {
+public interface MenuHandler<C> {
 
     /**
      * Runs before button dispatch.
      *
      * @return {@code true} to continue handling the click
      */
-    default boolean onPreClick(@NotNull MenuView<?> view, @NotNull InventoryClickEvent event) {
+    default boolean onPreClick(@NotNull MenuView<C, ?> view, @NotNull InventoryClickEvent event) {
         return true;
     }
 
     /**
      * Runs after button dispatch.
      */
-    default void onPostClick(@NotNull MenuView<?> view, @NotNull InventoryClickEvent event) {
+    default void onPostClick(@NotNull MenuView<C, ?> view, @NotNull InventoryClickEvent event) {
     }
 
     /**
      * Runs when the menu is opened.
      */
-    default void onOpen(@NotNull MenuView<?> view, @NotNull InventoryOpenEvent event) {
+    default void onOpen(@NotNull MenuView<C, ?> view, @NotNull InventoryOpenEvent event) {
     }
 
     /**
      * Runs when the menu is closed.
      */
-    default void onClose(@NotNull MenuView<?> view, @NotNull InventoryCloseEvent event) {
+    default void onClose(@NotNull MenuView<C, ?> view, @NotNull InventoryCloseEvent event) {
     }
 
     /**
      * Runs when the menu receives a drag event.
      */
-    default void onDrag(@NotNull MenuView<?> view, @NotNull InventoryDragEvent event) {
+    default void onDrag(@NotNull MenuView<C, ?> view, @NotNull InventoryDragEvent event) {
     }
 }

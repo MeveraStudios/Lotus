@@ -9,12 +9,12 @@ import studio.mevera.lotus.api.button.ClickAction;
 import studio.mevera.lotus.api.content.Content;
 import studio.mevera.lotus.api.menu.InteractiveMenu;
 import studio.mevera.lotus.api.menu.MenuView;
-import studio.mevera.lotus.api.pagination.PageContext;
-import studio.mevera.lotus.api.pagination.Pagination;
 import studio.mevera.lotus.api.slot.Capacity;
 import studio.mevera.lotus.api.slot.Slot;
 import studio.mevera.lotus.internal.pagination.DefaultPaginationSession;
 import studio.mevera.lotus.paper.api.menu.PaperInteractiveMenu;
+import studio.mevera.lotus.paper.api.pagination.PaperPageContext;
+import studio.mevera.lotus.paper.api.pagination.Pagination;
 import studio.mevera.lotus.paper.api.pagination.PaperPageLayout;
 
 import java.util.Iterator;
@@ -25,57 +25,60 @@ import java.util.List;
  * {@link #buildPageMenu(int)} to synthesise a {@link PaperPageMenu} — a {@link PaperInteractiveMenu}
  * whose {@code title()} returns an Adventure {@link Component} directly, preserving full fidelity.
  */
-public class PaperPaginationSession<T> extends DefaultPaginationSession<T> {
+public class PaperPaginationSession<T> extends DefaultPaginationSession<Component, T, PaperPageContext<T>> {
 
     public PaperPaginationSession(
         @NotNull Pagination<T> definition,
-        @NotNull Lotus lotus,
+        @NotNull Lotus<Component> lotus,
         @NotNull Player viewer
     ) {
         super(definition, lotus, viewer);
     }
 
     @Override
-    protected @NotNull InteractiveMenu<?> buildPageMenu(int pageIndex) {
-        return new PaperPageMenu(this, pageIndex);
+    public @NotNull Pagination<T> definition() {
+        return (Pagination<T>) super.definition();
+    }
+
+    @Override
+    protected @NotNull InteractiveMenu<Component> buildPageMenu(int pageIndex) {
+        return new PaperPageMenu<>(this, pageIndex);
     }
 
     /**
      * Synthesised page menu backed by a {@link PaperPageLayout}. Returns Adventure
      * {@link Component} titles with no serialization round-trip.
      */
-    private record PaperPageMenu(
-        @NotNull PaperPaginationSession<?> session,
+    private record PaperPageMenu<T>(
+        @NotNull PaperPaginationSession<T> session,
         int pageIndex
     ) implements PaperInteractiveMenu {
 
         @Override
-        public @NotNull Component title(@NotNull MenuView<?> view) {
-            // Safe cast: PaperPaginationSession is only constructed with PaperPageLayout.
+        public @NotNull Component title(@NotNull MenuView<Component, ?> view) {
             return paperLayout().title(contextFor(view));
         }
 
         @Override
-        public @NotNull Capacity capacity(@NotNull MenuView<?> view) {
+        public @NotNull Capacity capacity(@NotNull MenuView<Component, ?> view) {
             return paperLayout().capacity();
         }
 
-        @SuppressWarnings({"unchecked", "rawtypes"})
         @Override
-        public @NotNull Content content(@NotNull MenuView<?> view) {
-            PaperPageLayout layout = paperLayout();
-            PageContext ctx = contextFor(view);
+        public @NotNull Content content(@NotNull MenuView<Component, ?> view) {
+            PaperPageLayout<T> layout = paperLayout();
+            PaperPageContext<T> ctx = contextFor(view);
             Capacity capacity = layout.capacity();
 
             Content content = Content.empty(capacity);
             layout.decorations(ctx).forEach(content::set);
 
-            List<?> items = session.sliceFor(pageIndex);
+            List<T> items = session.sliceFor(pageIndex);
             Iterator<Slot> slotIterator = layout.fillMask().stream().iterator();
-            var renderer = (studio.mevera.lotus.api.pagination.ComponentRenderer) session.definition.renderer();
+            var renderer = session.definition.renderer();
             int rendered = 0;
             int max = session.definition.trimOverflow() ? layout.fillMask().size() : Integer.MAX_VALUE;
-            for (Object item : items) {
+            for (T item : items) {
                 if (rendered++ >= max || !slotIterator.hasNext()) break;
                 content.set(slotIterator.next(), renderer.render(item, ctx));
             }
@@ -96,12 +99,12 @@ public class PaperPaginationSession<T> extends DefaultPaginationSession<T> {
             return "PaperPageMenu#" + pageIndex;
         }
 
-        private @NotNull PaperPageLayout paperLayout() {
-            return (PaperPageLayout) session.definition.layout();
+        private @NotNull PaperPageLayout<T> paperLayout() {
+            return (PaperPageLayout<T>) session.definition.layout();
         }
 
-        private @NotNull PageContext contextFor(@NotNull MenuView<?> view) {
-            return new PageContext(pageIndex, session.totalPages, view.viewer(), session);
+        private @NotNull PaperPageContext<T> contextFor(@NotNull MenuView<Component, ?> view) {
+            return new PaperPageContext<>(pageIndex, session.totalPages, view.viewer(), session);
         }
 
         private static @NotNull Button wrapNav(@NotNull Button base, @NotNull ClickAction navigate) {

@@ -16,9 +16,10 @@ import studio.mevera.lotus.api.slot.Capacity;
  * <p>
  * A menu view holds the resolved inventory state, content, and per-view data.
  *
+ * @param <C> the type representing the title.
  * @param <M> the menu type
  */
-public interface MenuView<M extends Menu<?>> extends InventoryHolder {
+public interface MenuView<C, M extends Menu<C>> extends InventoryHolder {
 
     /**
      * Returns the Lotus runtime that owns this view.
@@ -29,6 +30,12 @@ public interface MenuView<M extends Menu<?>> extends InventoryHolder {
      * Returns the menu template behind this view.
      */
     @NotNull M menu();
+
+    /**
+     * Returns the title of the view.
+     * @return the title of the view.
+     */
+    @NotNull C title();
 
     /**
      * Returns the player viewing this menu.

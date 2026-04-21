@@ -8,10 +8,8 @@ import org.jetbrains.annotations.Nullable;
 import studio.mevera.lotus.api.data.DataRegistry;
 import studio.mevera.lotus.api.menu.Menu;
 import studio.mevera.lotus.api.menu.MenuView;
-import studio.mevera.lotus.internal.LotusListener;
 import studio.mevera.lotus.internal.LotusLogger;
 import studio.mevera.lotus.internal.menu.BaseMenuView;
-import studio.mevera.lotus.internal.pagination.DefaultPaginationSession;
 import studio.mevera.lotus.spi.PaginationSessionFactory;
 import studio.mevera.lotus.spi.opener.ViewOpener;
 
@@ -22,35 +20,40 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.UUID;
+import java.util.function.Consumer;
 
 /**
  * Facade and runtime for the Lotus menu framework. One instance per plugin: holds open-view
  * registry, configurable opener strategies, and the bound Bukkit listener.
  * <p>
- * Construct via {@link #builder(Plugin)}. All public mutators must be called on the server main
+ * Construct via platform factories such as {@code PaperLotus.create(...)} or
+ * {@code SpigotLotus.create(...)}. All public mutators must be called on the server main
  * thread.
  */
-public final class Lotus {
+public final class Lotus<C> {
 
     private final Plugin plugin;
     private final Options options;
     private final LotusLogger logger;
-    private ViewOpener defaultViewOpener;
-    private PaginationSessionFactory sessionFactory = DefaultPaginationSession::new;
-    private final Map<InventoryType, ViewOpener> openers = new EnumMap<>(InventoryType.class);
-    private final Map<UUID, MenuView<?>> openViews = new HashMap<>();
-    private final Map<String, Menu<?>> registeredMenus = new HashMap<>();
+    private final ViewOpener<C> defaultViewOpener;
+    private PaginationSessionFactory<C> sessionFactory;
+    private final Map<InventoryType, ViewOpener<C>> openers = new EnumMap<>(InventoryType.class);
+    private final Map<UUID, MenuView<C, ?>> openViews = new HashMap<>();
+    private final Map<String, Menu<C>> registeredMenus = new HashMap<>();
 
-    Lotus(@NotNull Plugin plugin, @NotNull Options options, @NotNull ViewOpener defaultViewOpener) {
+    Lotus(
+        @NotNull Plugin plugin,
+        @NotNull Options options,
+        @NotNull ViewOpener<C> defaultViewOpener,
+        @NotNull PaginationSessionFactory<C> sessionFactory,
+        @NotNull Consumer<Lotus<C>> bootstrap
+    ) {
         this.plugin = Objects.requireNonNull(plugin);
         this.options = Objects.requireNonNull(options);
         this.defaultViewOpener = Objects.requireNonNull(defaultViewOpener);
         this.logger = new LotusLogger(plugin.getLogger(), options.debug());
-        plugin.getServer().getPluginManager().registerEvents(new LotusListener(this), plugin);
-    }
-
-    public static @NotNull LotusBuilder builder(@NotNull Plugin plugin) {
-        return new LotusBuilder(plugin);
+        this.sessionFactory = Objects.requireNonNull(sessionFactory);
+        Objects.requireNonNull(bootstrap).accept(this);
     }
 
     public @NotNull Plugin plugin() {
@@ -69,39 +72,39 @@ public final class Lotus {
         openers.put(type, opener);
     }
 
-    public @NotNull ViewOpener openerFor(@NotNull InventoryType type) {
+    public @NotNull ViewOpener<C> openerFor(@NotNull InventoryType type) {
         return openers.getOrDefault(type, defaultViewOpener);
     }
 
-    public @NotNull PaginationSessionFactory sessionFactory() {
+    public @NotNull PaginationSessionFactory<C> sessionFactory() {
         return sessionFactory;
     }
 
-    public void sessionFactory(@NotNull PaginationSessionFactory factory) {
+    public void sessionFactory(@NotNull PaginationSessionFactory<C> factory) {
         this.sessionFactory = Objects.requireNonNull(factory);
     }
 
-    public void registerMenu(@NotNull Menu<?> menu) {
+    public void registerMenu(@NotNull Menu<C> menu) {
         registeredMenus.put(menu.name().toLowerCase(), menu);
     }
 
-    public @NotNull Optional<Menu<?>> registeredMenu(@NotNull String name) {
+    public @NotNull Optional<Menu<C>> registeredMenu(@NotNull String name) {
         return Optional.ofNullable(registeredMenus.get(name.toLowerCase()));
     }
 
-    public @NotNull Optional<MenuView<?>> viewOf(@NotNull Player player) {
+    public @NotNull Optional<MenuView<C, ?>> viewOf(@NotNull Player player) {
         return Optional.ofNullable(openViews.get(player.getUniqueId()));
     }
 
-    public @NotNull Collection<MenuView<?>> openViews() {
+    public @NotNull Collection<MenuView<C, ?>> openViews() {
         return openViews.values();
     }
 
-    public <M extends Menu<?>> @NotNull MenuView<M> openMenu(@NotNull Player viewer, @NotNull M menu) {
+    public <M extends Menu<C>> @NotNull MenuView<C, M> openMenu(@NotNull Player viewer, @NotNull M menu) {
         return openMenu(viewer, menu, DataRegistry.empty());
     }
 
-    public <M extends Menu<?>> @NotNull MenuView<M> openMenu(@NotNull Player viewer, @NotNull M menu, @NotNull DataRegistry data) {
+    public <M extends Menu<C>> @NotNull MenuView<C, M> openMenu(@NotNull Player viewer, @NotNull M menu, @NotNull DataRegistry data) {
         var view = new BaseMenuView<>(this, menu, viewer, data);
         view.open(openerFor(menu.type()));
         openViews.put(viewer.getUniqueId(), view);
@@ -116,11 +119,11 @@ public final class Lotus {
     }
 
     /**
-     * Internal: registers/replaces the open view for a player. Called from {@link LotusListener}
+     * Internal: registers/replaces the open view for a player. Called from platform listeners
      * when a click arrives for an inventory whose holder is a Lotus view but the player isn't yet
      * tracked (e.g. opened directly by another plugin).
      */
-    public void track(@NotNull Player player, @NotNull MenuView<?> view) {
+    public void track(@NotNull Player player, @NotNull MenuView<C, ?> view) {
         openViews.put(player.getUniqueId(), view);
     }
 
@@ -128,7 +131,7 @@ public final class Lotus {
         openViews.remove(player.getUniqueId());
     }
 
-    public @Nullable MenuView<?> resolveView(@NotNull Player player) {
+    public @Nullable MenuView<C, ?> resolveView(@NotNull Player player) {
         return openViews.get(player.getUniqueId());
     }
 

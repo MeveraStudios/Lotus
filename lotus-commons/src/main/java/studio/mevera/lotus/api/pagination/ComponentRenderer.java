@@ -7,10 +7,10 @@ import studio.mevera.lotus.api.button.Button;
  * Converts one page item into a {@link Button}.
  */
 @FunctionalInterface
-public interface ComponentRenderer<T> {
+public interface ComponentRenderer<T, X extends AbstractPageContext<?, T, ?>> {
 
     /**
      * Creates the button to show for the given item.
      */
-    @NotNull Button render(@NotNull T item, @NotNull PageContext context);
+    @NotNull Button render(@NotNull T item, @NotNull X context);
 }

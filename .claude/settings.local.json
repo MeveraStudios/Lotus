@@ -22,7 +22,9 @@
       "Bash(javap -p lotus-spigot/build/classes/java/main/studio/mevera/lotus/spigot/ItemBuilder.class)",
       "Bash(javap -p lotus-spigot/build/classes/java/main/studio/mevera/lotus/spigot/SpigotLotus.class)",
       "Bash(javap -verbose lotus-commons/build/classes/java/main/studio/mevera/lotus/api/menu/Menu.class)",
-      "Bash(xargs -I {} javap -verbose {})"
+      "Bash(xargs -I {} javap -verbose {})",
+      "Bash(./gradlew compileJava)",
+      "Bash(python3 -c ' *)"
     ]
   }
 }

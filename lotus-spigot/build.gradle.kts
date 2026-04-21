@@ -37,7 +37,7 @@ mavenPublishing {
             developerConnection.set("scm:git:ssh://git@github.com/MeveraStudios/Lotus.git")
         }
     }
-    if (gradle.startParameter.taskNames.none { it == "publishToMavenLocal" }) {
+    if (gradle.startParameter.taskNames.none { it.endsWith("publishToMavenLocal") }) {
         publishToMavenCentral(com.vanniktech.maven.publish.SonatypeHost.CENTRAL_PORTAL)
         signAllPublications()
     }

@@ -3,33 +3,26 @@ package studio.mevera.lotus.internal.pagination;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 import studio.mevera.lotus.Lotus;
-import studio.mevera.lotus.api.button.Button;
-import studio.mevera.lotus.api.button.ClickAction;
-import studio.mevera.lotus.api.content.Content;
 import studio.mevera.lotus.api.menu.InteractiveMenu;
-import studio.mevera.lotus.api.menu.MenuView;
-import studio.mevera.lotus.api.pagination.PageContext;
-import studio.mevera.lotus.api.pagination.PageLayout;
-import studio.mevera.lotus.api.pagination.Pagination;
+import studio.mevera.lotus.api.pagination.AbstractPagination;
+import studio.mevera.lotus.api.pagination.AbstractPageContext;
 import studio.mevera.lotus.api.pagination.PaginationSession;
-import studio.mevera.lotus.api.slot.Capacity;
-import studio.mevera.lotus.api.slot.Slot;
 
-import java.util.Iterator;
 import java.util.List;
 import java.util.Objects;
 
 /**
  * Per-player pagination runtime. Captures a snapshot of source items at construction so the page
- * count is stable for the session's lifetime, then synthesises a {@link PageMenu} per navigation.
+ * count is stable for the session's lifetime, then synthesises a PageMenu per navigation.
  * <p>
  * Subclass and override {@link #buildPageMenu(int)} to supply a platform-specific menu
  * (e.g. {@code PaperPaginationSession} in lotus-paper uses Adventure Component titles).
  */
-public class DefaultPaginationSession<T> implements PaginationSession<T> {
+public abstract class DefaultPaginationSession<C, T, X extends AbstractPageContext<C, T, ?>>
+    implements PaginationSession<C, T, X> {
 
-    protected final Lotus lotus;
-    protected final Pagination<T> definition;
+    protected final Lotus<C> lotus;
+    protected final AbstractPagination<C, T, X> definition;
     protected final Player viewer;
     protected final List<T> snapshot;
     protected final int totalPages;
@@ -39,8 +32,8 @@ public class DefaultPaginationSession<T> implements PaginationSession<T> {
     private boolean closed;
 
     public DefaultPaginationSession(
-        @NotNull Pagination<T> definition,
-        @NotNull Lotus lotus,
+        @NotNull AbstractPagination<C, T, X> definition,
+        @NotNull Lotus<C> lotus,
         @NotNull Player viewer
     ) {
         this.lotus = Objects.requireNonNull(lotus);
@@ -51,7 +44,7 @@ public class DefaultPaginationSession<T> implements PaginationSession<T> {
         this.totalPages = Math.max(1, (int) Math.ceil(snapshot.size() / (double) itemsPerPage));
     }
 
-    @Override public @NotNull Pagination<T> definition() { return definition; }
+    @Override public @NotNull AbstractPagination<C, T, ? super X> definition() { return definition; }
     @Override public @NotNull Player viewer() { return viewer; }
     @Override public int currentIndex() { return currentIndex; }
     @Override public int totalPages() { return totalPages; }
@@ -73,7 +66,7 @@ public class DefaultPaginationSession<T> implements PaginationSession<T> {
         Objects.checkIndex(pageIndex, totalPages);
         if (closed) throw new IllegalStateException("session closed");
         this.currentIndex = pageIndex;
-        InteractiveMenu<?> menu = buildPageMenu(pageIndex);
+        InteractiveMenu<C> menu = buildPageMenu(pageIndex);
         lotus.openMenu(viewer, menu);
     }
 
@@ -88,9 +81,7 @@ public class DefaultPaginationSession<T> implements PaginationSession<T> {
      * Factory method for constructing the page menu for a given index.
      * Override in subclasses to produce platform-specific menus with richer title types.
      */
-    protected @NotNull InteractiveMenu<?> buildPageMenu(int pageIndex) {
-        return new PageMenu(this, pageIndex);
-    }
+    protected @NotNull abstract InteractiveMenu<C> buildPageMenu(int pageIndex);
 
     protected List<T> sliceFor(int pageIndex) {
         int start = pageIndex * itemsPerPage;
@@ -99,76 +90,4 @@ public class DefaultPaginationSession<T> implements PaginationSession<T> {
         return snapshot.subList(start, end);
     }
 
-    /**
-     * Synthesised {@link InteractiveMenu}{@code <String>} representing one page.
-     * Implements {@link InteractiveMenu} purely to wire navigation without exposing
-     * handler types to users.
-     */
-    protected record PageMenu(
-        @NotNull DefaultPaginationSession<?> session,
-        int pageIndex
-    ) implements InteractiveMenu<String> {
-
-        @SuppressWarnings("unchecked")
-        @Override
-        public @NotNull String title(@NotNull MenuView<?> view) {
-            // Safe cast: in lotus-commons, layouts are always PageLayout<String>.
-            // Subclasses override buildPageMenu() to provide Component-titled menus instead.
-            return ((PageLayout<String>) session.definition.layout()).title(contextFor(view));
-        }
-
-        @Override
-        public @NotNull Capacity capacity(@NotNull MenuView<?> view) {
-            return session.definition.layout().capacity();
-        }
-
-        @SuppressWarnings({"unchecked", "rawtypes"})
-        @Override
-        public @NotNull Content content(@NotNull MenuView<?> view) {
-            PageLayout layout = session.definition.layout();
-            PageContext ctx = contextFor(view);
-            Capacity capacity = layout.capacity();
-
-            Content content = Content.empty(capacity);
-            layout.decorations(ctx).forEach(content::set);
-
-            List<?> items = session.sliceFor(pageIndex);
-            Iterator<Slot> slotIterator = layout.fillMask().stream().iterator();
-            var renderer = (studio.mevera.lotus.api.pagination.ComponentRenderer) session.definition.renderer();
-            int rendered = 0;
-            int max = session.definition.trimOverflow() ? layout.fillMask().size() : Integer.MAX_VALUE;
-            for (Object item : items) {
-                if (rendered++ >= max || !slotIterator.hasNext()) break;
-                content.set(slotIterator.next(), renderer.render(item, ctx));
-            }
-
-            if (!ctx.isFirst()) {
-                Button prev = layout.previousButton(ctx);
-                content.set(layout.previousButtonSlot(), wrapNav(prev, (v, e) -> session.previous()));
-            }
-            if (!ctx.isLast()) {
-                Button next = layout.nextButton(ctx);
-                content.set(layout.nextButtonSlot(), wrapNav(next, (v, e) -> session.next()));
-            }
-            return content;
-        }
-
-        @Override
-        public @NotNull String name() {
-            return "PageMenu#" + pageIndex;
-        }
-
-        private @NotNull PageContext contextFor(@NotNull MenuView<?> view) {
-            return new PageContext(pageIndex, session.totalPages, view.viewer(), session);
-        }
-
-        private static @NotNull Button wrapNav(@NotNull Button base, @NotNull ClickAction navigate) {
-            ClickAction action = (view, event) -> {
-                event.setCancelled(true);
-                base.dispatch(view, event);
-                navigate.onClick(view, event);
-            };
-            return Button.clickable(base.item(), action);
-        }
-    }
 }

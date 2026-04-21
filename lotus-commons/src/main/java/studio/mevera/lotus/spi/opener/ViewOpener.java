@@ -10,10 +10,10 @@ import studio.mevera.lotus.api.menu.MenuView;
  * <p>
  * Different inventory types may use different opener implementations.
  */
-public interface ViewOpener {
+public interface ViewOpener<C> {
 
     /**
      * Creates and opens the inventory for the given view.
      */
-    @NotNull Inventory open(@NotNull Lotus lotus, @NotNull MenuView<?> view);
+    @NotNull Inventory open(@NotNull Lotus<C> lotus, @NotNull MenuView<C, ?> view);
 }

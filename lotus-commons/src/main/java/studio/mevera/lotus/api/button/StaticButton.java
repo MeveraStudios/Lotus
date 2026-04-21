@@ -14,7 +14,7 @@ public record StaticButton(@NotNull ItemStack item, @NotNull DataRegistry data) 
     }
 
     @Override
-    public void dispatch(@NotNull MenuView<?> view, @NotNull InventoryClickEvent event) {
+    public void dispatch(@NotNull MenuView<?, ?> view, @NotNull InventoryClickEvent event) {
         // no-op
     }
 }

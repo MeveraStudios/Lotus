@@ -76,7 +76,7 @@ public record CycleButton(
     }
 
     @Override
-    public void dispatch(@NotNull MenuView<?> view, @NotNull InventoryClickEvent event) {
+    public void dispatch(@NotNull MenuView<?, ?> view, @NotNull InventoryClickEvent event) {
         current().dispatch(view, event);
         view.content().set(Slot.of(event.getSlot()), advanced());
     }

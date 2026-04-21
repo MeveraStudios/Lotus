@@ -8,12 +8,12 @@ import org.jetbrains.annotations.NotNull;
  * <p>
  * A session tracks the current page and opens page menus as the player navigates.
  */
-public interface PaginationSession<T> {
+public interface PaginationSession<C, T, X extends AbstractPageContext<C, T, ?>> {
 
     /**
      * Returns the shared pagination definition.
      */
-    @NotNull Pagination<T> definition();
+    @NotNull AbstractPagination<C, T, ? super X> definition();
 
     /**
      * Returns the player viewing this session.

@@ -1,11 +1,19 @@
 package studio.mevera.lotus.paper;
 
+import net.kyori.adventure.text.Component;
+import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
 import org.jetbrains.annotations.NotNull;
 import studio.mevera.lotus.Lotus;
 import studio.mevera.lotus.LotusBuilder;
+import studio.mevera.lotus.api.pagination.AbstractPagination;
+import studio.mevera.lotus.api.pagination.AbstractPageContext;
+import studio.mevera.lotus.api.pagination.PaginationSession;
 import studio.mevera.lotus.paper.internal.opener.PaperViewOpener;
+import studio.mevera.lotus.paper.api.pagination.Pagination;
+import studio.mevera.lotus.paper.internal.PaperLotusListener;
 import studio.mevera.lotus.paper.internal.pagination.PaperPaginationSession;
+import studio.mevera.lotus.spi.PaginationSessionFactory;
 
 import java.util.function.Consumer;
 
@@ -37,20 +45,40 @@ public final class PaperLotus {
     /**
      * Creates a {@link Lotus} facade pre-configured for Paper with default options.
      */
-    public static @NotNull Lotus create(@NotNull Plugin plugin) {
+    public static @NotNull Lotus<Component> create(@NotNull Plugin plugin) {
         return create(plugin, b -> {});
     }
 
+
+    public static final class PaperPaginationSessionFactory implements PaginationSessionFactory<Component> {
+
+        @Override
+        @SuppressWarnings("unchecked")
+        public <T, X extends AbstractPageContext<Component, T, ?>> @NotNull PaginationSession<Component, T, ? extends X> create(
+            @NotNull AbstractPagination<Component, T, X> definition,
+            @NotNull Lotus<Component> lotus,
+            @NotNull Player viewer
+        ) {
+            return (PaginationSession<Component, T, ? extends X>)
+                new PaperPaginationSession<>((Pagination<T>) definition, lotus, viewer);
+        }
+    }
     /**
      * Creates a {@link Lotus} facade pre-configured for Paper. The {@code customizer} receives the
      * {@link LotusBuilder} after Paper defaults ({@link PaperViewOpener}) have been applied, so you
      * may override any setting except the session factory (which is applied post-build).
      */
-    public static @NotNull Lotus create(@NotNull Plugin plugin, @NotNull Consumer<LotusBuilder> customizer) {
-        LotusBuilder builder = Lotus.builder(plugin).defaultViewOpener(new PaperViewOpener());
+    public static @NotNull Lotus<Component> create(
+        @NotNull Plugin plugin,
+        @NotNull Consumer<LotusBuilder<Component>> customizer
+    ) {
+        LotusBuilder<Component> builder = new LotusBuilder<Component>(
+            plugin,
+            lotus -> plugin.getServer().getPluginManager().registerEvents(new PaperLotusListener<>(lotus), plugin)
+        )
+            .defaultViewOpener(new PaperViewOpener())
+            .paginationSessionFactory(new PaperPaginationSessionFactory());
         customizer.accept(builder);
-        Lotus lotus = builder.build();
-        lotus.sessionFactory(PaperPaginationSession::new);
-        return lotus;
+        return builder.build();
     }
 }

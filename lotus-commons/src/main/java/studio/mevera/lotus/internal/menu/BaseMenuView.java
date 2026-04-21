@@ -26,13 +26,14 @@ import java.util.Objects;
  * Bukkit {@link Inventory} once opened. Title extraction is delegated entirely to the
  * platform-specific {@link ViewOpener}.
  */
-public class BaseMenuView<M extends Menu<?>> implements MenuView<M> {
+public class BaseMenuView<C, M extends Menu<C>> implements MenuView<C, M> {
 
     private final Lotus lotus;
     private final M menu;
     private final Player viewer;
     private final DataRegistry data;
 
+    private @Nullable C title;
     private @Nullable Capacity capacity;
     private @Nullable Content content;
     private @Nullable Inventory inventory;
@@ -50,6 +51,7 @@ public class BaseMenuView<M extends Menu<?>> implements MenuView<M> {
     @Override public @NotNull Player viewer() { return viewer; }
     @Override public @NotNull DataRegistry data() { return data; }
     @Override public @NotNull Capacity capacity() { return require(capacity, "capacity"); }
+    @Override public @NotNull C title() {return require(title, "title");}
     @Override public @NotNull Content content() { return require(content, "content"); }
     @Override public @Nullable Inventory getInventory() { return inventory; }
     @Override public boolean isOpen() { return open; }
@@ -59,6 +61,7 @@ public class BaseMenuView<M extends Menu<?>> implements MenuView<M> {
      * Title extraction is handled by the {@link ViewOpener} at inventory-creation time.
      */
     protected void resolve() {
+        this.title = menu.title(this);
         this.capacity = menu.capacity(this);
         this.content = menu.content(this);
     }

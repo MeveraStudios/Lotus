@@ -17,13 +17,13 @@ import studio.mevera.lotus.spi.opener.ViewOpener;
  * taken verbatim from {@code menu.title(view)} — users are expected to apply {@code ChatColor}
  * translation themselves (typically via the {@code ItemBuilder}).
  */
-public final class SpigotViewOpener implements ViewOpener {
+public final class SpigotViewOpener implements ViewOpener<String> {
 
     @Override
-    public @NotNull Inventory open(@NotNull Lotus lotus, @NotNull MenuView<?> view) {
+    public @NotNull Inventory open(@NotNull Lotus<String> lotus, @NotNull MenuView<String, ?> view) {
         String title = resolveTitle(view);
         Inventory inventory = createInventory(view, title);
-        if (view instanceof BaseMenuView<?> base) {
+        if (view instanceof BaseMenuView<?, ?> base) {
             base.renderInto(inventory);
         } else {
             view.content().forEach((slot, button) -> inventory.setItem(slot.index(), button.item()));
@@ -32,14 +32,12 @@ public final class SpigotViewOpener implements ViewOpener {
         return inventory;
     }
 
-    private static @NotNull String resolveTitle(@NotNull MenuView<?> view) {
+    private static @NotNull String resolveTitle(@NotNull MenuView<String, ?> view) {
         // On Spigot, menus implement Menu<String> — title() returns a String directly.
-        // The toString() fallback handles any exotic title types defensively.
-        Object raw = view.menu().title(view);
-        return raw instanceof String s ? s : raw.toString();
+        return view.title();
     }
 
-    private static @NotNull Inventory createInventory(@NotNull MenuView<?> view, @NotNull String title) {
+    private static @NotNull Inventory createInventory(@NotNull MenuView<String, ?> view, @NotNull String title) {
         InventoryType type = view.type();
         if (type == InventoryType.CHEST) {
             return Bukkit.createInventory(view, view.capacity().totalSize(), title);

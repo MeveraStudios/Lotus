@@ -47,7 +47,7 @@ public record SpanningButton(
     }
 
     @Override
-    public void dispatch(@NotNull MenuView<?> view, @NotNull InventoryClickEvent event) {
+    public void dispatch(@NotNull MenuView<?, ?> view, @NotNull InventoryClickEvent event) {
         action.onClick(view, event);
     }
 }

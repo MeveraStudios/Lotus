@@ -1,15 +1,11 @@
 package studio.mevera.lotus.internal;
 
 import org.bukkit.entity.Player;
-import org.bukkit.event.EventHandler;
-import org.bukkit.event.EventPriority;
-import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryAction;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.event.inventory.InventoryDragEvent;
 import org.bukkit.event.inventory.InventoryOpenEvent;
-import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.inventory.Inventory;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -23,79 +19,79 @@ import studio.mevera.lotus.internal.menu.BaseMenuView;
 import java.util.Objects;
 
 /**
- * Single Bukkit listener that bridges inventory events into the Lotus runtime. Resolves the
- * {@link MenuView} either from the per-player open-view registry or from the inventory holder.
+ * Shared listener logic that is agnostic to the platform-specific InventoryView ABI.
  */
-public final class LotusListener implements Listener {
+public abstract class AbstractLotusListener<C> {
 
-    private final Lotus lotus;
+    protected final Lotus<C> lotus;
     private volatile @Nullable Pair<Slot, Button> lastPickedUpButton;
 
-    public LotusListener(@NotNull Lotus lotus) {
+    protected AbstractLotusListener(@NotNull Lotus<C> lotus) {
         this.lotus = Objects.requireNonNull(lotus);
     }
 
-    @EventHandler(priority = EventPriority.LOW, ignoreCancelled = false)
-    public void onClick(@NotNull InventoryClickEvent event) {
+    protected void handleClick(
+        @NotNull InventoryClickEvent event,
+        @NotNull Inventory topInventory,
+        @NotNull Inventory bottomInventory
+    ) {
         if (!(event.getWhoClicked() instanceof Player player)) return;
-        MenuView<?> view = resolve(player, event.getView().getTopInventory());
+        MenuView<?, ?> view = resolve(player, topInventory);
         if (view == null) return;
 
         Inventory clicked = event.getClickedInventory();
-        if (clicked == null || clicked.equals(event.getView().getBottomInventory())) {
+        if (clicked == null || clicked.equals(bottomInventory)) {
             event.setCancelled(!lotus.options().allowBottomInventoryClick());
             return;
         }
         event.setCancelled(true);
         handleDynamicButtonAction(view, event);
-        if (view instanceof BaseMenuView<?> base) base.handleClick(event);
+        if (view instanceof BaseMenuView<?, ?> base) base.handleClick(event);
     }
 
-    @EventHandler(priority = EventPriority.LOW)
-    public void onDrag(@NotNull InventoryDragEvent event) {
+    protected void handleDrag(@NotNull InventoryDragEvent event, @NotNull Inventory topInventory) {
         if (!(event.getWhoClicked() instanceof Player player)) return;
-        MenuView<?> view = resolve(player, event.getView().getTopInventory());
+        MenuView<?, ?> view = resolve(player, topInventory);
         if (view == null) return;
         event.setCancelled(true);
-        if (view instanceof BaseMenuView<?> base) base.handleDrag(event);
+        if (view instanceof BaseMenuView<?, ?> base) base.handleDrag(event);
     }
 
-    @EventHandler(priority = EventPriority.LOW)
-    public void onOpen(@NotNull InventoryOpenEvent event) {
-        if (!(event.getInventory().getHolder() instanceof MenuView<?> view)) return;
+    @SuppressWarnings("unchecked")
+    protected void handleOpen(@NotNull InventoryOpenEvent event) {
+        if (!(event.getInventory().getHolder() instanceof MenuView<?, ?> view)) return;
         if (!(event.getPlayer() instanceof Player player)) return;
-        lotus.track(player, view);
-        if (view instanceof BaseMenuView<?> base) base.handleOpen(event);
+        lotus.track(player, (MenuView<C, ?>) view);
+        if (view instanceof BaseMenuView<?, ?> base) base.handleOpen(event);
     }
 
-    @EventHandler(priority = EventPriority.LOW)
-    public void onClose(@NotNull InventoryCloseEvent event) {
+    protected void handleClose(@NotNull InventoryCloseEvent event) {
         if (!(event.getPlayer() instanceof Player player)) return;
-        MenuView<?> view = lotus.resolveView(player);
+        MenuView<?, ?> view = lotus.resolveView(player);
         if (view == null) return;
         try {
-            if (view instanceof BaseMenuView<?> base) base.handleClose(event);
+            if (view instanceof BaseMenuView<?, ?> base) base.handleClose(event);
         } finally {
             lotus.untrack(player);
         }
     }
 
-    @EventHandler(priority = EventPriority.LOW)
-    public void onQuit(@NotNull PlayerQuitEvent event) {
-        lotus.untrack(event.getPlayer());
+    protected void handleQuit(@NotNull Player player) {
+        lotus.untrack(player);
     }
 
-    private MenuView<?> resolve(@NotNull Player player, @NotNull Inventory topInventory) {
-        MenuView<?> tracked = lotus.resolveView(player);
+    @SuppressWarnings("unchecked")
+    private @Nullable MenuView<?, ?> resolve(@NotNull Player player, @NotNull Inventory topInventory) {
+        MenuView<?, ?> tracked = lotus.resolveView(player);
         if (tracked != null) return tracked;
-        if (topInventory.getHolder() instanceof MenuView<?> holder) {
-            lotus.track(player, holder);
+        if (topInventory.getHolder() instanceof MenuView<?, ?> holder) {
+            lotus.track(player, (MenuView<C, ?>) holder);
             return holder;
         }
         return null;
     }
 
-    private void handleDynamicButtonAction(@NotNull MenuView<?> view, @NotNull InventoryClickEvent event) {
+    private void handleDynamicButtonAction(@NotNull MenuView<?, ?> view, @NotNull InventoryClickEvent event) {
         if (!lotus.options().dynamicButtonAction()) return;
 
         InventoryAction action = event.getAction();

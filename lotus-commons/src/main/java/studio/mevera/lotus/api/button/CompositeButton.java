@@ -42,7 +42,7 @@ public record CompositeButton(
     }
 
     @Override
-    public void dispatch(@NotNull MenuView<?> view, @NotNull InventoryClickEvent event) {
+    public void dispatch(@NotNull MenuView<?, ?> view, @NotNull InventoryClickEvent event) {
         for (Button child : children) {
             child.dispatch(view, event);
         }

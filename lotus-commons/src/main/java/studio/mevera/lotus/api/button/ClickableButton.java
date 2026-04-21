@@ -19,7 +19,7 @@ public record ClickableButton(@NotNull ItemStack item, @NotNull ClickAction acti
     }
 
     @Override
-    public void dispatch(@NotNull MenuView<?> view, @NotNull InventoryClickEvent event) {
+    public void dispatch(@NotNull MenuView<?, ?> view, @NotNull InventoryClickEvent event) {
         action.onClick(view, event);
     }
 }

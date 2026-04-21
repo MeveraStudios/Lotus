@@ -13,7 +13,7 @@ public interface ClickAction {
     /**
      * Handles the click.
      */
-    void onClick(@NotNull MenuView<?> view, @NotNull InventoryClickEvent event);
+    void onClick(@NotNull MenuView<?, ?> view, @NotNull InventoryClickEvent event);
 
     /**
      * Returns an action that runs this action first, then {@code next}.

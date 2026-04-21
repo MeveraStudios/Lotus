@@ -17,17 +17,17 @@ public interface Menu<C> {
     /**
      * Returns the title for the current view.
      */
-    @NotNull C title(@NotNull MenuView<?> view);
+    @NotNull C title(@NotNull MenuView<C, ?> view);
 
     /**
      * Returns the capacity for the current view.
      */
-    @NotNull Capacity capacity(@NotNull MenuView<?> view);
+    @NotNull Capacity capacity(@NotNull MenuView<C, ?> view);
 
     /**
      * Builds the content for the current view.
      */
-    @NotNull Content content(@NotNull MenuView<?> view);
+    @NotNull Content content(@NotNull MenuView<C, ?> view);
 
     /**
      * Returns the menu name used for registration and logging.

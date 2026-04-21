@@ -11,21 +11,26 @@ import java.util.Objects;
  * {@link ContentSource} and {@link ComponentRenderer}; instances are safe to share and reuse
  * across players and threads (definitions only — runtime state lives on the {@link PaginationSession}).
  */
-public final class Pagination<T> {
+public abstract class AbstractPagination<C, T, X extends AbstractPageContext<C, T, ?>> {
 
-    private final PageLayout<?> layout;
+    private final PageLayout<C, X> layout;
     private final ContentSource<T> source;
-    private final ComponentRenderer<T> renderer;
+    private final ComponentRenderer<T, X> renderer;
     private final boolean trimOverflow;
 
-    private Pagination(PageLayout<?> layout, ContentSource<T> source, ComponentRenderer<T> renderer, boolean trimOverflow) {
+    protected AbstractPagination(
+        PageLayout<C, X> layout,
+        ContentSource<T> source,
+        ComponentRenderer<T, X> renderer,
+        boolean trimOverflow
+    ) {
         this.layout = Objects.requireNonNull(layout);
         this.source = Objects.requireNonNull(source);
         this.renderer = Objects.requireNonNull(renderer);
         this.trimOverflow = trimOverflow;
     }
 
-    public @NotNull PageLayout<?> layout() {
+    public @NotNull PageLayout<C, X> layout() {
         return layout;
     }
 
@@ -33,7 +38,7 @@ public final class Pagination<T> {
         return source;
     }
 
-    public @NotNull ComponentRenderer<T> renderer() {
+    public @NotNull ComponentRenderer<T, X> renderer() {
         return renderer;
     }
 
@@ -46,50 +51,58 @@ public final class Pagination<T> {
      * {@link studio.mevera.lotus.spi.PaginationSessionFactory} registered on {@link Lotus},
      * and opens page 0.
      */
-    public @NotNull PaginationSession<T> open(@NotNull Lotus lotus, @NotNull Player viewer) {
-        PaginationSession<T> session = lotus.sessionFactory().create(this, lotus, viewer);
+    public @NotNull PaginationSession<C, T, ? extends X> open(@NotNull Lotus<C> lotus, @NotNull Player viewer) {
+        PaginationSession<C, T, ? extends X> session = lotus.sessionFactory().create(this, lotus, viewer);
         session.goTo(0);
         return session;
     }
 
-    public static <T> @NotNull Builder<T> builder() {
-        return new Builder<>();
-    }
-
-    public static final class Builder<T> {
-        private PageLayout<?> layout;
+    public abstract static class Builder<
+        C,
+        T,
+        X extends AbstractPageContext<C, T, ?>,
+        P extends AbstractPagination<C, T, X>
+    > {
+        private PageLayout<C, X> layout;
         private ContentSource<T> source;
-        private ComponentRenderer<T> renderer;
+        private ComponentRenderer<T, X> renderer;
         private boolean trimOverflow = true;
 
-        private Builder() {
+        protected Builder() {
         }
 
-        public @NotNull Builder<T> layout(@NotNull PageLayout<?> layout) {
+        public @NotNull Builder<C, T, X, P> layout(@NotNull PageLayout<C, X> layout) {
             this.layout = layout;
             return this;
         }
 
-        public @NotNull Builder<T> source(@NotNull ContentSource<T> source) {
+        public @NotNull Builder<C, T, X, P> source(@NotNull ContentSource<T> source) {
             this.source = source;
             return this;
         }
 
-        public @NotNull Builder<T> renderer(@NotNull ComponentRenderer<T> renderer) {
+        public @NotNull Builder<C, T, X, P> renderer(@NotNull ComponentRenderer<T, X> renderer) {
             this.renderer = renderer;
             return this;
         }
 
-        public @NotNull Builder<T> trimOverflow(boolean trim) {
+        public @NotNull Builder<C, T, X, P> trimOverflow(boolean trim) {
             this.trimOverflow = trim;
             return this;
         }
 
-        public @NotNull Pagination<T> build() {
+        public @NotNull P build() {
             if (layout == null) throw new IllegalStateException("layout missing");
             if (source == null) throw new IllegalStateException("source missing");
             if (renderer == null) throw new IllegalStateException("renderer missing");
-            return new Pagination<>(layout, source, renderer, trimOverflow);
+            return create(layout, source, renderer, trimOverflow);
         }
+
+        protected abstract @NotNull P create(
+            @NotNull PageLayout<C, X> layout,
+            @NotNull ContentSource<T> source,
+            @NotNull ComponentRenderer<T, X> renderer,
+            boolean trimOverflow
+        );
     }
 }

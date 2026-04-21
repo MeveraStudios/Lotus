@@ -11,8 +11,9 @@ import studio.mevera.lotus.api.slot.SlotMask;
  * Defines the shared layout for all pages in a pagination.
  *
  * @param <C> the title component type — {@code Component} on Paper, {@code String} on Spigot
+ * @param <X> the page context type supplied to layout hooks
  */
-public interface PageLayout<C> {
+public interface PageLayout<C, X extends AbstractPageContext<C, ?, ?>> {
 
     /**
      * Returns the page capacity.
@@ -22,7 +23,7 @@ public interface PageLayout<C> {
     /**
      * Returns the title for the current page.
      */
-    @NotNull C title(@NotNull PageContext context);
+    @NotNull C title(@NotNull X context);
 
     /**
      * Returns the slots used for page items.
@@ -42,25 +43,24 @@ public interface PageLayout<C> {
     /**
      * Returns the previous-page button.
      */
-    @NotNull Button previousButton(@NotNull PageContext context);
+    @NotNull Button previousButton(@NotNull X context);
 
     /**
      * Returns the next-page button.
      */
-    @NotNull Button nextButton(@NotNull PageContext context);
+    @NotNull Button nextButton(@NotNull X context);
 
     /**
      * Returns the static decorations for the current page.
      */
-    default @NotNull Content decorations(@NotNull PageContext context) {
+    default @NotNull Content decorations(@NotNull X context) {
         return Content.empty(capacity());
     }
 
     /**
-     * Creates a builder for the given capacity. Builds a {@link PageLayout}{@code <String>}
-     * compatible with Spigot 1.8.8 and above.
+     * Creates a generic builder for the given capacity.
      */
-    static @NotNull PageLayoutBuilder builder(@NotNull Capacity capacity) {
-        return new PageLayoutBuilder(capacity);
+    static <C, X extends AbstractPageContext<C, ?, ?>> @NotNull PageLayoutBuilder<C, X> builder(@NotNull Capacity capacity) {
+        return new PageLayoutBuilder<>(capacity);
     }
 }

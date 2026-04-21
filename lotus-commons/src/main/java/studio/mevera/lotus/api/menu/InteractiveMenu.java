@@ -5,5 +5,5 @@ package studio.mevera.lotus.api.menu;
  *
  * @param <C> the title component type — {@code Component} on Paper, {@code String} on Spigot
  */
-public interface InteractiveMenu<C> extends Menu<C>, MenuHandler {
+public interface InteractiveMenu<C> extends Menu<C>, MenuHandler<C> {
 }

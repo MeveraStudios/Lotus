@@ -35,7 +35,7 @@ public sealed interface Button
 
     @NotNull Button withItem(@NotNull ItemStack item);
 
-    void dispatch(@NotNull MenuView<?> view, @NotNull InventoryClickEvent event);
+    void dispatch(@NotNull MenuView<?, ?> view, @NotNull InventoryClickEvent event);
 
     static @NotNull StaticButton of(@NotNull ItemStack item) {
         return new StaticButton(item, DataRegistry.empty());
@@ -47,7 +47,7 @@ public sealed interface Button
 
     static @NotNull TransformingButton transforming(
         @NotNull ItemStack item,
-        @NotNull BiFunction<MenuView<?>, InventoryClickEvent, Button> transformer
+        @NotNull BiFunction<MenuView<?, ?>, InventoryClickEvent, Button> transformer
     ) {
         return new TransformingButton(item, transformer, DataRegistry.empty());
     }
