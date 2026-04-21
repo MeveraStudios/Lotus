@@ -15,12 +15,13 @@ import studio.mevera.lotus.spigot.internal.SpigotPaginationSession;
 public final class Pagination<T> extends AbstractPagination<String, T, SpigotPageContext<T>> {
 
     private Pagination(
+        @NotNull String id,
         @NotNull PageLayout<String, SpigotPageContext<T>> layout,
         @NotNull ContentSource<T> source,
         @NotNull ComponentRenderer<T, SpigotPageContext<T>> renderer,
         boolean trimOverflow
     ) {
-        super(layout, source, renderer, trimOverflow);
+        super(id, layout, source, renderer, trimOverflow);
     }
 
     @Override
@@ -29,14 +30,15 @@ public final class Pagination<T> extends AbstractPagination<String, T, SpigotPag
         return (SpigotPaginationSession<T>) super.open(lotus, viewer);
     }
 
-    public static <T> @NotNull Builder<T> builder() {
-        return new Builder<>();
+    public static <T> @NotNull Builder<T> builder(String id) {
+        return new Builder<>(id);
     }
 
     public static final class Builder<T>
         extends AbstractPagination.Builder<String, T, SpigotPageContext<T>, Pagination<T>> {
 
-        private Builder() {
+        private Builder(String id) {
+            super(id);
         }
 
         @Override
@@ -46,7 +48,7 @@ public final class Pagination<T> extends AbstractPagination<String, T, SpigotPag
             @NotNull ComponentRenderer<T, SpigotPageContext<T>> renderer,
             boolean trimOverflow
         ) {
-            return new Pagination<>(layout, source, renderer, trimOverflow);
+            return new Pagination<>(id, layout, source, renderer, trimOverflow);
         }
     }
 }

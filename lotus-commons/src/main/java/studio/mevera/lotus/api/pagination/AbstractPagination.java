@@ -13,21 +13,28 @@ import java.util.Objects;
  */
 public abstract class AbstractPagination<C, T, X extends AbstractPageContext<C, T, ?>> {
 
+    private final String id;
     private final PageLayout<C, X> layout;
     private final ContentSource<T> source;
     private final ComponentRenderer<T, X> renderer;
     private final boolean trimOverflow;
 
     protected AbstractPagination(
+        String id,
         PageLayout<C, X> layout,
         ContentSource<T> source,
         ComponentRenderer<T, X> renderer,
         boolean trimOverflow
     ) {
+        this.id = id;
         this.layout = Objects.requireNonNull(layout);
         this.source = Objects.requireNonNull(source);
         this.renderer = Objects.requireNonNull(renderer);
         this.trimOverflow = trimOverflow;
+    }
+
+    public @NotNull String getId() {
+        return id;
     }
 
     public @NotNull PageLayout<C, X> layout() {
@@ -63,12 +70,14 @@ public abstract class AbstractPagination<C, T, X extends AbstractPageContext<C, 
         X extends AbstractPageContext<C, T, ?>,
         P extends AbstractPagination<C, T, X>
     > {
+        protected final String id;
         private PageLayout<C, X> layout;
         private ContentSource<T> source;
         private ComponentRenderer<T, X> renderer;
         private boolean trimOverflow = true;
 
-        protected Builder() {
+        protected Builder(String id) {
+            this.id = id;
         }
 
         public @NotNull Builder<C, T, X, P> layout(@NotNull PageLayout<C, X> layout) {

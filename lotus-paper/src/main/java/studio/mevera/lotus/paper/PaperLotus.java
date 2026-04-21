@@ -12,6 +12,7 @@ import studio.mevera.lotus.api.pagination.PaginationSession;
 import studio.mevera.lotus.paper.internal.opener.PaperViewOpener;
 import studio.mevera.lotus.paper.api.pagination.Pagination;
 import studio.mevera.lotus.paper.internal.PaperLotusListener;
+import studio.mevera.lotus.paper.internal.pagination.PaperPageMenu;
 import studio.mevera.lotus.paper.internal.pagination.PaperPaginationSession;
 import studio.mevera.lotus.spi.PaginationSessionFactory;
 
@@ -80,5 +81,26 @@ public final class PaperLotus {
             .paginationSessionFactory(new PaperPaginationSessionFactory());
         customizer.accept(builder);
         return builder.build();
+    }
+
+    public static void syncOpenPagination(Lotus<Component> lotus, String paginationId, Player player) {
+        var view = lotus.resolveView(player);
+        if(view == null) {
+            return;
+        }
+        if(!(view.menu() instanceof PaperPageMenu<?> paperPageMenu)) {
+            return;
+        }
+
+        PaperPaginationSession<?> paginationSession = paperPageMenu.session();
+        if (paginationSession.definition().getId().equals(paginationId)) {
+            paginationSession.reload();
+        }
+    }
+
+    public static void syncOpenPagination(Lotus<Component> lotus, String paginationId) {
+        for(var view : lotus.openViews()) {
+            syncOpenPagination(lotus, paginationId, view.viewer());
+        }
     }
 }

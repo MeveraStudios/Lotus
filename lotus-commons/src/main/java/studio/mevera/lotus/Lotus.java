@@ -135,6 +135,7 @@ public final class Lotus<C> {
         return openViews.get(player.getUniqueId());
     }
 
+
     /**
      * Immutable runtime configuration.
      */

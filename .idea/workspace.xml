@@ -4,55 +4,17 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="5627481f-164c-4877-8050-a073e3de7c6c" name="Changes" comment="Finalizing docs.">
-      <change afterPath="$PROJECT_DIR$/lotus-commons/src/main/java/studio/mevera/lotus/api/pagination/AbstractPageContext.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lotus-commons/src/main/java/studio/mevera/lotus/internal/AbstractLotusListener.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lotus-paper/src/main/java/studio/mevera/lotus/paper/api/pagination/Pagination.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lotus-paper/src/main/java/studio/mevera/lotus/paper/api/pagination/PaperPageContext.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lotus-paper/src/main/java/studio/mevera/lotus/paper/internal/PaperLotusListener.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lotus-spigot/src/main/java/studio/mevera/lotus/spigot/api/pagination/Pagination.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lotus-spigot/src/main/java/studio/mevera/lotus/spigot/api/pagination/SpigotPageContext.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lotus-spigot/src/main/java/studio/mevera/lotus/spigot/api/pagination/SpigotPageLayout.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lotus-spigot/src/main/java/studio/mevera/lotus/spigot/api/pagination/SpigotPageLayoutBuilder.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lotus-spigot/src/main/java/studio/mevera/lotus/spigot/internal/SpigotLotusListener.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lotus-spigot/src/main/java/studio/mevera/lotus/spigot/internal/SpigotPaginationSession.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.claude/settings.local.json" beforeDir="false" afterPath="$PROJECT_DIR$/.claude/settings.local.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lotus-commons/build.gradle.kts" beforeDir="false" afterPath="$PROJECT_DIR$/lotus-commons/build.gradle.kts" afterDir="false" />
+    <list default="true" id="5627481f-164c-4877-8050-a073e3de7c6c" name="Changes" comment="Finalizing the framework base">
+      <change afterPath="$PROJECT_DIR$/lotus-paper/src/main/java/studio/mevera/lotus/paper/internal/pagination/PaperPageMenu.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lotus-commons/src/main/java/studio/mevera/lotus/Lotus.java" beforeDir="false" afterPath="$PROJECT_DIR$/lotus-commons/src/main/java/studio/mevera/lotus/Lotus.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lotus-commons/src/main/java/studio/mevera/lotus/LotusBuilder.java" beforeDir="false" afterPath="$PROJECT_DIR$/lotus-commons/src/main/java/studio/mevera/lotus/LotusBuilder.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lotus-commons/src/main/java/studio/mevera/lotus/api/button/Button.java" beforeDir="false" afterPath="$PROJECT_DIR$/lotus-commons/src/main/java/studio/mevera/lotus/api/button/Button.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lotus-commons/src/main/java/studio/mevera/lotus/api/button/ClickAction.java" beforeDir="false" afterPath="$PROJECT_DIR$/lotus-commons/src/main/java/studio/mevera/lotus/api/button/ClickAction.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lotus-commons/src/main/java/studio/mevera/lotus/api/button/ClickableButton.java" beforeDir="false" afterPath="$PROJECT_DIR$/lotus-commons/src/main/java/studio/mevera/lotus/api/button/ClickableButton.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lotus-commons/src/main/java/studio/mevera/lotus/api/button/CompositeButton.java" beforeDir="false" afterPath="$PROJECT_DIR$/lotus-commons/src/main/java/studio/mevera/lotus/api/button/CompositeButton.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lotus-commons/src/main/java/studio/mevera/lotus/api/button/CycleButton.java" beforeDir="false" afterPath="$PROJECT_DIR$/lotus-commons/src/main/java/studio/mevera/lotus/api/button/CycleButton.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lotus-commons/src/main/java/studio/mevera/lotus/api/button/SpanningButton.java" beforeDir="false" afterPath="$PROJECT_DIR$/lotus-commons/src/main/java/studio/mevera/lotus/api/button/SpanningButton.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lotus-commons/src/main/java/studio/mevera/lotus/api/button/StaticButton.java" beforeDir="false" afterPath="$PROJECT_DIR$/lotus-commons/src/main/java/studio/mevera/lotus/api/button/StaticButton.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lotus-commons/src/main/java/studio/mevera/lotus/api/button/TransformingButton.java" beforeDir="false" afterPath="$PROJECT_DIR$/lotus-commons/src/main/java/studio/mevera/lotus/api/button/TransformingButton.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lotus-commons/src/main/java/studio/mevera/lotus/api/menu/Menu.java" beforeDir="false" afterPath="$PROJECT_DIR$/lotus-commons/src/main/java/studio/mevera/lotus/api/menu/Menu.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lotus-commons/src/main/java/studio/mevera/lotus/api/menu/MenuHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/lotus-commons/src/main/java/studio/mevera/lotus/api/menu/MenuHandler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lotus-commons/src/main/java/studio/mevera/lotus/api/menu/MenuView.java" beforeDir="false" afterPath="$PROJECT_DIR$/lotus-commons/src/main/java/studio/mevera/lotus/api/menu/MenuView.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lotus-commons/src/main/java/studio/mevera/lotus/api/pagination/ComponentRenderer.java" beforeDir="false" afterPath="$PROJECT_DIR$/lotus-commons/src/main/java/studio/mevera/lotus/api/pagination/ComponentRenderer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lotus-commons/src/main/java/studio/mevera/lotus/api/pagination/PageContext.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lotus-commons/src/main/java/studio/mevera/lotus/api/pagination/PageLayout.java" beforeDir="false" afterPath="$PROJECT_DIR$/lotus-commons/src/main/java/studio/mevera/lotus/api/pagination/PageLayout.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lotus-commons/src/main/java/studio/mevera/lotus/api/pagination/PageLayoutBuilder.java" beforeDir="false" afterPath="$PROJECT_DIR$/lotus-commons/src/main/java/studio/mevera/lotus/api/pagination/PageLayoutBuilder.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lotus-commons/src/main/java/studio/mevera/lotus/api/pagination/Pagination.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lotus-commons/src/main/java/studio/mevera/lotus/api/pagination/AbstractPagination.java" beforeDir="false" afterPath="$PROJECT_DIR$/lotus-commons/src/main/java/studio/mevera/lotus/api/pagination/AbstractPagination.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lotus-commons/src/main/java/studio/mevera/lotus/api/pagination/PaginationSession.java" beforeDir="false" afterPath="$PROJECT_DIR$/lotus-commons/src/main/java/studio/mevera/lotus/api/pagination/PaginationSession.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lotus-commons/src/main/java/studio/mevera/lotus/internal/LotusListener.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lotus-commons/src/main/java/studio/mevera/lotus/internal/content/DefaultContent.java" beforeDir="false" afterPath="$PROJECT_DIR$/lotus-commons/src/main/java/studio/mevera/lotus/internal/content/DefaultContent.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lotus-commons/src/main/java/studio/mevera/lotus/internal/menu/BaseMenuView.java" beforeDir="false" afterPath="$PROJECT_DIR$/lotus-commons/src/main/java/studio/mevera/lotus/internal/menu/BaseMenuView.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lotus-commons/src/main/java/studio/mevera/lotus/internal/pagination/DefaultPaginationSession.java" beforeDir="false" afterPath="$PROJECT_DIR$/lotus-commons/src/main/java/studio/mevera/lotus/internal/pagination/DefaultPaginationSession.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lotus-commons/src/main/java/studio/mevera/lotus/spi/PaginationSessionFactory.java" beforeDir="false" afterPath="$PROJECT_DIR$/lotus-commons/src/main/java/studio/mevera/lotus/spi/PaginationSessionFactory.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lotus-commons/src/main/java/studio/mevera/lotus/spi/opener/ViewOpener.java" beforeDir="false" afterPath="$PROJECT_DIR$/lotus-commons/src/main/java/studio/mevera/lotus/spi/opener/ViewOpener.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lotus-paper/build.gradle.kts" beforeDir="false" afterPath="$PROJECT_DIR$/lotus-paper/build.gradle.kts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lotus-paper/src/main/java/studio/mevera/lotus/paper/PaperLotus.java" beforeDir="false" afterPath="$PROJECT_DIR$/lotus-paper/src/main/java/studio/mevera/lotus/paper/PaperLotus.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lotus-paper/src/main/java/studio/mevera/lotus/paper/api/menu/PaperMenu.java" beforeDir="false" afterPath="$PROJECT_DIR$/lotus-paper/src/main/java/studio/mevera/lotus/paper/api/menu/PaperMenu.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lotus-paper/src/main/java/studio/mevera/lotus/paper/api/pagination/PaperPageLayout.java" beforeDir="false" afterPath="$PROJECT_DIR$/lotus-paper/src/main/java/studio/mevera/lotus/paper/api/pagination/PaperPageLayout.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lotus-paper/src/main/java/studio/mevera/lotus/paper/api/pagination/PaperPageLayoutBuilder.java" beforeDir="false" afterPath="$PROJECT_DIR$/lotus-paper/src/main/java/studio/mevera/lotus/paper/api/pagination/PaperPageLayoutBuilder.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lotus-paper/src/main/java/studio/mevera/lotus/paper/internal/opener/PaperViewOpener.java" beforeDir="false" afterPath="$PROJECT_DIR$/lotus-paper/src/main/java/studio/mevera/lotus/paper/internal/opener/PaperViewOpener.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lotus-paper/src/main/java/studio/mevera/lotus/paper/api/pagination/Pagination.java" beforeDir="false" afterPath="$PROJECT_DIR$/lotus-paper/src/main/java/studio/mevera/lotus/paper/api/pagination/Pagination.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lotus-paper/src/main/java/studio/mevera/lotus/paper/internal/pagination/PaperPaginationSession.java" beforeDir="false" afterPath="$PROJECT_DIR$/lotus-paper/src/main/java/studio/mevera/lotus/paper/internal/pagination/PaperPaginationSession.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lotus-spigot/build.gradle.kts" beforeDir="false" afterPath="$PROJECT_DIR$/lotus-spigot/build.gradle.kts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lotus-spigot/src/main/java/studio/mevera/lotus/spigot/SpigotLotus.java" beforeDir="false" afterPath="$PROJECT_DIR$/lotus-spigot/src/main/java/studio/mevera/lotus/spigot/SpigotLotus.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lotus-spigot/src/main/java/studio/mevera/lotus/spigot/internal/opener/SpigotViewOpener.java" beforeDir="false" afterPath="$PROJECT_DIR$/lotus-spigot/src/main/java/studio/mevera/lotus/spigot/internal/opener/SpigotViewOpener.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lotus-spigot/src/main/java/studio/mevera/lotus/spigot/api/pagination/Pagination.java" beforeDir="false" afterPath="$PROJECT_DIR$/lotus-spigot/src/main/java/studio/mevera/lotus/spigot/api/pagination/Pagination.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lotus-spigot/src/main/java/studio/mevera/lotus/spigot/internal/SpigotPaginationSession.java" beforeDir="false" afterPath="$PROJECT_DIR$/lotus-spigot/src/main/java/studio/mevera/lotus/spigot/internal/SpigotPaginationSession.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -488,14 +450,21 @@
       <option name="project" value="LOCAL" />
       <updated>1776700824952</updated>
     </task>
-    <option name="localTasksCounter" value="25" />
+    <task id="LOCAL-00025" summary="Finalizing the framework base">
+      <option name="closed" value="true" />
+      <created>1776732464169</created>
+      <option name="number" value="00025" />
+      <option name="presentableId" value="LOCAL-00025" />
+      <option name="project" value="LOCAL" />
+      <updated>1776732464169</updated>
+    </task>
+    <option name="localTasksCounter" value="26" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Convert groovy to kotlin" />
     <MESSAGE value="Convert gradle groovy to kotlin" />
     <MESSAGE value="Refactor Lotus initialization with builder pattern and options, add dynamic button action support, update Java version to 17&#10;&#10;- Introduce LotusBuilder for flexible Lotus instantiation with customizable options&#10;- Move configuration fields into Lotus.Options data class&#10;- Add dynamicButtonAction option to enable drag-and-drop button rearrangement in menus&#10;- Refactor event handling to support dynamic button actions&#10;- Update default Java version and Gradle JVM to 17&#10;- Add utility method to ComponentItemBuilder for setting display from rich text&#10;- Set default Menu#getName to class simple name&#10;- Update MenuContentImpl to allow removing buttons by setting null" />
     <MESSAGE value="Add GitHub Actions workflow for release automation and cleanup" />
@@ -520,7 +489,8 @@
     <MESSAGE value="Improved internals &amp; api" />
     <MESSAGE value="Complete refactoring, separating into two modules for different versions e.g: 1.8.8 and Paper 1.21.x" />
     <MESSAGE value="Finalizing docs." />
-    <option name="LAST_COMMIT_MESSAGE" value="Finalizing docs." />
+    <MESSAGE value="Finalizing the framework base" />
+    <option name="LAST_COMMIT_MESSAGE" value="Finalizing the framework base" />
   </component>
   <component name="github-copilot-workspace">
     <instructionFileLocations>

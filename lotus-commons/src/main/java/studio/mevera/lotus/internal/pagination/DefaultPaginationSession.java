@@ -24,9 +24,9 @@ public abstract class DefaultPaginationSession<C, T, X extends AbstractPageConte
     protected final Lotus<C> lotus;
     protected final AbstractPagination<C, T, X> definition;
     protected final Player viewer;
-    protected final List<T> snapshot;
-    protected final int totalPages;
-    protected final int itemsPerPage;
+    protected List<T> snapshot;
+    protected int totalPages;
+    protected int itemsPerPage;
 
     private int currentIndex;
     private boolean closed;
@@ -39,9 +39,7 @@ public abstract class DefaultPaginationSession<C, T, X extends AbstractPageConte
         this.lotus = Objects.requireNonNull(lotus);
         this.definition = Objects.requireNonNull(definition);
         this.viewer = Objects.requireNonNull(viewer);
-        this.snapshot = List.copyOf(definition.source().provide(viewer));
-        this.itemsPerPage = definition.layout().fillMask().size();
-        this.totalPages = Math.max(1, (int) Math.ceil(snapshot.size() / (double) itemsPerPage));
+        rebuildState();
     }
 
     @Override public @NotNull AbstractPagination<C, T, ? super X> definition() { return definition; }
@@ -71,6 +69,14 @@ public abstract class DefaultPaginationSession<C, T, X extends AbstractPageConte
     }
 
     @Override
+    public void reload() {
+        if (closed) throw new IllegalStateException("session closed");
+        rebuildState();
+        int reloadedIndex = Math.min(currentIndex, totalPages - 1);
+        goTo(reloadedIndex);
+    }
+
+    @Override
     public void close() {
         if (closed) return;
         this.closed = true;
@@ -88,6 +94,12 @@ public abstract class DefaultPaginationSession<C, T, X extends AbstractPageConte
         int end = Math.min(start + itemsPerPage, snapshot.size());
         if (start >= snapshot.size()) return List.of();
         return snapshot.subList(start, end);
+    }
+
+    protected void rebuildState() {
+        this.snapshot = List.copyOf(definition.source().provide(viewer));
+        this.itemsPerPage = definition.layout().fillMask().size();
+        this.totalPages = Math.max(1, (int) Math.ceil(snapshot.size() / (double) itemsPerPage));
     }
 
 }

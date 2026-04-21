@@ -46,6 +46,12 @@ public interface PaginationSession<C, T, X extends AbstractPageContext<C, T, ?>>
     void goTo(int pageIndex);
 
     /**
+     * Rebuilds the session snapshot and reopens the current page from scratch.
+     * This recalculates page count and re-renders title, capacity, and content.
+     */
+    void reload();
+
+    /**
      * Closes the session and the viewer's inventory.
      */
     void close();

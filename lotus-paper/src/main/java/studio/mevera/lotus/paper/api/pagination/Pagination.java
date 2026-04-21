@@ -14,12 +14,13 @@ import studio.mevera.lotus.paper.internal.pagination.PaperPaginationSession;
 public final class Pagination<T> extends AbstractPagination<Component, T, PaperPageContext<T>> {
 
     private Pagination(
+        @NotNull String id,
         @NotNull PageLayout<Component, PaperPageContext<T>> layout,
         @NotNull ContentSource<T> source,
         @NotNull ComponentRenderer<T, PaperPageContext<T>> renderer,
         boolean trimOverflow
     ) {
-        super(layout, source, renderer, trimOverflow);
+        super(id, layout, source, renderer, trimOverflow);
     }
 
     @Override
@@ -31,14 +32,15 @@ public final class Pagination<T> extends AbstractPagination<Component, T, PaperP
         return (PaperPaginationSession<T>) super.open(lotus, viewer);
     }
 
-    public static <T> @NotNull Builder<T> builder() {
-        return new Builder<>();
+    public static <T> @NotNull Builder<T> builder(String id) {
+        return new Builder<>(id);
     }
 
     public static final class Builder<T>
         extends AbstractPagination.Builder<Component, T, PaperPageContext<T>, Pagination<T>> {
 
-        private Builder() {
+        private Builder(String id) {
+            super(id);
         }
 
         @Override
@@ -48,7 +50,7 @@ public final class Pagination<T> extends AbstractPagination<Component, T, PaperP
             @NotNull ComponentRenderer<T, PaperPageContext<T>> renderer,
             boolean trimOverflow
         ) {
-            return new Pagination<>(layout, source, renderer, trimOverflow);
+            return new Pagination<>(id, layout, source, renderer, trimOverflow);
         }
     }
 }

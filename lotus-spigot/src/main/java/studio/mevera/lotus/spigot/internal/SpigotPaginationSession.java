@@ -30,9 +30,9 @@ public class SpigotPaginationSession<T> implements PaginationSession<String, T, 
     protected final Lotus<String> lotus;
     protected final Pagination<T> definition;
     protected final Player viewer;
-    protected final List<T> snapshot;
-    protected final int totalPages;
-    protected final int itemsPerPage;
+    protected List<T> snapshot;
+    protected int totalPages;
+    protected int itemsPerPage;
 
     private int currentIndex;
     private boolean closed;
@@ -45,9 +45,7 @@ public class SpigotPaginationSession<T> implements PaginationSession<String, T, 
         this.lotus = Objects.requireNonNull(lotus);
         this.definition = Objects.requireNonNull(definition);
         this.viewer = Objects.requireNonNull(viewer);
-        this.snapshot = List.copyOf(definition.source().provide(viewer));
-        this.itemsPerPage = definition.layout().fillMask().size();
-        this.totalPages = Math.max(1, (int) Math.ceil(snapshot.size() / (double) itemsPerPage));
+        rebuildState();
     }
 
     @Override public @NotNull Pagination<T> definition() { return definition; }
@@ -83,6 +81,16 @@ public class SpigotPaginationSession<T> implements PaginationSession<String, T, 
     }
 
     @Override
+    public void reload() {
+        if (closed) {
+            throw new IllegalStateException("session closed");
+        }
+        rebuildState();
+        int reloadedIndex = Math.min(currentIndex, totalPages - 1);
+        goTo(reloadedIndex);
+    }
+
+    @Override
     public void close() {
         if (closed) {
             return;
@@ -106,6 +114,12 @@ public class SpigotPaginationSession<T> implements PaginationSession<String, T, 
             return List.of();
         }
         return snapshot.subList(start, end);
+    }
+
+    protected void rebuildState() {
+        this.snapshot = List.copyOf(definition.source().provide(viewer));
+        this.itemsPerPage = definition.layout().fillMask().size();
+        this.totalPages = Math.max(1, (int) Math.ceil(snapshot.size() / (double) itemsPerPage));
     }
 
     /**
