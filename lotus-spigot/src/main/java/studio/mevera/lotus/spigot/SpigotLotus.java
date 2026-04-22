@@ -11,9 +11,9 @@ import studio.mevera.lotus.api.pagination.PaginationSession;
 import studio.mevera.lotus.spi.PaginationSessionFactory;
 import studio.mevera.lotus.spigot.api.pagination.Pagination;
 import studio.mevera.lotus.spigot.internal.SpigotLotusListener;
-import studio.mevera.lotus.spigot.internal.SpigotPaginationSession;
+import studio.mevera.lotus.spigot.internal.pagination.SpigotPageMenu;
+import studio.mevera.lotus.spigot.internal.pagination.SpigotPaginationSession;
 import studio.mevera.lotus.spigot.internal.opener.SpigotViewOpener;
-
 import java.util.function.Consumer;
 
 /**
@@ -70,5 +70,26 @@ public final class SpigotLotus {
             .paginationSessionFactory(new SpigotPaginationSessionFactory());
         customizer.accept(builder);
         return builder.build();
+    }
+
+    public static void syncOpenPagination(Lotus<String> lotus, String paginationId, Player player) {
+        var view = lotus.resolveView(player);
+        if(view == null) {
+            return;
+        }
+        if(!(view.menu() instanceof SpigotPageMenu<?> spigotPageMenu)) {
+            return;
+        }
+
+        SpigotPaginationSession<?> paginationSession = spigotPageMenu.session();
+        if (paginationSession.definition().getId().equals(paginationId)) {
+            paginationSession.reload();
+        }
+    }
+
+    public static void syncOpenPagination(Lotus<String> lotus, String paginationId) {
+        for(var view : lotus.openViews()) {
+            syncOpenPagination(lotus, paginationId, view.viewer());
+        }
     }
 }

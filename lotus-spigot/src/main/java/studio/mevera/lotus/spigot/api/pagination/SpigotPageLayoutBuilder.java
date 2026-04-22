@@ -10,13 +10,14 @@ import studio.mevera.lotus.api.content.Content;
 import studio.mevera.lotus.api.slot.Capacity;
 import studio.mevera.lotus.api.slot.Slot;
 import studio.mevera.lotus.api.slot.SlotMask;
+import studio.mevera.lotus.spigot.internal.pagination.SpigotPaginationSession;
 
 import java.util.Objects;
 import java.util.function.Function;
 
 /**
  * Spigot-specific builder that exposes {@link SpigotPageContext} with a typed
- * {@link studio.mevera.lotus.spigot.internal.SpigotPaginationSession}.
+ * {@link SpigotPaginationSession}.
  */
 public final class SpigotPageLayoutBuilder<T> {
 

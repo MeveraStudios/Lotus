@@ -7,7 +7,7 @@ import studio.mevera.lotus.api.pagination.AbstractPagination;
 import studio.mevera.lotus.api.pagination.ComponentRenderer;
 import studio.mevera.lotus.api.pagination.ContentSource;
 import studio.mevera.lotus.api.pagination.PageLayout;
-import studio.mevera.lotus.spigot.internal.SpigotPaginationSession;
+import studio.mevera.lotus.spigot.internal.pagination.SpigotPaginationSession;
 
 /**
  * Spigot-facing pagination definition with string titles and Spigot page contexts.
