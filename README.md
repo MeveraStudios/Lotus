@@ -18,7 +18,7 @@ Simple but yet powerful spigot menus api created using OOP principles
 This library depends mainly on the following :
 
 - Java 21
-- Paper API for v1.21
+- Spigot API for 1.8.8 OR Paper API for v1.21
 
 ## Links
 
