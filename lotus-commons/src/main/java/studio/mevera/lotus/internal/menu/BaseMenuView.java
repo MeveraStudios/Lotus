@@ -62,8 +62,8 @@ public class BaseMenuView<C, M extends Menu<C>> implements MenuView<C, M> {
      */
     protected void resolve() {
         this.title = menu.title(this);
-        this.content = menu.content(this);
         this.capacity = menu.capacity(this);
+        this.content = menu.content(this);
     }
 
     public void open(@NotNull ViewOpener<C> opener) {
