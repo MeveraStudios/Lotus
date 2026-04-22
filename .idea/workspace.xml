@@ -4,15 +4,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="5627481f-164c-4877-8050-a073e3de7c6c" name="Changes" comment="Finalizing the framework base">
+    <list default="true" id="5627481f-164c-4877-8050-a073e3de7c6c" name="Changes" comment="Fixed order of resolving menus.">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lotus-commons/src/main/java/studio/mevera/lotus/api/content/Content.java" beforeDir="false" afterPath="$PROJECT_DIR$/lotus-commons/src/main/java/studio/mevera/lotus/api/content/Content.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lotus-commons/src/main/java/studio/mevera/lotus/api/content/ContentView.java" beforeDir="false" afterPath="$PROJECT_DIR$/lotus-commons/src/main/java/studio/mevera/lotus/api/content/ContentView.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lotus-commons/src/main/java/studio/mevera/lotus/api/slot/Capacity.java" beforeDir="false" afterPath="$PROJECT_DIR$/lotus-commons/src/main/java/studio/mevera/lotus/api/slot/Capacity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lotus-commons/src/main/java/studio/mevera/lotus/internal/content/DefaultContent.java" beforeDir="false" afterPath="$PROJECT_DIR$/lotus-commons/src/main/java/studio/mevera/lotus/internal/content/DefaultContent.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lotus-commons/src/main/java/studio/mevera/lotus/internal/menu/BaseMenuView.java" beforeDir="false" afterPath="$PROJECT_DIR$/lotus-commons/src/main/java/studio/mevera/lotus/internal/menu/BaseMenuView.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lotus-paper/src/main/java/studio/mevera/lotus/paper/PaperLotus.java" beforeDir="false" afterPath="$PROJECT_DIR$/lotus-paper/src/main/java/studio/mevera/lotus/paper/PaperLotus.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lotus-spigot/src/main/java/studio/mevera/lotus/spigot/SpigotLotus.java" beforeDir="false" afterPath="$PROJECT_DIR$/lotus-spigot/src/main/java/studio/mevera/lotus/spigot/SpigotLotus.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -452,15 +445,29 @@
       <option name="project" value="LOCAL" />
       <updated>1776816430574</updated>
     </task>
-    <option name="localTasksCounter" value="29" />
+    <task id="LOCAL-00029" summary="Cleaned code and added Growing Capacity">
+      <option name="closed" value="true" />
+      <created>1776820141586</created>
+      <option name="number" value="00029" />
+      <option name="presentableId" value="LOCAL-00029" />
+      <option name="project" value="LOCAL" />
+      <updated>1776820141586</updated>
+    </task>
+    <task id="LOCAL-00030" summary="Fixed order of resolving menus.">
+      <option name="closed" value="true" />
+      <created>1776820324267</created>
+      <option name="number" value="00030" />
+      <option name="presentableId" value="LOCAL-00030" />
+      <option name="project" value="LOCAL" />
+      <updated>1776820324267</updated>
+    </task>
+    <option name="localTasksCounter" value="31" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Convert gradle groovy to kotlin" />
-    <MESSAGE value="Refactor Lotus initialization with builder pattern and options, add dynamic button action support, update Java version to 17&#10;&#10;- Introduce LotusBuilder for flexible Lotus instantiation with customizable options&#10;- Move configuration fields into Lotus.Options data class&#10;- Add dynamicButtonAction option to enable drag-and-drop button rearrangement in menus&#10;- Refactor event handling to support dynamic button actions&#10;- Update default Java version and Gradle JVM to 17&#10;- Add utility method to ComponentItemBuilder for setting display from rich text&#10;- Set default Menu#getName to class simple name&#10;- Update MenuContentImpl to allow removing buttons by setting null" />
     <MESSAGE value="Add GitHub Actions workflow for release automation and cleanup" />
     <MESSAGE value="Enhance ComponentItemBuilder with MiniMessage support and add TutorialMenu implementation" />
     <MESSAGE value="Add TutorialMenu implementation with interactive button for item giving" />
@@ -484,7 +491,9 @@
     <MESSAGE value="Complete refactoring, separating into two modules for different versions e.g: 1.8.8 and Paper 1.21.x" />
     <MESSAGE value="Finalizing docs." />
     <MESSAGE value="Finalizing the framework base" />
-    <option name="LAST_COMMIT_MESSAGE" value="Finalizing the framework base" />
+    <MESSAGE value="Cleaned code and added Growing Capacity" />
+    <MESSAGE value="Fixed order of resolving menus." />
+    <option name="LAST_COMMIT_MESSAGE" value="Fixed order of resolving menus." />
   </component>
   <component name="github-copilot-workspace">
     <instructionFileLocations>

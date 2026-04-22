@@ -12,6 +12,10 @@ import java.util.Objects;
  */
 public class Capacity {
 
+    private static final int CHEST_COLUMNS = 9;
+    private static final int MAX_CHEST_ROWS = 6;
+    private static final int MAX_CHEST_SLOT = (MAX_CHEST_ROWS * CHEST_COLUMNS) - 1;
+
     private final int rows;
     private final int columns;
 
@@ -23,8 +27,14 @@ public class Capacity {
     }
 
     private Capacity(int furthestSlot) {
-        this.rows = Math.max(1, (furthestSlot / 9) + 1);
-        this.columns = 9;
+        if (furthestSlot < 0) {
+            throw new IllegalArgumentException("furthestSlot must be non-negative: " + furthestSlot);
+        }
+        if (furthestSlot > MAX_CHEST_SLOT) {
+            throw new IllegalArgumentException("furthestSlot exceeds chest capacity: " + furthestSlot);
+        }
+        this.rows = Math.max(1, (furthestSlot / CHEST_COLUMNS) + 1);
+        this.columns = CHEST_COLUMNS;
     }
 
     public int rows() {
@@ -44,7 +54,10 @@ public class Capacity {
     }
 
     public static @NotNull Capacity ofRows(int rows) {
-        return new Capacity(rows, 9);
+        if (rows > MAX_CHEST_ROWS) {
+            throw new IllegalArgumentException("rows must not exceed chest capacity: " + rows);
+        }
+        return new Capacity(rows, CHEST_COLUMNS);
     }
 
     public static @NotNull Capacity of(@NotNull InventoryType type) {

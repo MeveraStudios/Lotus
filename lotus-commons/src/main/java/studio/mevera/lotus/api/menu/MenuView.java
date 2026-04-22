@@ -66,7 +66,10 @@ public interface MenuView<C, M extends Menu<C>> extends InventoryHolder {
     boolean isOpen();
 
     /**
-     * Rebuilds the content from the menu and repaints the inventory.
+     * Rebuilds the resolved menu state and reapplies it to the live inventory.
+     * <p>
+     * Implementations may recreate the inventory when structural properties such
+     * as title, type, or capacity change.
      */
     void refresh();
 

@@ -75,8 +75,17 @@ public class BaseMenuView<C, M extends Menu<C>> implements MenuView<C, M> {
     @Override
     public void refresh() {
         if (!open || inventory == null) return;
-        this.capacity = menu.capacity(this);
-        this.content = menu.content(this);
+        Inventory currentInventory = inventory;
+        InventoryTypeSnapshot previous = new InventoryTypeSnapshot(currentInventory.getType(), title, capacity);
+
+        resolve();
+
+        if (previous.requiresReopen(type(), title, capacity)) {
+            this.inventory = lotus.openerFor(type()).open(lotus, this);
+            this.open = true;
+            return;
+        }
+
         repaint();
     }
 
@@ -93,14 +102,15 @@ public class BaseMenuView<C, M extends Menu<C>> implements MenuView<C, M> {
 
     public void handleClick(@NotNull InventoryClickEvent event) {
         var handler = handler();
-        if(handler == null) return;
-        if (!handler.onPreClick(this, event)) return;
+        if (handler != null && !handler.onPreClick(this, event)) return;
         Slot slot = Slot.of(event.getSlot());
         content().get(slot).ifPresent(button -> {
             dispatchButton(button, event);
             repaint();
         });
-        handler.onPostClick(this, event);
+        if (handler != null) {
+            handler.onPostClick(this, event);
+        }
     }
 
     public void handleDrag(@NotNull InventoryDragEvent event) {
@@ -144,5 +154,21 @@ public class BaseMenuView<C, M extends Menu<C>> implements MenuView<C, M> {
     private static <T> T require(@Nullable T value, String name) {
         if (value == null) throw new IllegalStateException("menu view not opened yet — '" + name + "' unresolved");
         return value;
+    }
+
+    private record InventoryTypeSnapshot(
+        @NotNull org.bukkit.event.inventory.InventoryType type,
+        @Nullable Object title,
+        @Nullable Capacity capacity
+    ) {
+        private boolean requiresReopen(
+            @NotNull org.bukkit.event.inventory.InventoryType nextType,
+            @Nullable Object nextTitle,
+            @Nullable Capacity nextCapacity
+        ) {
+            return type != nextType
+                || !Objects.equals(title, nextTitle)
+                || !Objects.equals(capacity, nextCapacity);
+        }
     }
 }
