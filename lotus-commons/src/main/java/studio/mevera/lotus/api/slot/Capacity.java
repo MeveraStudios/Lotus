@@ -10,11 +10,29 @@ import java.util.Objects;
  * <p>
  * Chest-style menus use 9 columns; other inventory types follow their fixed layout.
  */
-public record Capacity(int rows, int columns) {
+public class Capacity {
 
-    public Capacity {
+    private final int rows;
+    private final int columns;
+
+    public Capacity(int rows, int columns) {
         if (rows <= 0) throw new IllegalArgumentException("rows must be positive: " + rows);
         if (columns <= 0) throw new IllegalArgumentException("columns must be positive: " + columns);
+        this.rows = rows;
+        this.columns = columns;
+    }
+
+    private Capacity(int furthestSlot) {
+        this.rows = Math.max(1, (furthestSlot / 9) + 1);
+        this.columns = 9;
+    }
+
+    public int rows() {
+        return rows;
+    }
+
+    public int columns() {
+        return columns;
     }
 
     public int totalSize() {
@@ -40,5 +58,26 @@ public record Capacity(int rows, int columns) {
             default -> throw new IllegalArgumentException(
                 "InventoryType " + type + " has no fixed grid; specify rows explicitly via ofRows(int)");
         };
+    }
+
+    public static @NotNull Capacity growing(int furthestSlot) {
+        return new Capacity(furthestSlot);
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) return true;
+        if (!(obj instanceof Capacity other)) return false;
+        return rows == other.rows && columns == other.columns;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(rows, columns);
+    }
+
+    @Override
+    public String toString() {
+        return "Capacity[rows=" + rows + ", columns=" + columns + "]";
     }
 }

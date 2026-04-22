@@ -19,24 +19,22 @@ import studio.mevera.lotus.spi.PaginationSessionFactory;
 import java.util.function.Consumer;
 
 /**
- * Paper-specific static factory for {@link Lotus}. Returns a {@link Lotus} instance pre-configured
- * with:
- * <ul>
- *   <li>{@link PaperViewOpener} as the default {@link studio.mevera.lotus.spi.opener.ViewOpener} —
- *       uses Paper's {@code Bukkit.createInventory(holder, size, Component)} overload for
- *       full Adventure fidelity.</li>
- *   <li>{@link PaperPaginationSession}{@code ::new} as the
- *       {@link studio.mevera.lotus.spi.PaginationSessionFactory} — produces
- *       {@link studio.mevera.lotus.paper.api.menu.PaperInteractiveMenu} pages whose titles
- *       return Adventure {@link net.kyori.adventure.text.Component} directly.</li>
- * </ul>
+ * Entry point for creating {@link Lotus} instances configured for the Paper
+ * platform.
+ * <p>
+ * The factory applies Paper-specific defaults, including a
+ * {@link PaperViewOpener} for Adventure {@link Component}-based inventory
+ * titles and a {@link PaperPaginationSessionFactory} for Paper pagination
+ * sessions.
  * <p>
  * Usage:
  * <pre>{@code
- * Lotus lotus = PaperLotus.create(this); // 'this' is your JavaPlugin
+ * Lotus<Component> lotus = PaperLotus.create(this);
  *
- * // Or with builder customization:
- * Lotus lotus = PaperLotus.create(this, b -> b.debug(true).allowBottomInventoryClick(false));
+ * Lotus<Component> customized = PaperLotus.create(
+ *     this,
+ *     builder -> builder.debug(true).allowBottomInventoryClick(false)
+ * );
  * }</pre>
  */
 public final class PaperLotus {
@@ -44,13 +42,20 @@ public final class PaperLotus {
     private PaperLotus() {}
 
     /**
-     * Creates a {@link Lotus} facade pre-configured for Paper with default options.
+     * Creates a {@link Lotus} instance with the default Paper configuration.
+     *
+     * @param plugin the owning plugin used for listener registration
+     * @return a Paper-configured Lotus facade
      */
     public static @NotNull Lotus<Component> create(@NotNull Plugin plugin) {
         return create(plugin, b -> {});
     }
 
 
+    /**
+     * {@link PaginationSessionFactory} implementation that creates
+     * {@link PaperPaginationSession} instances for Paper pagination definitions.
+     */
     public static final class PaperPaginationSessionFactory implements PaginationSessionFactory<Component> {
 
         @Override
@@ -64,10 +69,17 @@ public final class PaperLotus {
                 new PaperPaginationSession<>((Pagination<T>) definition, lotus, viewer);
         }
     }
+
     /**
-     * Creates a {@link Lotus} facade pre-configured for Paper. The {@code customizer} receives the
-     * {@link LotusBuilder} after Paper defaults ({@link PaperViewOpener}) have been applied, so you
-     * may override any setting except the session factory (which is applied post-build).
+     * Creates a {@link Lotus} instance with Paper defaults applied and then
+     * exposes the builder for additional customization.
+     * <p>
+     * The {@code customizer} runs after Paper defaults have been registered, so
+     * callers can override builder settings before the facade is built.
+     *
+     * @param plugin the owning plugin used for listener registration
+     * @param customizer callback used to customize the prepared builder
+     * @return a configured Lotus facade for Paper
      */
     public static @NotNull Lotus<Component> create(
         @NotNull Plugin plugin,
@@ -83,6 +95,14 @@ public final class PaperLotus {
         return builder.build();
     }
 
+    /**
+     * Reloads an open Paper pagination view for the given player when the
+     * currently displayed pagination definition matches {@code paginationId}.
+     *
+     * @param lotus the Lotus instance managing open views
+     * @param paginationId the pagination definition identifier to refresh
+     * @param player the player whose current pagination view should be checked
+     */
     public static void syncOpenPagination(Lotus<Component> lotus, String paginationId, Player player) {
         var view = lotus.resolveView(player);
         if(view == null) {
@@ -98,6 +118,13 @@ public final class PaperLotus {
         }
     }
 
+    /**
+     * Reloads all open Paper pagination views whose backing pagination
+     * definition matches {@code paginationId}.
+     *
+     * @param lotus the Lotus instance managing open views
+     * @param paginationId the pagination definition identifier to refresh
+     */
     public static void syncOpenPagination(Lotus<Component> lotus, String paginationId) {
         for(var view : lotus.openViews()) {
             syncOpenPagination(lotus, paginationId, view.viewer());

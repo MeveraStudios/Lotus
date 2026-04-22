@@ -5,9 +5,14 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="5627481f-164c-4877-8050-a073e3de7c6c" name="Changes" comment="Finalizing the framework base">
-      <change afterPath="$PROJECT_DIR$/lotus-spigot/src/main/java/studio/mevera/lotus/spigot/api/menu/SpigotInteractiveMenu.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lotus-spigot/src/main/java/studio/mevera/lotus/spigot/api/menu/SpigotMenu.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lotus-commons/src/main/java/studio/mevera/lotus/api/content/Content.java" beforeDir="false" afterPath="$PROJECT_DIR$/lotus-commons/src/main/java/studio/mevera/lotus/api/content/Content.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lotus-commons/src/main/java/studio/mevera/lotus/api/content/ContentView.java" beforeDir="false" afterPath="$PROJECT_DIR$/lotus-commons/src/main/java/studio/mevera/lotus/api/content/ContentView.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lotus-commons/src/main/java/studio/mevera/lotus/api/slot/Capacity.java" beforeDir="false" afterPath="$PROJECT_DIR$/lotus-commons/src/main/java/studio/mevera/lotus/api/slot/Capacity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lotus-commons/src/main/java/studio/mevera/lotus/internal/content/DefaultContent.java" beforeDir="false" afterPath="$PROJECT_DIR$/lotus-commons/src/main/java/studio/mevera/lotus/internal/content/DefaultContent.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lotus-commons/src/main/java/studio/mevera/lotus/internal/menu/BaseMenuView.java" beforeDir="false" afterPath="$PROJECT_DIR$/lotus-commons/src/main/java/studio/mevera/lotus/internal/menu/BaseMenuView.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lotus-paper/src/main/java/studio/mevera/lotus/paper/PaperLotus.java" beforeDir="false" afterPath="$PROJECT_DIR$/lotus-paper/src/main/java/studio/mevera/lotus/paper/PaperLotus.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lotus-spigot/src/main/java/studio/mevera/lotus/spigot/SpigotLotus.java" beforeDir="false" afterPath="$PROJECT_DIR$/lotus-spigot/src/main/java/studio/mevera/lotus/spigot/SpigotLotus.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -38,36 +43,7 @@
             <expand>
               <path>
                 <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
-                <item name="Lotus" type="f1a62948:ProjectNode" />
-              </path>
-              <path>
-                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
-                <item name="Lotus" type="f1a62948:ProjectNode" />
-                <item name="Tasks" type="e4a08cd1:TasksNode" />
-              </path>
-              <path>
-                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
-                <item name="Lotus" type="f1a62948:ProjectNode" />
-                <item name="Tasks" type="e4a08cd1:TasksNode" />
-                <item name="build" type="c8890929:TasksNode$1" />
-              </path>
-              <path>
-                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
-                <item name="Lotus" type="f1a62948:ProjectNode" />
-                <item name="Tasks" type="e4a08cd1:TasksNode" />
-                <item name="publishing" type="c8890929:TasksNode$1" />
-              </path>
-              <path>
-                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
-                <item name="Lotus" type="f1a62948:ProjectNode" />
-                <item name="Tasks" type="e4a08cd1:TasksNode" />
-                <item name="release" type="c8890929:TasksNode$1" />
-              </path>
-              <path>
-                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
-                <item name="Lotus" type="f1a62948:ProjectNode" />
-                <item name="Tasks" type="e4a08cd1:TasksNode" />
-                <item name="shadow" type="c8890929:TasksNode$1" />
+                <item name="lotus" type="f1a62948:ProjectNode" />
               </path>
             </expand>
             <select />
@@ -80,6 +56,7 @@
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="Class" />
+        <option value="Interface" />
       </list>
     </option>
   </component>
@@ -459,7 +436,23 @@
       <option name="project" value="LOCAL" />
       <updated>1776738634551</updated>
     </task>
-    <option name="localTasksCounter" value="27" />
+    <task id="LOCAL-00027" summary="Finalizing the framework base">
+      <option name="closed" value="true" />
+      <created>1776816116518</created>
+      <option name="number" value="00027" />
+      <option name="presentableId" value="LOCAL-00027" />
+      <option name="project" value="LOCAL" />
+      <updated>1776816116518</updated>
+    </task>
+    <task id="LOCAL-00028" summary="Finalizing the framework base">
+      <option name="closed" value="true" />
+      <created>1776816430574</created>
+      <option name="number" value="00028" />
+      <option name="presentableId" value="LOCAL-00028" />
+      <option name="project" value="LOCAL" />
+      <updated>1776816430574</updated>
+    </task>
+    <option name="localTasksCounter" value="29" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">

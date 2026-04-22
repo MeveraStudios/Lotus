@@ -28,7 +28,7 @@ import java.util.Objects;
  */
 public class BaseMenuView<C, M extends Menu<C>> implements MenuView<C, M> {
 
-    private final Lotus lotus;
+    private final Lotus<C> lotus;
     private final M menu;
     private final Player viewer;
     private final DataRegistry data;
@@ -39,14 +39,14 @@ public class BaseMenuView<C, M extends Menu<C>> implements MenuView<C, M> {
     private @Nullable Inventory inventory;
     private boolean open;
 
-    public BaseMenuView(@NotNull Lotus lotus, @NotNull M menu, @NotNull Player viewer, @NotNull DataRegistry data) {
+    public BaseMenuView(@NotNull Lotus<C> lotus, @NotNull M menu, @NotNull Player viewer, @NotNull DataRegistry data) {
         this.lotus = Objects.requireNonNull(lotus);
         this.menu = Objects.requireNonNull(menu);
         this.viewer = Objects.requireNonNull(viewer);
         this.data = Objects.requireNonNull(data);
     }
 
-    @Override public @NotNull Lotus lotus() { return lotus; }
+    @Override public @NotNull Lotus<C> lotus() { return lotus; }
     @Override public @NotNull M menu() { return menu; }
     @Override public @NotNull Player viewer() { return viewer; }
     @Override public @NotNull DataRegistry data() { return data; }
@@ -62,11 +62,11 @@ public class BaseMenuView<C, M extends Menu<C>> implements MenuView<C, M> {
      */
     protected void resolve() {
         this.title = menu.title(this);
-        this.capacity = menu.capacity(this);
         this.content = menu.content(this);
+        this.capacity = menu.capacity(this);
     }
 
-    public void open(@NotNull ViewOpener opener) {
+    public void open(@NotNull ViewOpener<C> opener) {
         resolve();
         this.inventory = opener.open(lotus, this);
         this.open = true;
@@ -75,6 +75,7 @@ public class BaseMenuView<C, M extends Menu<C>> implements MenuView<C, M> {
     @Override
     public void refresh() {
         if (!open || inventory == null) return;
+        this.capacity = menu.capacity(this);
         this.content = menu.content(this);
         repaint();
     }
@@ -82,7 +83,7 @@ public class BaseMenuView<C, M extends Menu<C>> implements MenuView<C, M> {
     private void repaint() {
         if (inventory == null || content == null) return;
         inventory.clear();
-        content.forEach((slot, button) -> inventory.setItem(slot.index(), button.item()));
+        renderInto(inventory);
     }
 
     public void renderInto(@NotNull Inventory target) {
@@ -91,27 +92,36 @@ public class BaseMenuView<C, M extends Menu<C>> implements MenuView<C, M> {
     }
 
     public void handleClick(@NotNull InventoryClickEvent event) {
-        if (handler() instanceof MenuHandler h && !h.onPreClick(this, event)) return;
+        var handler = handler();
+        if(handler == null) return;
+        if (!handler.onPreClick(this, event)) return;
         Slot slot = Slot.of(event.getSlot());
         content().get(slot).ifPresent(button -> {
             dispatchButton(button, event);
             repaint();
         });
-        if (handler() instanceof MenuHandler h) h.onPostClick(this, event);
+        handler.onPostClick(this, event);
     }
 
     public void handleDrag(@NotNull InventoryDragEvent event) {
-        if (handler() instanceof MenuHandler h) h.onDrag(this, event);
+        var handler = handler();
+        if(handler != null) {
+            handler.onDrag(this, event);
+        }
     }
 
     public void handleOpen(@NotNull InventoryOpenEvent event) {
         this.open = true;
-        if (handler() instanceof MenuHandler h) h.onOpen(this, event);
+        var h = handler();
+        if(h != null) {
+            h.onOpen(this, event);
+        }
     }
 
     public void handleClose(@NotNull InventoryCloseEvent event) {
         try {
-            if (handler() instanceof MenuHandler h) h.onClose(this, event);
+            var handler = handler();
+            if(handler != null) handler.onClose(this, event);
         } finally {
             this.open = false;
             this.inventory = null;
@@ -126,8 +136,9 @@ public class BaseMenuView<C, M extends Menu<C>> implements MenuView<C, M> {
         }
     }
 
-    private @Nullable MenuHandler handler() {
-        return menu instanceof MenuHandler h ? h : null;
+    @SuppressWarnings("unchecked")
+    private @Nullable MenuHandler<C> handler() {
+        return menu instanceof MenuHandler<?> h ? (MenuHandler<C>) h : null;
     }
 
     private static <T> T require(@Nullable T value, String name) {
